@@ -1,11 +1,17 @@
 const { Sequelize, DataTypes, Model } = require('sequelize')
 let sequelize
 
-require('../functions')
-
 class ORM {
   constructor () {
     this.modelsDir = pathJoin(projectDir, 'models')
+  }
+
+  async init () {
+    await this.connect()
+    await this.importModels()
+    await this.sync()
+
+    return Promise.resolve()
   }
 
   async connect () {
@@ -66,6 +72,8 @@ class ORM {
     return Promise.all(promises)
   }
 
+  
+  //TODO: Sync esta ignorando config - https://trello.com/c/6ci12SS6/5-sync-esta-ignorando-config
   sync () {
     if (!process.env.Atlas.ORM_SYNC) return
 

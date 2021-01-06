@@ -2,11 +2,11 @@ require('./functions')
 require('./globals')
 
 const Orm = require('./modules/ORM')
+const Server = require('./modules/Server')
 
 module.exports = async () => {
   require('./env.js')()
 
-  await Orm.connect()
-  await Orm.importModels()
-  await Orm.sync()
+  await Orm.init()
+  await Server.init()
 }
