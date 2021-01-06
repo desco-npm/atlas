@@ -73,7 +73,6 @@ class ORM {
   }
 
   
-  //TODO: Sync esta ignorando config - https://trello.com/c/6ci12SS6/5-sync-esta-ignorando-config
   sync () {
     if (!process.env.Atlas.ORM_SYNC) return
 
