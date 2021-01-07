@@ -3,6 +3,7 @@
 //TODO: PDF - https://trello.com/c/h6gkNj17/18-pdf
 //TODO: Controle de permissoes - https://trello.com/c/L4YFDwa1/19-controle-de-permissoes
 //TODO: Migrações - https://trello.com/c/pF6LJKPU/21-migra%C3%A7%C3%B5es
+//TODO: Transições - https://trello.com/c/J2l5Tvrj/22-transições
 
 const cliHeader = require('@desco/cli-header')
 
