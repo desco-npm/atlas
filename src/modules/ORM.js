@@ -56,10 +56,17 @@ class ORM {
   async addModel ({ Model, defs, opts, }) {
     await this.connect()
 
+    defs = objectMap(defs, (v, k) => {
+      const uidDefaultVersion = parseInt(process.env.Atlas.ORM_UID_DEFAULT_VERSION)
+
+      if (v.type !== DataTypes.UUID || [ 1, 4, ].indexOf(uidDefaultVersion) === -1) return v
+
+      return { ...v, defaultValue: Sequelize['UUIDV' + uidDefaultVersion], }
+    })
+
     return Model.init(defs || {}, { ...(opts || {}), sequelize: sequelize, })
   }
 
-  //TODO: UID definir automaticamente valor padrão - https://trello.com/c/3rBIVIt9/9-uid-definir-automaticamente-valor-padr%C3%A3o
   async importModels () {
     const models = await readdir(this.modelsDir)
     let promises = []
