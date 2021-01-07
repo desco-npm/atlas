@@ -112,7 +112,7 @@ class Server {
     //TODO: Ordenação - https://trello.com/c/NE7dQNSq/10-ordena%C3%A7%C3%A3o
     //TODO: Paginação - https://trello.com/c/mYpovHSk/11-pagina%C3%A7%C3%A3o
     express.get(`/${entity}/`, async (req, resp) => {
-      resp.json(await model.findAll())
+      resp.json(await model.findAndCountAll())
     })
 
     express.post(`/${entity}/`, async (req, resp) => {
@@ -120,13 +120,13 @@ class Server {
     })
 
     express.get(`/${entity}/:id`, async (req, resp) => {
-      resp.json(await model.findAll({ where: { id: req.params.id }}))
+      resp.json(await model.findByPk(req.params.id))
     })
 
     express.put(`/${entity}/:id`, (req, resp) => {
       model.update(req.body, { where: { id: req.params.id }})
         .then(async () => {
-          resp.json(await model.findAll({ where: { id: req.params.id }}))
+          resp.json(await model.findByPk(req.params.id))
         })
         .catch (e => {
           resp.json(e)
