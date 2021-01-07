@@ -5,6 +5,8 @@ const Helmet = require('helmet')
 const objectMap = require('object.map')
 const { stat } = require('fs-extra')
 
+const Orm = require('./ORM')
+
 let express
 
 class Server {
@@ -87,8 +89,16 @@ class Server {
       routeModelName = routeModelName.slice(0, -3)
 
       const routeModelAddrs = pathJoin(this.routesDir, routeModelName)
+
+      const models = Orm.listModels()
       
-      require(routeModelAddrs)({ express, entity: routeModelName, middleware: middlewareList, })
+      require(routeModelAddrs)({
+        express,
+        entity: routeModelName,
+        middleware: middlewareList,
+        models,
+        model: models[routeModelName]
+      })
 
       this.defineDefaultRoute(routeModelName)
     })
@@ -97,24 +107,35 @@ class Server {
   }
 
   defineDefaultRoute (entity) {
-    express.get(`/${entity}/`, (req, resp) => {
-      resp.json({ sobre: 'Aqui lista todos os registros', })
+    const model = Orm.listModels()[entity]
+
+    //TODO: Ordenação - https://trello.com/c/NE7dQNSq/10-ordena%C3%A7%C3%A3o
+    //TODO: Paginação - https://trello.com/c/mYpovHSk/11-pagina%C3%A7%C3%A3o
+    express.get(`/${entity}/`, async (req, resp) => {
+      resp.json(await model.findAll())
     })
 
-    express.post(`/${entity}/`, (req, resp) => {
-      resp.json({ sobre: 'Aqui cria um novo registro', })
+    express.post(`/${entity}/`, async (req, resp) => {
+      resp.json(await model.create(req.body))
     })
 
-    express.get(`/${entity}/:id`, (req, resp) => {
-      resp.json({ sobre: 'Aqui detalha um registro' })
+    express.get(`/${entity}/:id`, async (req, resp) => {
+      resp.json(await model.findAll({ where: { id: req.params.id }}))
     })
 
     express.put(`/${entity}/:id`, (req, resp) => {
-      resp.json({ sobre: 'Aqui atualiza um registro' })
+      model.update(req.body, { where: { id: req.params.id }})
+        .then(async () => {
+          resp.json(await model.findAll({ where: { id: req.params.id }}))
+        })
+        .catch (e => {
+          resp.json(e)
+        })
     })
 
-    express.delete(`/${entity}/:id`, (req, resp) => {
-      resp.json({ sobre: 'Aqui remove um registro' })
+    //TODO: Remoção em massa - https://trello.com/c/UZKrRIpE/12-remo%C3%A7%C3%A3o-em-massa
+    express.delete(`/${entity}/:id`, async (req, resp) => {
+      resp.json(await model.destroy({ where: { id: req.params.id }}))
     })
   }
 

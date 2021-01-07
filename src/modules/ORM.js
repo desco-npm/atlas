@@ -59,6 +59,7 @@ class ORM {
     return Model.init(defs || {}, { ...(opts || {}), sequelize: sequelize, })
   }
 
+  //TODO: UID definir automaticamente valor padrão - https://trello.com/c/3rBIVIt9/9-uid-definir-automaticamente-valor-padr%C3%A3o
   async importModels () {
     const models = await readdir(this.modelsDir)
     let promises = []
@@ -66,13 +67,12 @@ class ORM {
     models.map(modelName => {
       const modelAddrs = pathJoin(this.modelsDir, modelName)
 
-      promises.push(require(modelAddrs)({ ORM: this, DataTypes, Model, }))
+      promises.push(require(modelAddrs)({ ORM: this, DataTypes, Model, Sequelize, sequelize }))
     })
 
     return Promise.all(promises)
   }
 
-  
   sync () {
     if (!process.env.Atlas.ORM_SYNC) return
 
@@ -92,6 +92,10 @@ class ORM {
 
   rollback () {
     return sequelize.rollback()
+  }
+
+  listModels () {
+    return sequelize.models
   }
 }
 
