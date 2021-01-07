@@ -4,4 +4,4 @@ global.pathJoin = require('path').join
 global.objectFilter = require('object-filter')
 global.objectMap = require('object.map')
 global.readdir = require('fs-extra').readdir
-global.isArray = require(is-array)
+global.isArray = require('is-array')
