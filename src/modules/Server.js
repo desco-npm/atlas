@@ -109,11 +109,14 @@ class Server {
   defineDefaultRoute (entity) {
     const model = Orm.listModels()[entity]
 
-    //TODO: Ordenação - https://trello.com/c/NE7dQNSq/10-ordena%C3%A7%C3%A3o
     //TODO: Paginação - https://trello.com/c/mYpovHSk/11-pagina%C3%A7%C3%A3o
     //TODO: Filtro - https://trello.com/c/lI7CnP8r/13-filtro
     express.get(`/${entity}/`, async (req, resp) => {
-      resp.json(await model.findAndCountAll({ order: [ [ 'createdAt', 'DESC', ], ]}))
+      const order = !req.query.order
+        ? [ [ 'createdAt', 'DESC', ], ]
+        : req.query.order.split(';').map(i => i.split(':'))
+
+      resp.json(await model.findAndCountAll({ order, }))
     })
 
     express.post(`/${entity}/`, async (req, resp) => {
