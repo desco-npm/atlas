@@ -3,7 +3,7 @@ const Cors = require('cors')
 const BodyParser = require('body-parser')
 const Helmet = require('helmet')
 
-const Orm = require('./ORM')
+const Orm = require('./Orm')
 
 let express
 
@@ -107,6 +107,9 @@ class Server {
 
   defineDefaultRoute (entity) {
     const model = Orm.listModels()[entity]
+
+    if (!model) return
+
     const Op = Orm.Op
 
     express.get(`/${entity}/`, async (req, resp) => {
@@ -119,8 +122,6 @@ class Server {
         where: req.query.where ? Orm.treatWhere(req.query.where) : {}
       }
 
-      console.log(params.where)
-
       if (req.query.page) {
         const perPage = req.query.perPage || process.env.Atlas.ORM_PER_PAGE
         const init = (req.query.page - 1) * perPage
@@ -129,8 +130,7 @@ class Server {
         params.offset = parseInt(init)
       }
 
-      resp.json({})
-      // resp.json(await model.findAndCountAll(params))
+      resp.json(await model.findAndCountAll(params))
     })
 
     express.post(`/${entity}/`, async (req, resp) => {

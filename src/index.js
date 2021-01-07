@@ -10,7 +10,7 @@ const cliHeader = require('@desco/cli-header')
 require('./functions')
 require('./globals')
 
-const Orm = require('./modules/ORM')
+const Orm = require('./modules/Orm')
 const Server = require('./modules/Server')
 
 module.exports = async () => {
