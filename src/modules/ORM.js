@@ -1,9 +1,10 @@
-const { Sequelize, DataTypes, Model } = require('sequelize')
+const { Sequelize, DataTypes, Model, Op, } = require('sequelize')
 let sequelize
 
 class ORM {
   constructor () {
     this.modelsDir = pathJoin(projectDir, 'models')
+    this.Op = Op
   }
 
   async init () {
@@ -91,14 +92,6 @@ class ORM {
 
   transaction () {
     return sequelize.transaction()
-  }
-
-  commit () {
-    return sequelize.commit()
-  }
-
-  rollback () {
-    return sequelize.rollback()
   }
 
   listModels () {

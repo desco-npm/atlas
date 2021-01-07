@@ -2,8 +2,6 @@ const Express = require('express')
 const Cors = require('cors')
 const BodyParser = require('body-parser')
 const Helmet = require('helmet')
-const objectMap = require('object.map')
-const { stat } = require('fs-extra')
 
 const Orm = require('./ORM')
 
@@ -97,7 +95,8 @@ class Server {
         entity: routeModelName,
         middleware: middlewareList,
         models,
-        model: models[routeModelName]
+        model: models[routeModelName],
+        Op: Orm.Op
       })
 
       this.defineDefaultRoute(routeModelName)
@@ -108,6 +107,7 @@ class Server {
 
   defineDefaultRoute (entity) {
     const model = Orm.listModels()[entity]
+    const Op = Orm.Op
 
     //TODO: Paginação - https://trello.com/c/mYpovHSk/11-pagina%C3%A7%C3%A3o
     //TODO: Filtro - https://trello.com/c/lI7CnP8r/13-filtro
@@ -137,9 +137,10 @@ class Server {
         })
     })
 
-    //TODO: Remoção em massa - https://trello.com/c/UZKrRIpE/12-remo%C3%A7%C3%A3o-em-massa
     express.delete(`/${entity}/:id`, async (req, resp) => {
-      resp.json(await model.destroy({ where: { id: req.params.id }}))
+      const ids = { [ Op.in ]: req.params.id.split(';'), }
+
+      resp.json({ count: await model.destroy({ where: { id: ids, }}), })
     })
   }
 
