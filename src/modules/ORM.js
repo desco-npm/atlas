@@ -97,6 +97,32 @@ class ORM {
   listModels () {
     return sequelize.models
   }
+
+  treatWhere (where) {
+    if (!where) return {}
+
+    const newWhere = {}
+
+    if (typeof where === 'string') {
+      where = JSON.parse(where)
+    }
+
+    objectMap(where, (v, k) => {
+      if (k.indexOf('Op.') === 0) {
+        const op = k.split('.')[1]
+
+        k = Op[op]
+      }
+
+      if (typeof v === 'object') {
+        v = this.treatWhere(v)
+      }
+
+      newWhere[k] = v
+    })
+
+    return newWhere
+  }
 }
 
 module.exports = new ORM()

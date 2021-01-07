@@ -109,8 +109,6 @@ class Server {
     const model = Orm.listModels()[entity]
     const Op = Orm.Op
 
-    //TODO: Paginação - https://trello.com/c/mYpovHSk/11-pagina%C3%A7%C3%A3o
-    //TODO: Filtro - https://trello.com/c/lI7CnP8r/13-filtro
     express.get(`/${entity}/`, async (req, resp) => {
       const params = {
         order: !req.query.order
@@ -118,7 +116,10 @@ class Server {
           : req.query.order.split(';').map(i => i.split(':')),
         offset: req.query.offset ? parseInt(req.query.offset) : undefined,
         limit: req.query.limit ? parseInt(req.query.limit) : undefined,
+        where: req.query.where ? Orm.treatWhere(req.query.where) : {}
       }
+
+      console.log(params.where)
 
       if (req.query.page) {
         const perPage = req.query.perPage || process.env.Atlas.ORM_PER_PAGE
@@ -128,7 +129,8 @@ class Server {
         params.offset = parseInt(init)
       }
 
-      resp.json(await model.findAndCountAll(params))
+      resp.json({})
+      // resp.json(await model.findAndCountAll(params))
     })
 
     express.post(`/${entity}/`, async (req, resp) => {
