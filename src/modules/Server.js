@@ -112,11 +112,23 @@ class Server {
     //TODO: Paginação - https://trello.com/c/mYpovHSk/11-pagina%C3%A7%C3%A3o
     //TODO: Filtro - https://trello.com/c/lI7CnP8r/13-filtro
     express.get(`/${entity}/`, async (req, resp) => {
-      const order = !req.query.order
-        ? [ [ 'createdAt', 'DESC', ], ]
-        : req.query.order.split(';').map(i => i.split(':'))
+      const params = {
+        order: !req.query.order
+          ? [ [ 'createdAt', 'DESC', ], ]
+          : req.query.order.split(';').map(i => i.split(':')),
+        offset: req.query.offset ? parseInt(req.query.offset) : undefined,
+        limit: req.query.limit ? parseInt(req.query.limit) : undefined,
+      }
 
-      resp.json(await model.findAndCountAll({ order, }))
+      if (req.query.page) {
+        const perPage = req.query.perPage || process.env.Atlas.ORM_PER_PAGE
+        const init = (req.query.page - 1) * perPage
+
+        params.limit = parseInt(perPage)
+        params.offset = parseInt(init)
+      }
+
+      resp.json(await model.findAndCountAll(params))
     })
 
     express.post(`/${entity}/`, async (req, resp) => {
