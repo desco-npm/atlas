@@ -106,56 +106,35 @@ class Server {
   }
 
   defineDefaultRoute (entity) {
-    const model = Orm.listModels()[entity]
+    const Model = Orm.listModels()[entity]
 
-    if (!model) return
+    if (!Model) return
 
     const Op = Orm.Op
 
-    express.get(`/${entity}/`, async (req, resp) => {
-      const params = {
-        order: !req.query.order
-          ? [ [ 'createdAt', 'DESC', ], ]
-          : req.query.order.split(';').map(i => i.split(':')),
-        offset: req.query.offset ? parseInt(req.query.offset) : undefined,
-        limit: req.query.limit ? parseInt(req.query.limit) : undefined,
-        where: req.query.where ? Orm.treatWhere(req.query.where) : {}
-      }
-
-      if (req.query.page) {
-        const perPage = req.query.perPage || process.env.Atlas.ORM_PER_PAGE
-        const init = (req.query.page - 1) * perPage
-
-        params.limit = parseInt(perPage)
-        params.offset = parseInt(init)
-      }
-
-      resp.json(await model.findAndCountAll(params))
+    express.get(`/crud/${entity}/`, async (req, res) => {
+      res.json(await Model.select(req))
     })
 
-    express.post(`/${entity}/`, async (req, resp) => {
-      resp.json(await model.create(req.body))
+    express.post(`/crud/${entity}/`, async (req, res) => {
+      res.json(await Model.insert(req))
     })
 
-    express.get(`/${entity}/:id`, async (req, resp) => {
-      resp.json(await model.findByPk(req.params.id))
+    express.get(`/crud/${entity}/:id`, async (req, res) => {
+      res.json(await Model.read(req))
     })
 
-    express.put(`/${entity}/:id`, (req, resp) => {
-      model.update(req.body, { where: { id: req.params.id }})
-        .then(async () => {
-          resp.json(await model.findByPk(req.params.id))
-        })
-        .catch (e => {
-          resp.json(e)
-        })
+    express.put(`/crud/${entity}/:id`, async (req, res) => {
+      res.json(await Model.update(req))
     })
 
-    express.delete(`/${entity}/:id`, async (req, resp) => {
-      const ids = { [ Op.in ]: req.params.id.split(';'), }
-
-      resp.json({ count: await model.destroy({ where: { id: ids, }}), })
+    express.delete(`/crud/${entity}/:id`, async (req, res) => {
+      res.json(await Model.delete(req))
     })
+  }
+
+  express () {
+    return express
   }
 
   start () {

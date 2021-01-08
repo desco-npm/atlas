@@ -78,10 +78,60 @@ class ORM {
       { ...(opts || {}), sequelize: sequelize, }
     )
 
-    //TODO: Trarar mixins em conflito - https://trello.com/c/YKfmGUaq/25-trarar-mixins-em-conflito
+    Model.select = async req => {
+      const params = {
+        order: !req.query.order
+          ? [ [ 'createdAt', 'DESC', ], ]
+          : req.query.order.split(';').map(i => i.split(':')),
+        offset: req.query.offset ? parseInt(req.query.offset) : undefined,
+        limit: req.query.limit ? parseInt(req.query.limit) : undefined,
+        where: req.query.where ? this.treatWhere(req.query.where) : {}
+      }
+
+      if (req.query.page) {
+        const perPage = req.query.perPage || process.env.Atlas.ORM_PER_PAGE
+        const init = (req.query.page - 1) * perPage
+
+        params.limit = parseInt(perPage)
+        params.offset = parseInt(init)
+      }
+
+      return await Model.findAndCountAll(params)
+    }
+
+    Model.insert = async req => {
+      return await Model.create(req.body)
+    }
+
+    Model.read = async req => {
+      return await Model.findByPk(req.params.id)
+    }
+
+    Model.update = async req => {
+      return Model.update(req.body, { where: { id: req.params.id }}).then(async () => {
+        return await Model.findByPk(req.params.id)
+      })
+    }
+
+    Model.delete = async req => {
+      const ids = { [ Op.in ]: req.params.id.split(';'), }
+
+      return { count: await Model.destroy({ where: { id: ids, }}), }
+    }
+
+    //TODO: Tratar mixins em conflito - https://trello.com/c/YKfmGUaq/25-tratar-mixins-em-conflito
+    //TODO: Vários Mixins de uma vez - https://trello.com/c/CEhVWvk2/26-v%C3%A1rios-mixins-de-uma-vez
     Model.mixin = obj => {
       objectMap(obj, (v, k) => {
         Model[k] = v
+      })
+
+      Model.router = Model.router || (() => {})
+
+      Model.router({
+        express: require('./Server').express(),
+        entity: name,
+        models: this.listModels(),
       })
 
       return Model
