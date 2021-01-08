@@ -118,17 +118,16 @@ class ORM {
       return { count: await Model.destroy({ where: { id: ids, }}), }
     }
 
-    //TODO: Tratar mixins em conflito - https://trello.com/c/YKfmGUaq/25-tratar-mixins-em-conflito
-    Model.mixin = obj => {
-      const objs = isArray(obj) ? [ ...obj, ] : [ obj, ]
-
-      objs.map(obj => {
+    Model.mixin = objs => {
+      objectMap(objs, (obj, mixinName) => {
         objectMap(obj, (v, k) => {
+          k = !Model[k] ? k : `${k}_${mixinName}`
+
           Model[k] = v
         })
-  
+
         Model.router = Model.router || (() => {})
-  
+
         Model.router({
           express: require('./Server').express(),
           entity: name,
