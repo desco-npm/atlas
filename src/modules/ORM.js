@@ -72,8 +72,13 @@ class ORM {
       return { ...v, defaultValue: Sequelize['UUIDV' + uidDefaultVersion], }
     })
     
-    const Model = await sequelize.define(name, defs || {}, { ...(opts || {}), sequelize: sequelize, })
+    const Model = await sequelize.define(
+      name,
+      defs || {},
+      { ...(opts || {}), sequelize: sequelize, }
+    )
 
+    //TODO: Trarar mixins em conflito - https://trello.com/c/YKfmGUaq/25-trarar-mixins-em-conflito
     Model.mixin = obj => {
       objectMap(obj, (v, k) => {
         Model[k] = v
