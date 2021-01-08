@@ -72,7 +72,15 @@ class ORM {
       return { ...v, defaultValue: Sequelize['UUIDV' + uidDefaultVersion], }
     })
     
-    const Model = sequelize.define(name, defs || {}, { ...(opts || {}), sequelize: sequelize, })
+    const Model = await sequelize.define(name, defs || {}, { ...(opts || {}), sequelize: sequelize, })
+
+    Model.mixin = obj => {
+      objectMap(obj, (v, k) => {
+        Model[k] = v
+      })
+
+      return Model
+    }
 
     return Model
   }
