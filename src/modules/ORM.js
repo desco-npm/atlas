@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes, Model, Op, } = require('sequelize')
+const { Sequelize, DataTypes, Op, } = require('sequelize')
 
 let sequelize
 
@@ -119,18 +119,21 @@ class ORM {
     }
 
     //TODO: Tratar mixins em conflito - https://trello.com/c/YKfmGUaq/25-tratar-mixins-em-conflito
-    //TODO: Vários Mixins de uma vez - https://trello.com/c/CEhVWvk2/26-v%C3%A1rios-mixins-de-uma-vez
     Model.mixin = obj => {
-      objectMap(obj, (v, k) => {
-        Model[k] = v
-      })
+      const objs = isArray(obj) ? [ ...obj, ] : [ obj, ]
 
-      Model.router = Model.router || (() => {})
-
-      Model.router({
-        express: require('./Server').express(),
-        entity: name,
-        models: this.listModels(),
+      objs.map(obj => {
+        objectMap(obj, (v, k) => {
+          Model[k] = v
+        })
+  
+        Model.router = Model.router || (() => {})
+  
+        Model.router({
+          express: require('./Server').express(),
+          entity: name,
+          models: this.listModels(),
+        })
       })
 
       return Model
