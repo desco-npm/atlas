@@ -16,7 +16,6 @@ class ORM {
     return Promise.resolve()
   }
 
-  //TODO: Tratar melhor mensagem de erro de conexão com o banco - https://trello.com/c/I3YGQKYW/24-tratar-melhor-mensagem-de-erro-de-conex%C3%A3o-com-o-banco
   async connect () {
     if (await this.authenticate() === true) return this
 
@@ -39,9 +38,9 @@ class ORM {
       return Promise.resolve(this)
     }
     else {
-      console.error('Error connecting to the database:', authenticate)
+      console.error('Error connecting to the database')
 
-      return Promise.reject(e)
+      process.exit()
     }
   }
 
