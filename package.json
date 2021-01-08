@@ -36,6 +36,7 @@
     "object-filter": "^1.0.2",
     "object.map": "^1.0.1",
     "path": "^0.12.7",
-    "sequelizer": "^1.1.4"
+    "sequelizer": "^1.1.4",
+    "stack-trace": "0.0.10"
   }
 }

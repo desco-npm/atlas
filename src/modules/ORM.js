@@ -1,4 +1,5 @@
 const { Sequelize, DataTypes, Model, Op, } = require('sequelize')
+
 let sequelize
 
 class ORM {
@@ -15,6 +16,7 @@ class ORM {
     return Promise.resolve()
   }
 
+  //TODO: Tratar melhor mensagem de erro de conexão com o banco - https://trello.com/c/I3YGQKYW/24-tratar-melhor-mensagem-de-erro-de-conex%C3%A3o-com-o-banco
   async connect () {
     if (await this.authenticate() === true) return this
 
@@ -54,18 +56,25 @@ class ORM {
     }
   }
 
-  async addModel ({ Model, defs, opts, }) {
+  async addModel ({ defs, opts, }) {
+    // Duas próximas precisam estar antes do await
+    // Two next ones need to be before await
+    const trace = stackTrace.get();
+    const name = trace[1].getFileName().split('\\').pop().slice(0, -3)
+
     await this.connect()
 
     defs = objectMap(defs, (v, k) => {
       const uidDefaultVersion = parseInt(process.env.Atlas.ORM_UID_DEFAULT_VERSION)
-
+      
       if (v.type !== DataTypes.UUID || [ 1, 4, ].indexOf(uidDefaultVersion) === -1) return v
-
+      
       return { ...v, defaultValue: Sequelize['UUIDV' + uidDefaultVersion], }
     })
+    
+    const Model = sequelize.define(name, defs || {}, { ...(opts || {}), sequelize: sequelize, })
 
-    return Model.init(defs || {}, { ...(opts || {}), sequelize: sequelize, })
+    return Model
   }
 
   async importModels () {
@@ -75,7 +84,7 @@ class ORM {
     models.map(modelName => {
       const modelAddrs = pathJoin(this.modelsDir, modelName)
 
-      promises.push(require(modelAddrs)({ ORM: this, DataTypes, Model, Sequelize, sequelize }))
+      promises.push(require(modelAddrs)({ DataTypes, Orm: this, }))
     })
 
     return Promise.all(promises)
