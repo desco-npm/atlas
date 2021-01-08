@@ -1,4 +1,3 @@
-//TODO: Email - https://trello.com/c/LPPtBoUF/16-email
 //TODO: PDF - https://trello.com/c/h6gkNj17/18-pdf
 //TODO: Controle de permissoes - https://trello.com/c/L4YFDwa1/19-controle-de-permissoes
 //TODO: Migrações - https://trello.com/c/pF6LJKPU/21-migra%C3%A7%C3%B5es
@@ -9,6 +8,7 @@ const cliHeader = require('@desco/cli-header')
 require('./functions')
 require('./globals')
 
+const Mail = require('./modules/Mail')
 const Orm = require('./modules/Orm')
 const Server = require('./modules/Server')
 
@@ -18,5 +18,6 @@ module.exports = async () => {
   require('./env.js')()
 
   await Orm.init()
+  await Mail.init()
   await Server.init()
 }
