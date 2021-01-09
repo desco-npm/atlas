@@ -2,6 +2,8 @@
 //TODO: Controle de permissoes - https://trello.com/c/L4YFDwa1/19-controle-de-permissoes
 //TODO: Migrações - https://trello.com/c/pF6LJKPU/21-migra%C3%A7%C3%B5es
 //TODO: Transições - https://trello.com/c/J2l5Tvrj/22-transições
+//TODO: Login com redes sociais - https://trello.com/c/TM9vRY23/29-login-com-redes-sociais
+//TODO: DiscordBot - https://trello.com/c/iK7f9pRi/31-discordbot
 
 const cliHeader = require('@desco/cli-header')
 
