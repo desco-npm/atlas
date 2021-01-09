@@ -59,7 +59,7 @@ class ORM {
     }
   }
 
-  async addModel ({ defs, opts, }) {
+  async addModel ({ defs, opts, mixins, }) {
     // Duas próximas precisam estar antes do await
     // Two next ones need to be before await
     const trace = stackTrace.get();
@@ -122,25 +122,21 @@ class ORM {
       return { count: await Model.destroy({ where: { id: ids, }}), }
     }
 
-    Model.mixin = objs => {
-      objectMap(objs, (obj, mixinName) => {
-        objectMap(obj, (v, k) => {
-          k = !Model[k] ? k : `${k}_${mixinName}`
+    objectMap(mixins, (mixin, mixinName) => {
+      objectMap(mixin, (v, k) => {
+        k = !Model[k] ? k : `${k}_${mixinName}`
 
-          Model[k] = v
-        })
-
-        Model.router = Model.router || (() => {})
-
-        Model.router({
-          express: require('./Server').express(),
-          entity: name,
-          models: this.listModels(),
-        })
+        Model[k] = v
       })
 
-      return Model
-    }
+      Model.router = Model.router || (() => {})
+
+      Model.router({
+        express: require('./Server').express(),
+        entity: name,
+        models: this.listModels(),
+      })
+    })
 
     return Model
   }
