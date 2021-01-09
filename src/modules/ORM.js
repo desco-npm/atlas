@@ -2,6 +2,7 @@ const { Sequelize, DataTypes, Op, } = require('sequelize')
 
 let sequelize
 
+//TODO: Validações no ORM - https://trello.com/c/k2vo9AWU/32-valida%C3%A7%C3%B5es-no-orm
 class ORM {
   constructor () {
     this.modelsDir = pathJoin(projectDir, 'models')
