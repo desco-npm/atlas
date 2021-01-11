@@ -9,12 +9,24 @@ let sequelize
 class ORM {
   constructor () {
     this.modelsDir = pathJoin(projectDir, 'models')
+    this.nativeModelsDir = pathJoin(atlasDir, 'models')
     this.Op = Op
+    this.pos = {}
   }
 
   async init () {
+    this.User_UserGroup = [
+      process.env.Atlas.PERMISSION_USER_MODEL,
+      process.env.Atlas.PERMISSION_GROUP_MODEL
+    ]
+      .sort()
+      .join('_')
+
     await this.connect()
+    await this.importModels([ 'User_UserGroup', 'Permission', ])
     await this.importModels()
+    await this.setAssociations()
+    await this.posDefines()
     await this.sync()
 
     return Promise.resolve()
@@ -59,6 +71,15 @@ class ORM {
     }
   }
 
+  posDefines () {
+    objectMap(this.pos, (pos, modelName) => {
+      const models = this.listModels() 
+
+      pos({ models, Model: models[modelName], })
+
+    })
+  }
+
   setDefs (defs, name) {
     let newDefs = {
       id: defs.id || {
@@ -67,6 +88,7 @@ class ORM {
         allowNull: false,
       },
     }
+
     if (name === process.env.Atlas.PERMISSION_USER_MODEL) {
       newDefs = {
         ...newDefs,
@@ -93,11 +115,31 @@ class ORM {
     return { ...newDefs, ...defs, }
   }
 
-  async addModel ({ defs, opts, mixins, }) {
+  setAssociations () {
+    const models = this.listModels()
+
+    objectMap(models, (Model, modelName) => {
+      if (modelName === process.env.Atlas.PERMISSION_USER_MODEL) {
+        Model.belongsToMany(models[process.env.Atlas.PERMISSION_GROUP_MODEL], {
+          through: models[this.User_UserGroup]
+        })
+      }
+      else if (modelName === process.env.Atlas.PERMISSION_GROUP_MODEL) {
+        Model.belongsToMany(models[process.env.Atlas.PERMISSION_USER_MODEL], {
+          through: models[this.User_UserGroup]
+        })
+      }
+    })
+  }
+
+  async addModel ({ name, defs, opts, mixins, pos, }) {
     // Duas próximas precisam estar antes do await
     // Two next ones need to be before await
     const trace = stackTrace.get();
-    const name = trace[1].getFileName().split('\\').pop().slice(0, -3)
+
+    name = name || trace[1].getFileName().split('\\').pop().slice(0, -3)
+
+    this.pos[name] = pos
 
     await this.connect()
 
@@ -152,12 +194,14 @@ class ORM {
     return Model
   }
 
-  async importModels () {
-    const models = (await readdir(this.modelsDir)).map(i => i.slice(0, -3))
+  async importModels (models) {
+    const nativeModels = models !== undefined
     let promises = []
 
+    models = models || (await readdir(this.modelsDir)).map(i => i.slice(0, -3))
+
     models.map(modelName => {
-      const modelAddrs = pathJoin(this.modelsDir, modelName)
+      const modelAddrs = pathJoin(nativeModels ? this.nativeModelsDir : this.modelsDir, modelName)
 
       promises.push(require(modelAddrs)({ DataTypes, Orm: this, }))
     })
