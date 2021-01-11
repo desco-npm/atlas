@@ -129,13 +129,11 @@ class ORM {
   }
 
   sync () {
-    const sync = (
-      process.env.Atlas.ORM_SYNC ||
-      process.env.Atlas.ORM_SYNC_FORCE ||
-      process.env.Atlas.ORM_SYNC_ALTER
-    )
+    const sync = process.env.Atlas.ORM_SYNC
+    const forceSync = process.env.Atlas.ORM_SYNC_FORCE
+    const alterSync = process.env.Atlas.ORM_SYNC_ALTER
 
-    if (!sync) return
+    if (!sync && !forceSync && !alterSync) return
 
     return sequelize.sync({
       force: process.env.Atlas.ORM_SYNC_FORCE,
