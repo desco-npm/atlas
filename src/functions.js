@@ -6,3 +6,5 @@ global.objectMap = require('object.map')
 global.readdir = require('fs-extra').readdir
 global.isArray = require('is-array')
 global.stackTrace = require('stack-trace')
+
+global.arrayUnique = array => array.filter((item, key, self) => self.indexOf(item) === key)
