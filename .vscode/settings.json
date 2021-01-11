@@ -19,7 +19,11 @@
   "workbench.tree.indent": 15,
   "gitflow4code.features": [
     {
-      "name": "feature/importModelFromOtherModule",
+      "name": "feature/permission-control",
+      "base": "develop"
+    },
+    {
+      "name": "feature/pre",
       "base": "develop"
     }
   ],
