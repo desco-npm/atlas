@@ -16,7 +16,7 @@ module.exports = {
     })
 
     express.put(`/crud/${entity}/:id`, async (req, res) => {
-      res.json(await this.update(req.body, req.params.id))
+      res.json(await this.change(req.body, req.params.id))
     })
 
     express.delete(`/crud/${entity}/:id`, async (req, res) => {
@@ -48,7 +48,7 @@ module.exports = {
   async read (id) {
     return await this.findByPk(id)
   },
-  async update (body, id) {
+  async change (body, id) {
     return this.update(body, { where: { id, }, }).then(async () => {
       return await this.findByPk(req.params.id)
     })
