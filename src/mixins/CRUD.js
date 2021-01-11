@@ -42,15 +42,17 @@ module.exports = {
 
     return await this.findAndCountAll(params)
   },
-  async insert (data) {
-    return await this.create(data)
+  insert (data) {
+    return this.create(data).then(response => {
+      return this.findByPk(response.id)
+    })
   },
   async read (id) {
     return await this.findByPk(id)
   },
-  async change (body, id) {
+  change (body, id) {
     return this.update(body, { where: { id, }, }).then(async () => {
-      return await this.findByPk(req.params.id)
+      return this.findByPk(req.params.id)
     })
   },
   async delete (ids) {
