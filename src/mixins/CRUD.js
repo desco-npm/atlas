@@ -1,22 +1,22 @@
 module.exports = {
   router ({ express, entity, }) {
-    express.get(`/crud/${entity}/`, async (req, res) => {
+    express.get(`/CRUD/${entity}/`, async (req, res) => {
       res.json(await this.select(req))
     })
 
-    express.post(`/crud/${entity}/`, async (req, res) => {
+    express.post(`/CRUD/${entity}/`, async (req, res) => {
       res.json(await this.insert(req))
     })
 
-    express.get(`/crud/${entity}/:id`, async (req, res) => {
+    express.get(`/CRUD/${entity}/:id`, async (req, res) => {
       res.json(await this.read(req))
     })
 
-    express.put(`/crud/${entity}/:id`, async (req, res) => {
+    express.put(`/CRUD/${entity}/:id`, async (req, res) => {
       res.json(await this.update(req))
     })
 
-    express.delete(`/crud/${entity}/:id`, async (req, res) => {
+    express.delete(`/CRUD/${entity}/:id`, async (req, res) => {
       res.json(await this.delete(req))
     })
   },
