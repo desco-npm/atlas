@@ -10,9 +10,10 @@ require('./globals')
 
 class Atlas {
   constructor () {
+    global.Atlas = this
+
     this.Mail = require('./modules/Mail')
     this.Orm = require('./modules/Orm')
-    this.Permission = require('./modules/Permission')
     this.Server = require('./modules/Server')
   }
 
@@ -21,7 +22,6 @@ class Atlas {
 
     require('./env.js')()
 
-    await this.Permission.init()
     await this.Orm.init()
     await this.Mail.init()
     await this.Server.init()
@@ -31,5 +31,5 @@ class Atlas {
 }
 
 module.exports = async () => {
-  return global.Atlas = new Atlas().init()
+  return new Atlas().init()
 }
