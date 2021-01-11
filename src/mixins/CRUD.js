@@ -1,38 +1,40 @@
 module.exports = {
   router ({ express, entity, }) {
-    express.get(`/CRUD/${entity}/`, async (req, res) => {
-      res.json(await this.select(req))
+    express.get(`/crud/${entity}/`, async (req, res) => {
+      res.json(await this.select({
+        ...req.query,
+        where: req.query.where ? this.treatWhere(req.query.where) : undefined
+      }))
     })
 
-    express.post(`/CRUD/${entity}/`, async (req, res) => {
-      res.json(await this.insert(req))
+    express.post(`/crud/${entity}/`, async (req, res) => {
+      res.json(await this.insert(req.body))
     })
 
-    express.get(`/CRUD/${entity}/:id`, async (req, res) => {
-      res.json(await this.read(req))
+    express.get(`/crud/${entity}/:id`, async (req, res) => {
+      res.json(await this.read(req.params.id))
     })
 
-    express.put(`/CRUD/${entity}/:id`, async (req, res) => {
-      res.json(await this.update(req))
+    express.put(`/crud/${entity}/:id`, async (req, res) => {
+      res.json(await this.update(req.body, req.params.id))
     })
 
-    express.delete(`/CRUD/${entity}/:id`, async (req, res) => {
-      res.json(await this.delete(req))
+    express.delete(`/crud/${entity}/:id`, async (req, res) => {
+      res.json(await this.delete(req.params.id))
     })
   },
-  async select (req) {
-    const params = {
-      order: !req.query.order
+  async select (params) {
+    params = {
+      order: !params.order
         ? [ [ 'createdAt', 'DESC', ], ]
-        : req.query.order.split(';').map(i => i.split(':')),
-      offset: req.query.offset ? parseInt(req.query.offset) : undefined,
-      limit: req.query.limit ? parseInt(req.query.limit) : undefined,
-      where: req.query.where ? this.treatWhere(req.query.where) : {}
+        : params.order.split(';').map(i => i.split(':')),
+      offset: params.offset ? parseInt(params.offset) : undefined,
+      limit: params.limit ? parseInt(params.limit) : undefined,
     }
 
-    if (req.query.page) {
-      const perPage = req.query.perPage || process.env.Atlas.ORM_PER_PAGE
-      const init = (req.query.page - 1) * perPage
+    if (params.page) {
+      const perPage = params.perPage || process.env.Atlas.ORM_PER_PAGE
+      const init = (params.page - 1) * perPage
 
       params.limit = parseInt(perPage)
       params.offset = parseInt(init)
@@ -40,20 +42,26 @@ module.exports = {
 
     return await this.findAndCountAll(params)
   },
-  async insert (req) {
-    return await this.create(req.body)
+  async insert (data) {
+    return await this.create(data)
   },
-  async read (req) {
-    return await this.findByPk(req.params.id)
+  async read (id) {
+    return await this.findByPk(id)
   },
-  async update (req) {
-    return this.update(req.body, { where: { id: req.params.id }}).then(async () => {
+  async update (body, id) {
+    return this.update(body, { where: { id, }, }).then(async () => {
       return await this.findByPk(req.params.id)
     })
   },
-  async delete (req) {
-    const ids = { [ this.Op.in ]: req.params.id.split(';'), }
-
-    return { count: await this.destroy({ where: { id: ids, }}), }
+  async delete (ids) {
+    return {
+      count: await this.destroy({
+        where: {
+          id: {
+            [ this.Op.in ]: ids.split(';'),
+          },
+        }
+      }),
+    } 
   }
 }
