@@ -6,5 +6,5 @@ module.exports = {
   },
   login (login, password) {
     return this.select({ where: { login, password, }, })
-  }
+  },
 }
