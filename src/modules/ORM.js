@@ -73,8 +73,34 @@ class ORM {
         primaryKey: true,
         allowNull: false,
       },
+      ...(
+        name === process.env.Atlas.PERMISSION_USER_MODEL
+          ? 
+          {
+            login: {
+              type: DataTypes.STRING(100),
+            },
+            password: {
+              type: DataTypes.STRING(32),
+            },
+          }
+          : {}
+      ),
+      ...(
+        name === process.env.Atlas.PERMISSION_GROUP_MODEL
+          ? 
+          {
+            name: {
+              type: DataTypes.STRING(100),
+            },
+          }
+          : {}
+      ),
       ...defs,
     }
+
+    
+
 
     defs = objectMap(defs, (v, k) => {
       const uidDefaultVersion = parseInt(process.env.Atlas.ORM_UID_DEFAULT_VERSION)
