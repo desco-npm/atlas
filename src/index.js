@@ -18,7 +18,11 @@ class Atlas {
   }
 
   async init () {
-    cliHeader({ title: 'AtlasJS v2.0.0', size: 25, align: 'center', })
+    cliHeader({
+      title: 'AtlasJS v' + require('../package.json').version,
+      size: 25,
+      align: 'center',
+    })
 
     require('./env.js')()
 

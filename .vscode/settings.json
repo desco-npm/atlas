@@ -21,10 +21,6 @@
     {
       "name": "feature/importModelFromOtherModule",
       "base": "develop"
-    },
-    {
-      "name": "feature/separar-parametros-rotas-e-metodos",
-      "base": "develop"
     }
   ],
 }
