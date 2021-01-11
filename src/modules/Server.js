@@ -98,39 +98,9 @@ class Server {
         model: models[routeModelName],
         Op: Orm.Op
       })
-
-      this.defineDefaultRoute(routeModelName)
     })
 
     return Promise.resolve()
-  }
-
-  defineDefaultRoute (entity) {
-    const Model = Orm.listModels()[entity]
-
-    if (!Model) return
-
-    const Op = Orm.Op
-
-    express.get(`/crud/${entity}/`, async (req, res) => {
-      res.json(await Model.select(req))
-    })
-
-    express.post(`/crud/${entity}/`, async (req, res) => {
-      res.json(await Model.insert(req))
-    })
-
-    express.get(`/crud/${entity}/:id`, async (req, res) => {
-      res.json(await Model.read(req))
-    })
-
-    express.put(`/crud/${entity}/:id`, async (req, res) => {
-      res.json(await Model.update(req))
-    })
-
-    express.delete(`/crud/${entity}/:id`, async (req, res) => {
-      res.json(await Model.delete(req))
-    })
   }
 
   express () {

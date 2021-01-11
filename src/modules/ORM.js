@@ -16,7 +16,6 @@ class ORM {
     await this.connect()
     await this.importModels()
     await this.sync()
-
     return Promise.resolve()
   }
 
@@ -70,9 +69,13 @@ class ORM {
     defs = objectMap(defs, (v, k) => {
       const uidDefaultVersion = parseInt(process.env.Atlas.ORM_UID_DEFAULT_VERSION)
       
-      if (v.type !== DataTypes.UUID || [ 1, 4, ].indexOf(uidDefaultVersion) === -1) return v
+      const versions = [ 1, 4, ]
+
+      if (k === 'id' && (v.type !== DataTypes.UUID || versions.indexOf(uidDefaultVersion) >= 0)) {
+        return { ...v, defaultValue: Sequelize['UUIDV' + uidDefaultVersion], }
+      }
       
-      return { ...v, defaultValue: Sequelize['UUIDV' + uidDefaultVersion], }
+      return v
     })
     
     const Model = await sequelize.define(
@@ -80,61 +83,32 @@ class ORM {
       defs || {},
       { ...(opts || {}), sequelize: sequelize, }
     )
+    
+    Model.Op = Op
 
-    Model.select = async req => {
-      const params = {
-        order: !req.query.order
-          ? [ [ 'createdAt', 'DESC', ], ]
-          : req.query.order.split(';').map(i => i.split(':')),
-        offset: req.query.offset ? parseInt(req.query.offset) : undefined,
-        limit: req.query.limit ? parseInt(req.query.limit) : undefined,
-        where: req.query.where ? this.treatWhere(req.query.where) : {}
-      }
+    this.mixins({ Model, mixins, name, })
 
-      if (req.query.page) {
-        const perPage = req.query.perPage || process.env.Atlas.ORM_PER_PAGE
-        const init = (req.query.page - 1) * perPage
+    return Model
+  }
 
-        params.limit = parseInt(perPage)
-        params.offset = parseInt(init)
-      }
-
-      return await Model.findAndCountAll(params)
-    }
-
-    Model.insert = async req => {
-      return await Model.create(req.body)
-    }
-
-    Model.read = async req => {
-      return await Model.findByPk(req.params.id)
-    }
-
-    Model.update = async req => {
-      return Model.update(req.body, { where: { id: req.params.id }}).then(async () => {
-        return await Model.findByPk(req.params.id)
-      })
-    }
-
-    Model.delete = async req => {
-      const ids = { [ Op.in ]: req.params.id.split(';'), }
-
-      return { count: await Model.destroy({ where: { id: ids, }}), }
-    }
+  mixins ({ Model, name, mixins = {}, }) {
+    mixins.CRUD = require('../mixins/CRUD')
 
     objectMap(mixins, (mixin, mixinName) => {
       objectMap(mixin, (v, k) => {
         k = !Model[k] ? k : `${k}_${mixinName}`
 
         Model[k] = v
-      })
 
-      Model.router = Model.router || (() => {})
+        if (k === 'router') {
+          Model.router({
+            express: require('./Server').express(),
+            entity: name,
+            models: this.listModels(),
+          })
 
-      Model.router({
-        express: require('./Server').express(),
-        entity: name,
-        models: this.listModels(),
+          delete Model.router
+        }
       })
     })
 
@@ -142,7 +116,7 @@ class ORM {
   }
 
   async importModels () {
-    const models = await readdir(this.modelsDir)
+    const models = (await readdir(this.modelsDir)).map(i => i.slice(0, -3))
     let promises = []
 
     models.map(modelName => {
