@@ -59,6 +59,40 @@ class ORM {
     }
   }
 
+  setDefs (defs, name) {
+    let newDefs = {
+      id: defs.id || {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        allowNull: false,
+      },
+    }
+    if (name === process.env.Atlas.PERMISSION_USER_MODEL) {
+      newDefs = {
+        ...newDefs,
+        login: {
+          type: DataTypes.STRING(50),
+          allowNull: false,
+        },
+        password: {
+          type: DataTypes.STRING(32),
+          allowNull: false,
+        }
+      }
+    }
+    else if (name === process.env.Atlas.PERMISSION_GROUP_MODEL) {
+      newDefs = {
+        ...newDefs,
+        name: {
+          type: DataTypes.STRING(50),
+          allowNull: false,
+        },
+      }
+    }
+
+    return { ...newDefs, ...defs, }
+  }
+
   async addModel ({ defs, opts, mixins, }) {
     // Duas próximas precisam estar antes do await
     // Two next ones need to be before await
@@ -67,40 +101,7 @@ class ORM {
 
     await this.connect()
 
-    defs = {
-      id: defs.id || {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        allowNull: false,
-      },
-      ...(
-        name === process.env.Atlas.PERMISSION_USER_MODEL
-          ? 
-          {
-            login: {
-              type: DataTypes.STRING(100),
-            },
-            password: {
-              type: DataTypes.STRING(32),
-            },
-          }
-          : {}
-      ),
-      ...(
-        name === process.env.Atlas.PERMISSION_GROUP_MODEL
-          ? 
-          {
-            name: {
-              type: DataTypes.STRING(100),
-            },
-          }
-          : {}
-      ),
-      ...defs,
-    }
-
-    
-
+    defs = this.setDefs(defs, name)
 
     defs = objectMap(defs, (v, k) => {
       const uidDefaultVersion = parseInt(process.env.Atlas.ORM_UID_DEFAULT_VERSION)
