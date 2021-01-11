@@ -17,4 +17,10 @@
   },
   "editor.fontSize": 14,
   "workbench.tree.indent": 15,
+  "gitflow4code.features": [
+    {
+      "name": "feature/importModelFromOtherModule",
+      "base": "develop"
+    }
+  ],
 }

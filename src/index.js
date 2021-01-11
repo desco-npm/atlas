@@ -8,16 +8,28 @@ const cliHeader = require('@desco/cli-header')
 require('./functions')
 require('./globals')
 
-const Mail = require('./modules/Mail')
-const Orm = require('./modules/Orm')
-const Server = require('./modules/Server')
+class Atlas {
+  constructor () {
+    this.Mail = require('./modules/Mail')
+    this.Orm = require('./modules/Orm')
+    this.Permission = require('./modules/Permission')
+    this.Server = require('./modules/Server')
+  }
+
+  async init () {
+    cliHeader({ title: 'AtlasJS v2.0.0', size: 25, align: 'center', })
+
+    require('./env.js')()
+
+    await this.Permission.init()
+    await this.Orm.init()
+    await this.Mail.init()
+    await this.Server.init()
+
+    return this
+  }
+}
 
 module.exports = async () => {
-  cliHeader({ title: 'AtlasJS v2.0.0', size: 25, align: 'center', })
-
-  require('./env.js')()
-
-  await Orm.init()
-  await Mail.init()
-  await Server.init()
+  return global.Atlas = new Atlas().init()
 }
