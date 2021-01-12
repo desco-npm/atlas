@@ -1,7 +1,4 @@
-//TODO: PDF - https://trello.com/c/h6gkNj17/18-pdf
-//TODO: Controle de permissoes - https://trello.com/c/L4YFDwa1/19-controle-de-permissoes
 //TODO: DiscordBot - https://trello.com/c/iK7f9pRi/31-discordbot
-//TODO: Header pegar Version do package.json - https://trello.com/c/FojrWDqS/33-header-pegar-version-do-packagejson
 
 const cliHeader = require('@desco/cli-header')
 
