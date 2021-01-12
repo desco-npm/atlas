@@ -35,16 +35,22 @@ class ORM {
   async connect () {
     if (await this.authenticate() === true) return this
 
-    sequelize = new Sequelize('diasrafael', 'root', '12345678', {
-      host: 'localhost',
-      dialect: 'mysql',
-      pool: {
-        max: parseInt(process.env.Atlas.ORM_POOL_MAX),
-        min: parseInt(process.env.Atlas.ORM_POOL_MIN),
-        acquire: parseInt(process.env.Atlas.ORM_POOL_IDLE),
-        idle: parseInt(process.env.Atlas.ORM_POOL_ACQUIRE),
+    sequelize = new Sequelize(
+      process.env.Atlas.ORM_DB_NAME,
+      process.env.Atlas.ORM_DB_USER,
+      process.env.Atlas.ORM_DB_PASSWORD,
+      {
+        logging: process.env.Atlas.ORM_DB_LOG,
+        host: process.env.Atlas.ORM_DB_HOST,
+        dialect: process.env.Atlas.ORM_DB_TYPE,
+        pool: {
+          max: parseInt(process.env.Atlas.ORM_POOL_MAX),
+          min: parseInt(process.env.Atlas.ORM_POOL_MIN),
+          acquire: parseInt(process.env.Atlas.ORM_POOL_IDLE),
+          idle: parseInt(process.env.Atlas.ORM_POOL_ACQUIRE),
+        }
       }
-    })
+    )
 
     const authenticate = await this.authenticate() === true
 
