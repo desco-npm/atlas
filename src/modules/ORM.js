@@ -48,7 +48,7 @@ class ORM {
           min: parseInt(process.env.Atlas.ORM_POOL_MIN),
           acquire: parseInt(process.env.Atlas.ORM_POOL_IDLE),
           idle: parseInt(process.env.Atlas.ORM_POOL_ACQUIRE),
-        }
+        },
       }
     )
 
