@@ -2,6 +2,7 @@ const { Sequelize, DataTypes, Op, } = require('sequelize')
 
 let sequelize
 
+//TODO: Tratar erro "cannot be null" - https://trello.com/c/2r3opAOM/39-tratar-erro-cannot-be-null
 //TODO: Validações no ORM - https://trello.com/c/k2vo9AWU/32-valida%C3%A7%C3%B5es-no-orm
 //TODO: Implementar "Paranoid" no Sequelize do ORM - https://trello.com/c/4I4CZukx/38-implementar-paranoid-no-sequelize-do-orm
 //TODO: Migrações - https://trello.com/c/pF6LJKPU/21-migra%C3%A7%C3%B5es
@@ -11,7 +12,6 @@ class ORM {
   constructor () {
     this.modelsDir = pathJoin(projectDir, 'models')
     this.nativeModelsDir = pathJoin(atlasDir, 'models')
-    this.Op = Op
     this.pos = {}
   }
 
@@ -170,8 +170,6 @@ class ORM {
       { ...(opts || {}), sequelize: sequelize, }
     )
     
-    Model.Op = Op
-
     this.mixins({ Model, mixins, name, })
 
     return Model
@@ -181,6 +179,10 @@ class ORM {
     mixins.CRUD = require('../mixins/CRUD')
 
     objectMap(mixins, (mixin, mixinName) => {
+      const models = this.listModels()
+
+      mixin = typeof mixin === 'function' ? mixin({ Model, models, Op, }) : mixin
+
       objectMap(mixin, (v, k) => {
         k = !Model[k] ? k : `${k}_${mixinName}`
 
