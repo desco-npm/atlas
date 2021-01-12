@@ -19,10 +19,6 @@
   "workbench.tree.indent": 15,
   "gitflow4code.features": [
     {
-      "name": "feature/permission-control",
-      "base": "develop"
-    },
-    {
       "name": "feature/pre",
       "base": "develop"
     }

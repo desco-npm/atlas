@@ -43,29 +43,43 @@ module.exports = ({ Model, Op, }) => {
       }
   
       return await this.findAndCountAll(params)
+        .catch(e => {
+          return e
+        })
     },
     insert (data) {
-      return this.create(data).then(response => {
-        return this.findByPk(response.id)
-      })
+      return this.create(data)
+        .then(response => {
+          return this.findByPk(response.id)
+        })
+        .catch(e => {
+          return e
+        })
     },
     async read (id) {
       return await this.findByPk(id)
     },
     change (body, id) {
-      return this.update(body, { where: { id, }, }).then(async () => {
-        return this.findByPk(id)
-      })
+      return this.update(body, { where: { id, }, })
+        .then(async () => {
+          return this.findByPk(id)
+        })
+        .catch(e => {
+          return e
+        })
     },
     async delete (ids) {
       return {
-        count: await this.destroy({
+        count: (await this.destroy({
           where: {
             id: {
               [ Op.in ]: ids.split(';'),
             },
           }
-        }),
+        }))
+        .catch(e => {
+          return e
+        })
       } 
     }
   }

@@ -2,7 +2,6 @@ const { Sequelize, DataTypes, Op, } = require('sequelize')
 
 let sequelize
 
-//TODO: Tratar erro "cannot be null" - https://trello.com/c/2r3opAOM/39-tratar-erro-cannot-be-null
 //TODO: Validações no ORM - https://trello.com/c/k2vo9AWU/32-valida%C3%A7%C3%B5es-no-orm
 //TODO: Implementar "Paranoid" no Sequelize do ORM - https://trello.com/c/4I4CZukx/38-implementar-paranoid-no-sequelize-do-orm
 //TODO: Migrações - https://trello.com/c/pF6LJKPU/21-migra%C3%A7%C3%B5es
