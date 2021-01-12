@@ -3,6 +3,7 @@ const { Sequelize, DataTypes, Op, } = require('sequelize')
 let sequelize
 
 //TODO: Validações no ORM - https://trello.com/c/k2vo9AWU/32-valida%C3%A7%C3%B5es-no-orm
+//TODO: Implementar "Paranoid" no Sequelize do ORM - https://trello.com/c/4I4CZukx/38-implementar-paranoid-no-sequelize-do-orm
 //TODO: Migrações - https://trello.com/c/pF6LJKPU/21-migra%C3%A7%C3%B5es
 //TODO: Transições - https://trello.com/c/J2l5Tvrj/22-transições
 //TODO: Login com redes sociais - https://trello.com/c/TM9vRY23/29-login-com-redes-sociais
