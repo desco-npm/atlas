@@ -2,9 +2,10 @@ const { Sequelize, DataTypes, Op, } = require('sequelize')
 
 let sequelize
 
+//TODO: Login com redes sociais - https://trello.com/c/TM9vRY23/29-login-com-redes-sociais
+//TODO: Relacionamento em User e UserGroup - https://trello.com/c/ywS5WDx3/40-relacionamento-em-user-e-usergroup
 //TODO: Migrações - https://trello.com/c/pF6LJKPU/21-migra%C3%A7%C3%B5es
 //TODO: Transições - https://trello.com/c/J2l5Tvrj/22-transições
-//TODO: Login com redes sociais - https://trello.com/c/TM9vRY23/29-login-com-redes-sociais
 class ORM {
   constructor () {
     this.modelsDir = pathJoin(projectDir, 'models')
@@ -96,14 +97,27 @@ class ORM {
     if (name === process.env.Atlas.PERMISSION_USER_MODEL) {
       newDefs = {
         ...newDefs,
-        login: {
+        mail: {
           type: DataTypes.STRING(50),
           allowNull: false,
         },
         password: {
           type: DataTypes.STRING(32),
+          allowNull: true,
+        },
+        token: {
+          type: DataTypes.STRING(200),
           allowNull: false,
-        }
+        },
+        tokenType: {
+          type: DataTypes.ENUM([ 'default', 'google', 'facebook', ]),
+          allowNull: false,
+          defaultValue: 'default',
+        },
+        expireToken: {
+          type: DataTypes.BIGINT,
+          allowNull: true,
+        },
       }
     }
     else if (name === process.env.Atlas.PERMISSION_GROUP_MODEL) {

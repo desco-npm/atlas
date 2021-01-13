@@ -30,7 +30,7 @@ module.exports = async ({ DataTypes, Orm, }) => {
           })
         },
         async userPermission (id) {
-          const userGroups = (await models[User_UserGroup_Model].select({
+          const userGroups = (await models[User_UserGroup_Model].find({
             where: {
               [`${userModel}Id`]: id,
             },
