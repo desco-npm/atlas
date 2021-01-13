@@ -110,7 +110,7 @@ class ORM {
           allowNull: false,
         },
         tokenType: {
-          type: DataTypes.ENUM([ 'default', 'google', 'facebook', ]),
+          type: DataTypes.ENUM([ 'default', 'google', ]),
           allowNull: false,
           defaultValue: 'default',
         },

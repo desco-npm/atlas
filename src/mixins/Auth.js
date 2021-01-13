@@ -8,51 +8,55 @@ module.exports = {
 
     if (process.env.Atlas.GOOGLE_AUTH) {
       express.get('/oauth/google', async (req, res) => {
-        const GoogleAPI = newGoogleAPI(req.headers.host)
-        
-        const url = GoogleAPI.generateAuthUrl()
-
-        res.redirect(url)
+        res.json({ url: await this.googleLogin(req.headers.host), })
       })
 
       express.get('/oauth/google/callback', async (req, res) => {
-        const GoogleAPI = newGoogleAPI(req.headers.host)
-        
-        try {
-          const tokens = await GoogleAPI.setCredentials(req.query.code)
-
-          const token = {
-            token: tokens.access_token,
-            tokenType: 'google',
-            expireToken: tokens.expiry_date,
-          }
-
-          const info = await GoogleAPI.userInfo()
-
-          let [ User, created, ] = await this.selectOrCreate({
-            where: {
-              mail: info.data.email,
-            },
-            create: {
-              mail: info.data.email,
-              ...token,
-            }
-          })
-
-          if (!created) {
-            User = await this.change(token, User.id)
-          }
-
-          res.json({ ...token, ...User })
-        }
-        catch (e) {
-          res.json({ message: 'Error in login on Google', error: e, })
-        }
+        res.json(await this.googleCallback(req.headers.host, req.query.code))
       })
     }
   },
   login (login, password) {
     return this.select({ where: { login, password, }, })
+  },
+  googleLogin (host) {
+    const GoogleAPI = newGoogleAPI(host)
+
+    return GoogleAPI.generateAuthUrl()
+  },
+  async googleCallback (host, code) {
+    const GoogleAPI = newGoogleAPI(host)
+
+    try {
+      const tokens = await GoogleAPI.setCredentials(code)
+
+      const token = {
+        token: tokens.access_token,
+        tokenType: 'google',
+        expireToken: tokens.expiry_date,
+      }
+
+      const info = await GoogleAPI.userInfo()
+
+      let [ User, created, ] = await this.selectOrCreate({
+        where: {
+          mail: info.data.email,
+        },
+        create: {
+          mail: info.data.email,
+          ...token,
+        }
+      })
+
+      if (!created) {
+        User = await this.change(token, User.id)
+      }
+
+      return { ...token, ...User }
+    }
+    catch (e) {
+      return { message: 'Error in login on Google', error: e, }
+    }
   },
 }
 
