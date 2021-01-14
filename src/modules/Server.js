@@ -51,18 +51,6 @@ class Server {
     return fileExists(addrs)
   }
 
-  importMiddleware () {
-    if (!this.middlewareExists()) return
-
-    const addrs = pathJoin(this.middlewareDir, 'index')
-
-    const middlewareList = require(addrs)
-
-    middlewareList.map(middleware => {
-      express.use(middleware)
-    })
-  }
-
   async loadMiddlewareList () {
     if (!this.middlewareExists()) return {}
 
