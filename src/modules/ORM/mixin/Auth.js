@@ -1,22 +1,7 @@
-//TODO: Rotas validar permissão - https://trello.com/c/w1bdRzRT/47-rotas-validar-permiss%C3%A3oconst moment = require('moment')
+//TODO: Rotas validar permissão - https://trello.com/c/w1bdRzRT/47-rotas-validar-permiss%C3%A3o
 //TODO: RefreshToken - https://trello.com/c/iHS9PuI8/48-refreshtoken
 
 module.exports = {
-  router ({ express, }) {
-    express.post('/login', async (req, res) => {
-      res.json(await this.login(req.body.mail, req.body.password))
-    })
-
-    if (process.env.Atlas.GOOGLE_AUTH) {
-      express.get('/oauth/google', async (req, res) => {
-        res.json({ url: await this.googleLogin(req.headers.host), })
-      })
-
-      express.get('/oauth/google/callback', async (req, res) => {
-        res.json(await this.googleCallback(req.headers.host, req.query.code))
-      })
-    }
-  },
   login (mail, password) {
     if (!password) return null
 

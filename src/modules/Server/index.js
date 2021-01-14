@@ -3,8 +3,6 @@ const Cors = require('cors')
 const BodyParser = require('body-parser')
 const Helmet = require('helmet')
 
-const Orm = require('./Orm')
-
 let express
 
 class Server {
@@ -18,11 +16,11 @@ class Server {
 
     this.routesDir = pathJoin(projectDir, 'routes')
     this.middlewareDir = pathJoin(projectDir, 'middleware')
+    this.mixinDir = pathJoin(atlasDir, 'modules', 'Server', 'mixin')
   }
 
   async init () {
     this.defineStatic()
-    await this.importMiddleware()
     await this.importRoutes()
 
     this.start()
@@ -67,25 +65,39 @@ class Server {
     return middlewareObj
   }
 
+  async loadMixinList () {
+    const mixinList = await readdir(this.mixinDir)
+    const mixinObj = {}
+
+    mixinList
+      .filter(mixin => mixin !== 'index.js')
+      .map(mixinName => {
+        mixinName = mixinName.slice(0, -3)
+        mixinObj[mixinName] = require(pathJoin(this.mixinDir, mixinName))
+      })
+
+    return mixinObj
+  }
+
   async importRoutes () {
     const routeModels = await readdir(this.routesDir)
     const middlewareList = await this.loadMiddlewareList()
+    const mixinList = await this.loadMixinList()
 
     routeModels.map(routeModelName => {
-      routeModelName = routeModelName.slice(0, -3)
+      const entity = routeModelName.slice(0, -3)
 
-      const routeModelAddrs = pathJoin(this.routesDir, routeModelName)
-
-      const models = Orm.listModels()
-
-      require(routeModelAddrs)({
+      const routeModelAddrs = pathJoin(this.routesDir, entity)
+      const routeParams = {
         express,
-        entity: routeModelName,
+        entity,
         middleware: middlewareList,
-        models,
-        model: models[routeModelName],
-        Op: Orm.Op,
-      })
+        mixin: mixinList,
+        Model: Atlas.Orm.listModels()[entity],
+      }
+
+      require(routeModelAddrs)(routeParams)
+      mixinList.CRUD(routeParams)
     })
 
     return Promise.resolve()

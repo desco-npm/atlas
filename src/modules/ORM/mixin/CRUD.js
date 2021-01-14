@@ -1,30 +1,6 @@
 //TODO: change() deve receber id pelo body - https://trello.com/c/6xyRcYCo/43-change-deve-receber-id-pelo-body
-module.exports = ({ Model, Op, }) => {
+module.exports = ({ Op, }) => {
   return {
-    router ({ express, entity, }) {
-      express.get(`/crud/${entity}/`, async (req, res) => {
-        res.json(await this.select({
-          ...req.query,
-          where: req.query.where ? this.treatWhere(req.query.where) : undefined,
-        }))
-      })
-
-      express.post(`/crud/${entity}/`, async (req, res) => {
-        res.json(await this.insert(req.body))
-      })
-
-      express.get(`/crud/${entity}/:id`, async (req, res) => {
-        res.json(await this.read(req.params.id))
-      })
-
-      express.put(`/crud/${entity}/:id`, async (req, res) => {
-        res.json(await this.change(req.body, req.params.id))
-      })
-
-      express.delete(`/crud/${entity}/:id`, async (req, res) => {
-        res.json(await this.delete(req.params.id))
-      })
-    },
     async select (params) {
       return this.findAndCountAll(treatParameters(params))
         .then(result => {

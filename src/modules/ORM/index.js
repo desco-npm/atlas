@@ -8,7 +8,7 @@ let sequelize
 class ORM {
   constructor () {
     this.modelsDir = pathJoin(projectDir, 'models')
-    this.nativeModelsDir = pathJoin(atlasDir, 'models')
+    this.nativeModelsDir = pathJoin(atlasDir, 'modules', 'ORM', 'models')
     this.pos = {}
   }
 
@@ -180,13 +180,13 @@ class ORM {
       { ...(opts || {}), sequelize: sequelize, }
     )
 
-    this.mixins({ Model, mixins, name, })
+    this.mixins({ Model, mixins, })
 
     return Model
   }
 
-  mixins ({ Model, name, mixins = {}, }) {
-    mixins.CRUD = require('../mixins/CRUD')
+  mixins ({ Model, mixins = {}, }) {
+    mixins.CRUD = require('./mixin/CRUD')
 
     objectMap(mixins, (mixin, mixinName) => {
       const models = this.listModels()
@@ -197,16 +197,6 @@ class ORM {
         k = !Model[k] ? k : `${k}_${mixinName}`
 
         Model[k] = v
-
-        if (k === 'router') {
-          Model.router({
-            express: require('./Server').express(),
-            entity: name,
-            models: this.listModels(),
-          })
-
-          delete Model.router
-        }
       })
     })
 
