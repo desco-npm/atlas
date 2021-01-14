@@ -2,7 +2,6 @@ const { Sequelize, DataTypes, Op, } = require('sequelize')
 
 let sequelize
 
-//TODO: Login com redes sociais - https://trello.com/c/TM9vRY23/29-login-com-redes-sociais
 //TODO: Relacionamento em User e UserGroup - https://trello.com/c/ywS5WDx3/40-relacionamento-em-user-e-usergroup
 //TODO: Migrações - https://trello.com/c/pF6LJKPU/21-migra%C3%A7%C3%B5es
 //TODO: Transições - https://trello.com/c/J2l5Tvrj/22-transições
@@ -16,7 +15,7 @@ class ORM {
   async init () {
     this.User_UserGroup = [
       process.env.Atlas.PERMISSION_USER_MODEL,
-      process.env.Atlas.PERMISSION_GROUP_MODEL
+      process.env.Atlas.PERMISSION_GROUP_MODEL,
     ]
       .sort()
       .join('_')
@@ -78,7 +77,7 @@ class ORM {
 
   posDefines () {
     objectMap(this.pos, (pos, modelName) => {
-      const models = this.listModels() 
+      const models = this.listModels()
 
       pos({ models, Model: models[modelName], })
 
@@ -106,8 +105,8 @@ class ORM {
           allowNull: true,
         },
         token: {
-          type: DataTypes.STRING(200),
-          allowNull: false,
+          type: DataTypes.STRING(500),
+          allowNull: true,
         },
         tokenType: {
           type: DataTypes.ENUM([ 'default', 'google', ]),
@@ -139,12 +138,12 @@ class ORM {
     objectMap(models, (Model, modelName) => {
       if (modelName === process.env.Atlas.PERMISSION_USER_MODEL) {
         Model.belongsToMany(models[process.env.Atlas.PERMISSION_GROUP_MODEL], {
-          through: models[this.User_UserGroup]
+          through: models[this.User_UserGroup],
         })
       }
       else if (modelName === process.env.Atlas.PERMISSION_GROUP_MODEL) {
         Model.belongsToMany(models[process.env.Atlas.PERMISSION_USER_MODEL], {
-          through: models[this.User_UserGroup]
+          through: models[this.User_UserGroup],
         })
       }
     })
@@ -153,7 +152,7 @@ class ORM {
   async addModel ({ name, defs, opts, mixins, pos, }) {
     // Duas próximas precisam estar antes do await
     // Two next ones need to be before await
-    const trace = stackTrace.get();
+    const trace = stackTrace.get()
 
     name = name || trace[1].getFileName().split('\\').pop().slice(0, -3)
 
@@ -165,22 +164,22 @@ class ORM {
 
     defs = objectMap(defs, (v, k) => {
       const uidDefaultVersion = parseInt(process.env.Atlas.ORM_UID_DEFAULT_VERSION)
-      
+
       const versions = [ 1, 4, ]
 
       if (k === 'id' && (v.type !== DataTypes.UUID || versions.indexOf(uidDefaultVersion) >= 0)) {
         return { ...v, defaultValue: Sequelize['UUIDV' + uidDefaultVersion], }
       }
-      
+
       return v
     })
-    
+
     const Model = await sequelize.define(
       name,
       defs || {},
       { ...(opts || {}), sequelize: sequelize, }
     )
-    
+
     this.mixins({ Model, mixins, name, })
 
     return Model

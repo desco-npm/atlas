@@ -5,22 +5,22 @@ module.exports = ({ Model, Op, }) => {
       express.get(`/crud/${entity}/`, async (req, res) => {
         res.json(await this.select({
           ...req.query,
-          where: req.query.where ? this.treatWhere(req.query.where) : undefined
+          where: req.query.where ? this.treatWhere(req.query.where) : undefined,
         }))
       })
-  
+
       express.post(`/crud/${entity}/`, async (req, res) => {
         res.json(await this.insert(req.body))
       })
-  
+
       express.get(`/crud/${entity}/:id`, async (req, res) => {
         res.json(await this.read(req.params.id))
       })
-  
+
       express.put(`/crud/${entity}/:id`, async (req, res) => {
         res.json(await this.change(req.body, req.params.id))
       })
-  
+
       express.delete(`/crud/${entity}/:id`, async (req, res) => {
         res.json(await this.delete(req.params.id))
       })
@@ -37,7 +37,8 @@ module.exports = ({ Model, Op, }) => {
         })
     },
     async selectOne (params) {
-      return (await this.findOne(treatParameters(params))).toJSON()
+      return this.findOne(treatParameters(params))
+        .then(response => response ? response.toJSON(): null)
     },
     async selectById (id) {
       return (await this.findByPk(id)).toJSON()
@@ -82,13 +83,13 @@ module.exports = ({ Model, Op, }) => {
             id: {
               [ Op.in ]: ids.split(';'),
             },
-          }
+          },
         }))
-        .catch(e => {
-          return e
-        })
-      } 
-    }
+          .catch(e => {
+            return e
+          }),
+      }
+    },
   }
 }
 

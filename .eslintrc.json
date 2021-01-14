@@ -25,6 +25,7 @@
       "verifyToken": "readonly",
       "decodeToken": "readonly",
       "formatDateTime": "readonly",
+      "moment": "readonly",
       "arrayUnique": "readonly",
       "projectDir": "readonly",
       "atlasDir": "readonly",

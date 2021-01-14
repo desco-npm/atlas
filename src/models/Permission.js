@@ -6,12 +6,12 @@ module.exports = async ({ DataTypes, Orm, }) => {
   const defs = {
     resource: {
       type: DataTypes.STRING(50),
-      allowNull: false
+      allowNull: false,
     },
     allow: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
-    }
+    },
   }
 
   const opts = {}
@@ -71,7 +71,7 @@ module.exports = async ({ DataTypes, Orm, }) => {
 
             if (
               notPermission || permissionInListIsNull || permissionListIsGroupAndCurrentIsUser ||
-              permissionsIsUserAndCurrentIsFalse || permissionsIsGroupAndCurrentIsFalse 
+              permissionsIsUserAndCurrentIsFalse || permissionsIsGroupAndCurrentIsFalse
             ) {
               permissions[permission.resource] = permission
             }
@@ -80,9 +80,9 @@ module.exports = async ({ DataTypes, Orm, }) => {
           return objectMap(permissions, permission => {
             return permission.allow || false
           })
-        }
+        },
       }
-    }
+    },
   }
 
   return Orm.addModel({ defs, opts, pos, mixins, })

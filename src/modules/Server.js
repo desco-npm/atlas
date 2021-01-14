@@ -12,7 +12,7 @@ class Server {
     express = Express()
 
     express.use(Cors())
-    express.use(BodyParser.urlencoded({ extended: false }))
+    express.use(BodyParser.urlencoded({ extended: false, }))
     express.use(BodyParser.json())
     express.use(Helmet())
 
@@ -32,7 +32,7 @@ class Server {
 
   defineStatic () {
     const staticList = process.env.Atlas.SERVER_STATIC.split(';')
-    
+
     staticList.map(staticItem => {
       const [ dir, prefix, ] = staticItem.split(',')
 
@@ -89,14 +89,14 @@ class Server {
       const routeModelAddrs = pathJoin(this.routesDir, routeModelName)
 
       const models = Orm.listModels()
-      
+
       require(routeModelAddrs)({
         express,
         entity: routeModelName,
         middleware: middlewareList,
         models,
         model: models[routeModelName],
-        Op: Orm.Op
+        Op: Orm.Op,
       })
     })
 

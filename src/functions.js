@@ -9,5 +9,9 @@ global.isArray = require('is-array')
 global.stackTrace = require('stack-trace')
 global.htmlPdf = require('html-pdf')
 global.pdfMake = require('pdfmake')
+global.generateToken = require('jsonwebtoken').sign
+global.verifyToken = require('jsonwebtoken').verify
+global.decodeToken = require('jsonwebtoken').decode
+global.moment = require('moment')
 
 global.arrayUnique = array => array.filter((item, key, self) => self.indexOf(item) === key)

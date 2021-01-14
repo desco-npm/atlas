@@ -7,10 +7,10 @@ class Mail {
 
   init () {
     const transporters = process.env.Atlas.MAIL.split(';')
-    
+
     transporters.map((transporter, k) => {
       transporter = JSON.parse(transporter)
-      
+
       transporter.name = transporter.name || `mail${k + 1}`
 
       this.transporters[transporter.name] = nodemailer.createTransport({
@@ -22,12 +22,12 @@ class Mail {
           pass: transporter.password,
         },
         tls: {
-          rejectUnauthorized: transporter.rejectUnauthorized || false
-        }
+          rejectUnauthorized: transporter.rejectUnauthorized || false,
+        },
       })
     })
   }
-  
+
   async send (config) {
     const name = config.name || Object.keys(this.transporters)[0]
 

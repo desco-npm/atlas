@@ -35,6 +35,8 @@
     "html-pdf": "^2.2.0",
     "is-array": "^1.0.1",
     "is-object": "^1.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "mysql2": "^2.2.5",
     "nodemailer": "^6.4.17",
     "object-filter": "^1.0.2",
@@ -43,5 +45,8 @@
     "pdfmake": "^0.1.69",
     "sequelizer": "^1.1.4",
     "stack-trace": "0.0.10"
+  },
+  "devDependencies": {
+    "eslint": "^7.17.0"
   }
 }

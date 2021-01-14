@@ -8,9 +8,9 @@ module.exports = () => {
 
     if (typeof v === 'string' && v.toLowerCase() === 'true') v = true
     if (typeof v === 'string' && v.toLowerCase() === 'false') v = false
-    
+
     atlasEnv[k.replace('ATLAS_', '')] = v
-    
+
     return false
   })
 
