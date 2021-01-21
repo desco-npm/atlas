@@ -8,22 +8,12 @@ let sequelize
 class ORM {
   constructor () {
     this.modelsDir = pathJoin(projectDir, 'models')
-    this.nativeModelsDir = pathJoin(atlasDir, 'modules', 'ORM', 'models')
     this.pos = {}
   }
 
   async init () {
-    this.User_UserGroup = [
-      process.env.Atlas.PERMISSION_USER_MODEL,
-      process.env.Atlas.PERMISSION_GROUP_MODEL,
-    ]
-      .sort()
-      .join('_')
-
     await this.connect()
-    await this.importModels([ 'User_UserGroup', 'Permission', ])
     await this.importModels()
-    await this.setAssociations()
     await this.posDefines()
     await this.sync()
 
@@ -84,75 +74,6 @@ class ORM {
     })
   }
 
-  setDefs (defs, name) {
-    let newDefs = {
-      id: defs.id || {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        allowNull: false,
-      },
-    }
-
-    if (name === process.env.Atlas.PERMISSION_USER_MODEL) {
-      newDefs = {
-        ...newDefs,
-        mail: {
-          type: DataTypes.STRING(50),
-          allowNull: false,
-        },
-        password: {
-          type: DataTypes.STRING(32),
-          allowNull: true,
-        },
-        token: {
-          type: DataTypes.STRING(500),
-          allowNull: true,
-        },
-        tokenType: {
-          type: DataTypes.ENUM([ 'default', 'google', ]),
-          allowNull: false,
-          defaultValue: 'default',
-        },
-        expireToken: {
-          type: DataTypes.BIGINT,
-          allowNull: true,
-        },
-      }
-    }
-    else if (name === process.env.Atlas.PERMISSION_GROUP_MODEL) {
-      newDefs = {
-        ...newDefs,
-        name: {
-          type: DataTypes.STRING(50),
-          allowNull: false,
-        },
-      }
-    }
-
-    return { ...newDefs, ...defs, }
-  }
-
-  setAssociations () {
-    const models = this.listModels()
-
-    objectMap(models, (Model, modelName) => {
-      if (modelName === process.env.Atlas.PERMISSION_USER_MODEL) {
-        Model.belongsToMany(models[process.env.Atlas.PERMISSION_GROUP_MODEL], {
-          through: models[this.User_UserGroup],
-        })
-
-        Atlas.Server.importRouteByEntity(this.User_UserGroup)
-      }
-      else if (modelName === process.env.Atlas.PERMISSION_GROUP_MODEL) {
-        Model.belongsToMany(models[process.env.Atlas.PERMISSION_USER_MODEL], {
-          through: models[this.User_UserGroup],
-        })
-
-        Atlas.Server.importRouteByEntity(this.User_UserGroup)
-      }
-    })
-  }
-
   async addModel ({ name, defs, opts, mixins, pos, }) {
     // Duas próximas precisam estar antes do await
     // Two next ones need to be before await
@@ -163,8 +84,6 @@ class ORM {
     this.pos[name] = pos
 
     await this.connect()
-
-    defs = this.setDefs(defs, name)
 
     defs = objectMap(defs, (v, k) => {
       const uidDefaultVersion = parseInt(process.env.Atlas.ORM_UID_DEFAULT_VERSION)
@@ -207,14 +126,13 @@ class ORM {
     return Model
   }
 
-  async importModels (models) {
-    const nativeModels = models !== undefined
+  async importModels () {
     let promises = []
 
-    models = models || (await readdir(this.modelsDir)).map(i => i.slice(0, -3))
+    const models = (await readdir(this.modelsDir)).map(i => i.slice(0, -3))
 
     models.map(modelName => {
-      const modelAddrs = pathJoin(nativeModels ? this.nativeModelsDir : this.modelsDir, modelName)
+      const modelAddrs = pathJoin(this.modelsDir, modelName)
 
       promises.push(require(modelAddrs)({ DataTypes, Orm: this, }))
     })
