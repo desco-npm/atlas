@@ -25,8 +25,8 @@ class Atlas {
 
     require('./env.js')()
 
-    await this.Orm.init()
     await this.Mail.init()
+    await this.Orm.init()
     await this.Server.init()
 
     return this

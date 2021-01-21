@@ -81,26 +81,34 @@ class Server {
 
   async importRoutes () {
     const routeModels = await readdir(this.routesDir)
-    const middlewareList = await this.loadMiddlewareList()
-    const mixinList = await this.loadMixinList()
 
     routeModels.map(routeModelName => {
       const entity = routeModelName.slice(0, -3)
 
-      const routeModelAddrs = pathJoin(this.routesDir, entity)
-      const routeParams = {
-        express,
-        entity,
-        middleware: middlewareList,
-        mixin: mixinList,
-        Model: Atlas.Orm.listModels()[entity],
-      }
-
-      require(routeModelAddrs)(routeParams)
-      mixinList.CRUD(routeParams)
+      this.importRouteByEntity(entity)
     })
 
     return Promise.resolve()
+  }
+
+  async importRouteByEntity (entity) {
+    const middlewareList = await this.loadMiddlewareList()
+    const mixinList = await this.loadMixinList()
+
+    const routeModelAddrs = pathJoin(this.routesDir, entity)
+    const routeParams = {
+      express,
+      entity,
+      middleware: middlewareList,
+      mixin: mixinList,
+      Model: Atlas.Orm.listModels()[entity],
+    }
+
+    if (await fileExists(routeModelAddrs)) {
+      require(routeModelAddrs)(routeParams)
+    }
+
+    mixinList.CRUD(routeParams)
   }
 
   express () {

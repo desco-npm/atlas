@@ -140,11 +140,15 @@ class ORM {
         Model.belongsToMany(models[process.env.Atlas.PERMISSION_GROUP_MODEL], {
           through: models[this.User_UserGroup],
         })
+
+        Atlas.Server.importRouteByEntity(this.User_UserGroup)
       }
       else if (modelName === process.env.Atlas.PERMISSION_GROUP_MODEL) {
         Model.belongsToMany(models[process.env.Atlas.PERMISSION_USER_MODEL], {
           through: models[this.User_UserGroup],
         })
+
+        Atlas.Server.importRouteByEntity(this.User_UserGroup)
       }
     })
   }
