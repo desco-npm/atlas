@@ -21,6 +21,10 @@
     {
       "name": "feature/pre",
       "base": "develop"
+    },
+    {
+      "name": "feature/permission",
+      "base": "develop"
     }
   ],
 }
