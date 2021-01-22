@@ -15,6 +15,11 @@ class ORM {
     await this.connect()
     await this.importModels()
     await this.posDefines()
+
+    return Promise.resolve()
+  }
+
+  async start () {
     await this.sync()
 
     return Promise.resolve()

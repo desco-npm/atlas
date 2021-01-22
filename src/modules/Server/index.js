@@ -21,11 +21,18 @@ class Server {
 
   async init () {
     this.defineStatic()
+
     await this.importRoutes()
 
-    this.start()
-
     return Promise.resolve()
+  }
+
+  start () {
+    let port = parseInt(process.env.Atlas.SERVER_PORT)
+
+    express.listen(port, () => {
+      console.log(`Server listening at port ${port}`)
+    })
   }
 
   defineStatic () {
@@ -113,14 +120,6 @@ class Server {
 
   express () {
     return express
-  }
-
-  start () {
-    let port = parseInt(process.env.Atlas.SERVER_PORT)
-
-    express.listen(port, () => {
-      console.log(`Server listening at port ${port}`)
-    })
   }
 }
 

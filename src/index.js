@@ -29,6 +29,9 @@ class Atlas {
     await this.Orm.init()
     await this.Server.init()
 
+    await this.Orm.start()
+    await this.Server.start()
+
     return this
   }
 }
