@@ -25,6 +25,10 @@ class ORM {
     return Promise.resolve()
   }
 
+  sequelize () {
+    return sequelize
+  }
+
   async connect () {
     if (await this.authenticate() === true) return this
 
@@ -79,7 +83,7 @@ class ORM {
     })
   }
 
-  async addModel ({ name, defs, opts, mixins, pos, }) {
+  async addModel ({ name, defs = {}, opts = {}, mixins ={}, pos = () => {}, }) {
     // Duas próximas precisam estar antes do await
     // Two next ones need to be before await
     const trace = stackTrace.get()
