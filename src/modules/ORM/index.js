@@ -83,7 +83,7 @@ class ORM {
     })
   }
 
-  async addModel ({ name, defs = {}, opts = {}, mixins ={}, pos = () => {}, }) {
+  async addModel ({ name, defs = {}, opts = {}, mixins = {}, pos = () => {}, }) {
     // Duas próximas precisam estar antes do await
     // Two next ones need to be before await
     const trace = stackTrace.get()
@@ -91,8 +91,6 @@ class ORM {
     name = name || trace[1].getFileName().split('\\').pop().slice(0, -3)
 
     this.pos[name] = pos
-
-    await this.connect()
 
     defs = objectMap(defs, (v, k) => {
       const uidDefaultVersion = parseInt(process.env.Atlas.ORM_UID_DEFAULT_VERSION)

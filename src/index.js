@@ -14,6 +14,7 @@ class Atlas {
     this.Mail = require('./modules/Mail')
     this.Orm = require('./modules/Orm')
     this.Server = require('./modules/Server')
+    this.Permission = require('./modules/Permission')
   }
 
   async init () {
@@ -28,11 +29,18 @@ class Atlas {
     await this.Mail.init()
     await this.Orm.init()
     await this.Server.init()
+    await this.Permission.init()
 
     await this.Orm.start()
     await this.Server.start()
 
     return this
+  }
+
+  newEntity (name) {
+    this.Server.loadRouteByEntity(name)
+
+    return this.Orm.addModel({ name, })
   }
 }
 
