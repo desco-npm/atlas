@@ -60,10 +60,7 @@ module.exports = ({ Op, }) => {
               [ Op.in ]: ids.split(';'),
             },
           },
-        }))
-          .catch(e => {
-            return e
-          }),
+        })),
       }
     },
   }
