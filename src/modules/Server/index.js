@@ -92,13 +92,13 @@ class Server {
     routeModels.map(routeModelName => {
       const entity = routeModelName.slice(0, -3)
 
-      this.importRouteByEntity(entity)
+      this.loadRouteByEntity(entity)
     })
 
     return Promise.resolve()
   }
 
-  async importRouteByEntity (entity) {
+  async loadRouteByEntity (entity) {
     const middlewareList = await this.loadMiddlewareList()
     const mixinList = await this.loadMixinList()
 
@@ -116,6 +116,8 @@ class Server {
     }
 
     mixinList.CRUD(routeParams)
+
+    return Promise.resolve()
   }
 
   express () {
