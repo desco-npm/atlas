@@ -2,7 +2,6 @@ const { Sequelize, DataTypes, Op, } = require('sequelize')
 
 let sequelize
 
-//TODO: Relacionamento em User e UserGroup - https://trello.com/c/ywS5WDx3/40-relacionamento-em-user-e-usergroup
 //TODO: Migrações - https://trello.com/c/pF6LJKPU/21-migra%C3%A7%C3%B5es
 //TODO: Transições - https://trello.com/c/J2l5Tvrj/22-transições
 class ORM {
