@@ -1,4 +1,4 @@
-module.exports = async ({ DataTypes, Orm, }) => {
+module.exports = async ({ DataTypes, Orm,  }) => {
   const defs = {
     resource: {
       type: DataTypes.STRING(50),
@@ -15,8 +15,7 @@ module.exports = async ({ DataTypes, Orm, }) => {
   const pos = ({ Model, models, }) => {
   }
 
-  const mixins = {
-  }
+  const mixins = []
 
   return Orm.addModel({ defs, opts, pos, mixins, })
 }

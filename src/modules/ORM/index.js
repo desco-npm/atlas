@@ -82,7 +82,7 @@ class ORM {
     })
   }
 
-  async addModel ({ name, defs = {}, opts = {}, mixins = {}, pos = () => {}, }) {
+  async addModel ({ name, defs = {}, opts = {}, mixins = [], pos = () => {}, }) {
     // Duas próximas precisam estar antes do await
     // Two next ones need to be before await
     const trace = stackTrace.get()
@@ -114,11 +114,23 @@ class ORM {
     return Model
   }
 
-  mixins ({ Model, mixins = {}, }) {
-    mixins.CRUD = require('./mixin/CRUD')
+  mixins ({ Model, mixins = [], }) {
+    if (mixins.indexOf('CRUD') === -1) {
+      mixins.push('CRUD')
+    }
 
-    objectMap(mixins, (mixin, mixinName) => {
-      const models = this.listModels()
+    const models = this.listModels()
+
+    mixins.map(mixin => {
+      let mixinName
+      if (typeof mixin === 'string') {
+        mixinName = mixin
+        mixin = require('./mixin/' + mixin)
+      }
+      else {
+        mixinName = Object.keys(mixin)[0]
+        mixin = Object.values(mixin)[0]
+      }
 
       mixin = typeof mixin === 'function' ? mixin({ Model, models, Op, }) : mixin
 
