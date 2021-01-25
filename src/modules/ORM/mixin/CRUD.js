@@ -1,4 +1,3 @@
-//TODO: change() deve receber id pelo body - https://trello.com/c/6xyRcYCo/43-change-deve-receber-id-pelo-body
 module.exports = ({ Op, }) => {
   return {
     async select (params) {
