@@ -31,6 +31,14 @@ module.exports = ({ Op, }) => {
         })
         .catch(e => console.log(e))
     },
+    save (data) {
+      if (data.id) {
+        return this.change(data)
+      }
+      else {
+        return this.insert(data)
+      }
+    },
     insert (data) {
       return this.create(data)
         .then(response => {
@@ -40,10 +48,11 @@ module.exports = ({ Op, }) => {
           return e
         })
     },
-    async read (id) {
-      return (await this.findByPk(id)).toJSON()
-    },
     change (body, id) {
+      if (!id && body.id) {
+        id = body.id
+      }
+
       return this.update(body, { where: { id, }, })
         .then(async () => {
           return this.read(id)
@@ -51,6 +60,9 @@ module.exports = ({ Op, }) => {
         .catch(e => {
           return e
         })
+    },
+    async read (id) {
+      return (await this.findByPk(id)).toJSON()
     },
     async delete (ids) {
       return {
