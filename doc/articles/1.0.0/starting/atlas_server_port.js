@@ -5,7 +5,7 @@ Porta a ser usada pelo servidor.
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_SERVER_PORT=3000
       `,

@@ -13,15 +13,15 @@ As propriedades do JSON são as mesmas do [NodeMailer](https://nodemailer.com/ab
 * **host**: Host do e-mail com o qual se conectar;
 * **port**: Porta do e-mail com o qual se conectar;
 * **secure**: Se e-mail utiliza TLS/STARTTLS;
-* **user**: Usuário para se autencicar no e-mail com o qual se conectar;
-* **password**: Senha para se autencicar no e-mail com o qual se conectar;
+* **user**: Usuário para se autenticar no e-mail com o qual se conectar;
+* **password**: Senha para se autenticar no e-mail com o qual se conectar;
 * **tls.rejectUnauthorized**: Se deve rejeitar conexão com servidores que não puderam ter a identidade verificada;
 
 Para maiores informações sobre as configurações do [NodeMailer](https://nodemailer.com/about/), consulte a [documentação oficial](https://nodemailer.com/about/).
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_MAIL={ "name": "myMail", "host": "br142.hostgator.com.br", "port": 465, "secure": true, "user": "noreplydomain.com.br", "password": "123456", "tls" : { "rejectUnauthorized": false } },{ "host": "br142.hostgator.com.br", "port": 465, "secure": true, "user": "noreplydomain2.com.br", "password": "123456", "tls" : { "rejectUnauthorized": false } }
       `,

@@ -5,7 +5,7 @@ Id de conexão com o APP da Google.
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_GOOGLE_AUTH_ID=*************-*&*&*&*&*&*&&&.apps.googleusercontent.com
       `,

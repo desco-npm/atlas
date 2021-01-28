@@ -7,7 +7,7 @@ Algoritmo a ser utilizado para o [hasheamento](https://www.techtudo.com.br/artig
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_AUTH_ALGORITHM=HS256
       `,

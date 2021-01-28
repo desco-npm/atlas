@@ -5,7 +5,7 @@ Se deve permitir autenticação com a Google.
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_GOOGLE_AUTH=true
       `,

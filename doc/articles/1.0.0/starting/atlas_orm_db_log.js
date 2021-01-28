@@ -5,7 +5,7 @@ Se o ORM deve exibir as mensagens SQL executadas.
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_ORM_DB_LOG=true
       `,

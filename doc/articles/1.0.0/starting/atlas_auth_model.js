@@ -5,7 +5,7 @@ Nome do Model (existente) que será usado para registrar as permissões dos usu�
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_AUTH_MODEL=Permission
       `,

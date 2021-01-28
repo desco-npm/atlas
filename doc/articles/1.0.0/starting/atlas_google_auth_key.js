@@ -5,7 +5,7 @@ Chave de conexão com o APP da Google.
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_GOOGLE_AUTH_KEY=&-_&&&*&****&&&**&&&&-*
       `,

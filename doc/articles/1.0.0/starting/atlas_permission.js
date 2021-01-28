@@ -5,7 +5,7 @@ Se deve ser aplicado e usado o sistema de permissionamento do AtlasJS.
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_PERMISSION=true
       `,

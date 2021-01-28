@@ -5,7 +5,7 @@ Nome da propriedade do Model de usuário que será utilizada para armazenar a se
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_AUTH_PSW_PROP=password
       `,

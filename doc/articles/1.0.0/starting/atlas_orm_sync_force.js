@@ -5,7 +5,7 @@ Se o ORM deve criar as tabelas no banco de dados de acordo com os modelos, antes
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_ORM_SYNC_FORCE=false
       `,

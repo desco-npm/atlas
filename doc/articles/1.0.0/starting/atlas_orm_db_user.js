@@ -5,7 +5,7 @@ Nome de usuário a ser usado para que o ORM se conecte ao banco de dados.
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_ORM_DB_USER=root
       `,

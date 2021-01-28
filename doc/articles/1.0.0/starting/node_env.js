@@ -7,7 +7,7 @@ Aceita "*production*", "*development*" ou outro valor definido pelo desenvolvedo
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 NODE_ENV=development
       `,

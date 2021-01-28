@@ -7,7 +7,7 @@ Consulte a [documentação do Sequelize](https://sequelize.org/master/manual/get
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_ORM_DB_DIALOG=mysql
       `,

@@ -7,7 +7,7 @@ Absolutamente qualquer string serve, quanto mais aleatória, melhor!
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_AUTH_SECRET=ihfgnjdhfginasijk.SDVINSKDGHINKsbivnkrjo
       `,

@@ -5,7 +5,7 @@ Host do banco de dados com o qual o ORM deve se conectar.
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_ORM_DB_HOST=localhost
       `,

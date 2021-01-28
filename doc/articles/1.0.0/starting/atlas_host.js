@@ -3,7 +3,7 @@ module.exports = {
   description: 'Host onde esta rodando o AtlasJS.',
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_HOST=http://www.my_domain.com/
       `,

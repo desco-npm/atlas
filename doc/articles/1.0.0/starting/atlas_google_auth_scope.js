@@ -7,7 +7,7 @@ Devem ser passados sem a URL, somente o escopo e separados por ponto-e-vírgula.
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_GOOGLE_AUTH_SCOPE=userinfo.email;userinfo.profile
       `,

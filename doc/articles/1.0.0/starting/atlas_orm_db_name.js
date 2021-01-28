@@ -5,7 +5,7 @@ Nome do banco de dados com o qual o ORM deverá se conectar.
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_ORM_DB_NAME=tot
       `,

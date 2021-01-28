@@ -5,7 +5,7 @@ Número de registros a serem retornados por padrão nas paginações do ORM.
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_ORM_PER_PAGE=25
       `,

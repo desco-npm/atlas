@@ -5,7 +5,7 @@ Nome do Model (existente) que será usado para registrar os usuários.
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_AUTH_USER_MODEL=User
       `,

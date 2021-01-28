@@ -7,7 +7,7 @@ Aceita somente os valores "*1*" e "*4*", consulte detalhes na [documentação do
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_ORM_UID_DEFAULT_VERSION=4
       `,

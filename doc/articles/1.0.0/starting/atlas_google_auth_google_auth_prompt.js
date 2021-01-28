@@ -7,7 +7,7 @@ Saiba mais aqui na [documentação oficial da Google](https://developers.google.
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_GOOGLE_AUTH_GOOGLE_AUTH_PROMPT=consent
       `,

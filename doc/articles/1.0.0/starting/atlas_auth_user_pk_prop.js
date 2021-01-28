@@ -5,7 +5,7 @@ Nome da propriedade do Model de usuário que será utilizada para armazenar o ID
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_AUTH_USER_PK_PROP=id
       `,

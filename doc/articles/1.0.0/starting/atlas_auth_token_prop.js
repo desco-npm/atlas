@@ -5,7 +5,7 @@ Nome da propriedade do Model de usuário que será utilizada para armazenar o to
   `,
   example: [
     {
-      lang: 'prompt',
+      lang: 'env',
       content: `
 ATLAS_AUTH_TOKEN_PROP=token
       `,
