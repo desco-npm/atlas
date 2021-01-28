@@ -13,18 +13,15 @@ class Mail {
 
       transporter.name = transporter.name || `mail${k + 1}`
 
-      this.transporters[transporter.name] = nodemailer.createTransport({
-        host: transporter.host,
-        port: transporter.port,
-        secure: transporter.secure, // true for 465, false for other ports
-        auth: {
-          user: transporter.user,
-          pass: transporter.password,
-        },
+      transporter = {
+        ...transporter,
         tls: {
-          rejectUnauthorized: transporter.rejectUnauthorized || false,
+          ...transporter.tls,
+          rejectUnauthorized: transporter.tls.rejectUnauthorized || false,
         },
-      })
+      }
+
+      this.transporters[transporter.name] = nodemailer.createTransport(transporter)
     })
   }
 
