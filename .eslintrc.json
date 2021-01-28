@@ -10,6 +10,8 @@
     },
     "globals": {
       // "var1": "writable",
+      "_envRequire": "readonly",
+      "envRequire": "readonly",
       "Atlas": "readonly",
       "clone": "readonly",
       "fileExists": "readonly",

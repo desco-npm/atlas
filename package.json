@@ -22,6 +22,7 @@
   "homepage": "https://github.com/descodifica/atlas#readme",
   "dependencies": {
     "@desco/cli-header": "^1.0.0",
+    "@desco/env-require": "^1.0.0",
     "@desco/sequelize-permission-resources": "^1.0.0",
     "app-root-dir": "^1.0.2",
     "body-parser": "^1.19.0",

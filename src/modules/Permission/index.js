@@ -1,4 +1,4 @@
-const sequelizePermissionResources = require('@desco/sequelize-permission-resources')
+const sequelizePermissionResources = _envRequire('@desco/sequelize-permission-resources')
 
 class Permission {
   constructor () {

@@ -15,3 +15,12 @@ global.decodeToken = require('jsonwebtoken').decode
 global.moment = require('moment')
 
 global.arrayUnique = array => array.filter((item, key, self) => self.indexOf(item) === key)
+
+global._envRequire = require('@desco/env-require')(
+  pathJoin(atlasDir, '../'),
+  {
+    'development': {
+      '@desco/cli-header': '../../cli-header',
+      '@desco/sequelize-permission-resources': '../../sequelize-permission-resources',
+    },
+  })
