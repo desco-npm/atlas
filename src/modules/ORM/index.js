@@ -38,7 +38,7 @@ class ORM {
       {
         logging: process.env.Atlas.ORM_DB_LOG,
         host: process.env.Atlas.ORM_DB_HOST,
-        dialect: process.env.Atlas.ORM_DB_TYPE,
+        dialect: process.env.Atlas.ORM_DB_DIALOG,
         pool: {
           max: parseInt(process.env.Atlas.ORM_POOL_MAX),
           min: parseInt(process.env.Atlas.ORM_POOL_MIN),
