@@ -1,0 +1,17 @@
+@font-face {
+    font-family: "Roboto Mono";
+    src: url('~@/assets/fonts/RobotoMono-VariableFont_wght.ttf');
+}
+
+@font-face {
+    font-family: "Roboto Slab";
+    src: url('~@/assets/fonts/RobotoSlab-VariableFont_wght.ttf');
+}
+
+// Fonte padrão a ser usada
+// Standard font to be used
+$FONT_DEFAULT: "Roboto Slab";
+
+// Fonte a ser usada nas áreas onde códigos são exibidos
+// Font to be used in areas where codes are displayed
+$FONT_CODE: "Roboto Mono";

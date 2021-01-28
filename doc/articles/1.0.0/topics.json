@@ -1,0 +1,9 @@
+[
+    {
+        "id": "starting",
+        "icon": "far fa-flag",
+        "label": {
+            "ptbr": "Começando"
+        }
+    }
+]

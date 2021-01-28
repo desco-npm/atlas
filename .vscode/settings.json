@@ -21,6 +21,24 @@
     {
       "name": "feature/pre",
       "base": "develop"
+    },
+    {
+      "name": "feature/doc",
+      "base": "develop"
     }
   ],
+  "cSpell.words": [
+    "CRUD",
+    "Permissionamento",
+    "desenvolvedor",
+    "desenvolvedores",
+    "engessamento",
+    "framework",
+    "hasheamento",
+    "registrar"
+  ],
+  "cSpell.language": "pt",
+  "cSpell.ignoreWords": [
+    "production"
+  ]
 }

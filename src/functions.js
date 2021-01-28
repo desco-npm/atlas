@@ -20,7 +20,7 @@ global._envRequire = require('@desco/env-require')(
   pathJoin(atlasDir, '../'),
   {
     'development': {
-      '@desco/cli-header': '../../cli-header',
-      '@desco/sequelize-permission-resources': '../../sequelize-permission-resources',
+      '@desco/cli-header': '../cli-header',
+      '@desco/sequelize-permission-resources': '../sequelize-permission-resources',
     },
   })
