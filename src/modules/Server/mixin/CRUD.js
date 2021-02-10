@@ -15,7 +15,7 @@ module.exports = ({ express, entity, Model, }) => {
   })
 
   express.put(`/crud/${entity}/:id`, async (req, res) => {
-    res.json(await Model.change(req.body, req.params.id))
+    res.json(await Model.change({ id: req.params.id, ...req.body, }))
   })
 
   express.delete(`/crud/${entity}/:id`, async (req, res) => {

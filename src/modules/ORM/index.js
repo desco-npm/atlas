@@ -2,8 +2,6 @@ const { Sequelize, DataTypes, Op, } = require('sequelize')
 
 let sequelize
 
-//TODO: Migrações - https://trello.com/c/pF6LJKPU/21-migra%C3%A7%C3%B5es
-//TODO: Transições - https://trello.com/c/J2l5Tvrj/22-transições
 class ORM {
   constructor () {
     this.modelsDir = pathJoin(projectDir, 'models')
@@ -24,8 +22,16 @@ class ORM {
     return Promise.resolve()
   }
 
-  sequelize () {
+  Sequelize () {
     return sequelize
+  }
+
+  DataTypes () {
+    return DataTypes
+  }
+
+  Op () {
+    return Op
   }
 
   async connect () {
@@ -38,7 +44,7 @@ class ORM {
       {
         logging: process.env.Atlas.ORM_DB_LOG,
         host: process.env.Atlas.ORM_DB_HOST,
-        dialect: process.env.Atlas.ORM_DB_TYPE,
+        dialect: process.env.Atlas.ORM_DB_DIALOG,
         pool: {
           max: parseInt(process.env.Atlas.ORM_POOL_MAX),
           min: parseInt(process.env.Atlas.ORM_POOL_MIN),
@@ -82,7 +88,7 @@ class ORM {
     })
   }
 
-  async addModel ({ name, defs = {}, opts = {}, mixins = [], pos = () => {}, }) {
+  async addModel ({ name, attrs = {}, opts = {}, mixins = [], pos = () => {}, }) {
     // Duas próximas precisam estar antes do await
     // Two next ones need to be before await
     const trace = stackTrace.get()
@@ -91,12 +97,13 @@ class ORM {
 
     this.pos[name] = pos
 
-    defs = objectMap(defs, (v, k) => {
-      const uidDefaultVersion = parseInt(process.env.Atlas.ORM_UID_DEFAULT_VERSION)
+    const uidDefaultVersion = parseInt(process.env.Atlas.ORM_UID_DEFAULT_VERSION)
+    const uidVersions = [ 1, 4, ]
 
-      const versions = [ 1, 4, ]
+    attrs = objectMap(attrs, v => {
+      const inVersions = uidVersions.indexOf(uidDefaultVersion) >= 0
 
-      if (k === 'id' && (v.type !== DataTypes.UUID || versions.indexOf(uidDefaultVersion) >= 0)) {
+      if (v.type === DataTypes.UUID && !v.defaultValue && inVersions) {
         return { ...v, defaultValue: Sequelize['UUIDV' + uidDefaultVersion], }
       }
 
@@ -105,7 +112,7 @@ class ORM {
 
     const Model = await sequelize.define(
       name,
-      defs || {},
+      attrs || {},
       { ...(opts || {}), sequelize: sequelize, }
     )
 
@@ -147,7 +154,9 @@ class ORM {
   async importModels () {
     let promises = []
 
-    const models = (await readdir(this.modelsDir)).map(i => i.slice(0, -3))
+    const models = (await readdir(this.modelsDir))
+      .map(i => i.slice(0, -3))
+      .filter(i => i !== 'index.js')
 
     models.map(modelName => {
       const modelAddrs = pathJoin(this.modelsDir, modelName)
@@ -171,8 +180,8 @@ class ORM {
     })
   }
 
-  transaction () {
-    return sequelize.transaction()
+  transaction (fn) {
+    return sequelize.transaction(fn)
   }
 
   listModels () {
@@ -203,6 +212,28 @@ class ORM {
     })
 
     return newWhere
+  }
+
+  treatParameters (params) {
+    params = {
+      ...params,
+      order: !params.order
+        ? [ [ 'createdAt', 'DESC', ], ]
+        : params.order.split(';').map(i => i.split(':')),
+      offset: params.offset ? parseInt(params.offset) : undefined,
+      limit: params.limit ? parseInt(params.limit) : undefined,
+      where: this.treatWhere(params.where),
+    }
+
+    if (params.page) {
+      const perPage = params.perPage || process.env.Atlas.ORM_PER_PAGE
+      const init = (params.page - 1) * perPage
+
+      params.limit = parseInt(perPage)
+      params.offset = parseInt(init)
+    }
+
+    return params
   }
 }
 

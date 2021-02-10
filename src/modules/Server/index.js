@@ -50,20 +50,13 @@ class Server {
     })
   }
 
-  middlewareExists () {
-    const addrs = pathJoin(this.middlewareDir, 'index.js')
-
-    return fileExists(addrs)
-  }
-
   async loadMiddlewareList () {
-    if (!this.middlewareExists()) return {}
+    if (!fileExists(this.middlewareDir)) return {}
 
     const middlewareList = await readdir(this.middlewareDir)
     const middlewareObj = {}
 
     middlewareList
-      .filter(middleware => middleware !== 'index.js')
       .map(middlewareName => {
         middlewareName = middlewareName.slice(0, -3)
         middlewareObj[middlewareName] = require(pathJoin(this.middlewareDir, middlewareName))

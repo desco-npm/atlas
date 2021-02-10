@@ -21,6 +21,39 @@
     {
       "name": "feature/pre",
       "base": "develop"
+    },
+    {
+      "name": "feature/doc",
+      "base": "develop"
     }
   ],
+  "cSpell.words": [
+    "CRUD",
+    "Permissionamento",
+    "an",
+    "anônima",
+    "desenvolvedor",
+    "desenvolvedores",
+    "engessamento",
+    "expir",
+    "expirável",
+    "framework",
+    "gerenciar",
+    "hasheamento",
+    "libera",
+    "liberação",
+    "nima",
+    "o",
+    "populado",
+    "registrar",
+    "registro",
+    "registros",
+    "terceiriza",
+    "vel"
+  ],
+  "cSpell.language": "pt",
+  "cSpell.ignoreWords": [
+    "production",
+    "starttls"
+  ]
 }

@@ -1,14 +1,23 @@
-const sequelizePermissionResources = require('@desco/sequelize-permission-resources')
+const sequelizePermissionResources = _envRequire('@desco/sequelize-permission-resources')
 
 class Permission {
   constructor () {
   }
 
   async init () {
-    const express = Atlas.Server.express()
+    if (!process.env.Atlas.PERMISSION) return Promise.resolve()
+
     const User = Atlas.Orm.listModels()[process.env.Atlas.AUTH_USER_MODEL]
     const Group = Atlas.Orm.listModels()[process.env.Atlas.AUTH_GROUP_MODEL]
     const Permission = Atlas.Orm.listModels()[process.env.Atlas.AUTH_MODEL]
+
+    if (!User || !Group || !Permission) {
+      console.log('Permission: will not be executed because one or more of the following models have not been defined: User, Group or Permission.')
+
+      return Promise.resolve()
+    }
+
+    const express = Atlas.Server.express()
     const secret = process.env.Atlas.AUTH_SECRET
     const google = process.env.Atlas.GOOGLE_AUTH
     const googleId = process.env.Atlas.GOOGLE_AUTH_ID

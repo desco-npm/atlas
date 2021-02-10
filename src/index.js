@@ -1,10 +1,10 @@
 //TODO: DiscordBot - https://trello.com/c/iK7f9pRi/31-discordbot
 //TODO: HTTPS - https://trello.com/c/qrJqWZCi/44-https
 
-const cliHeader = require('@desco/cli-header')
-
-require('./functions')
 require('./globals')
+require('./functions')
+
+const cliHeader = _envRequire('@desco/cli-header')
 
 class Atlas {
   constructor () {

@@ -1,0 +1,70 @@
+$color1: #2C974B;
+$color2: #191910;
+$color3: #0366D6;
+// $color4: #AC7A38;
+// $color5: #543512;
+$color6: darken(#f6f8fa, 5%);
+$color7: #DBEDFF;
+$color8: #24292E;
+$color9: #494a4b;
+$color10: lighten($color9, 25%);
+$color11: #FFFFFF;
+
+$normalScrollBackgroundColor: transparentize($color8, 0.75);
+$hoverScrollBackgroundColor: transparentize($color9, 0);
+$selectedScrollBackgroundColor: transparentize($color9, 0);
+
+$sideBackgroundColor: $color8;
+$sideTextColor: $color11;
+$sideTopBackgroundColor: $color8;
+$sideTopFrontConfigComboBackgroundColor: $color11;
+$sideTopFrontConfigComboTextColor: $color2;
+$sideTopFrontConfigComboBorderColor: $color2;
+$sideTopAvatarBorderColor: $color11;
+$sideSearchTopicsBackgroundColor: $color9;
+$sideSearchTopicsTextColor: $color11;
+$sideTreeItemTextColor: $color11;
+$sideTreeItemHoverBackgroundColor: $color9;
+$sideTreeItemHoverTextColor: $color11;
+$sideTreeNoItemsTextColor: $sideTreeItemTextColor;
+
+$contentBackgroundColor: $color6;
+$contentTextColor: $color2;
+
+$contentBreadcrumbBackbgroudColor: $color9;
+$contentBreadcrumbItemTextColor: $color11;
+$contentBreadcrumbItemLastTextColor: $color11;
+$contentBreadcrumbBorderColor: $color11;
+
+$contentPaginateBackgroundColor: $color9;
+$contentPaginateBorderColor: $color11;
+$contentPaginateLineColor: $color11;
+$contentPaginateTitleColor: $color11;
+$contentPaginateCircleBackgroundColor: $color9;
+$contentPaginateCircleBorderColor: $color11;
+$contentPaginateCircleIconColor: $color11;
+
+$contentBlockquoteBorderColor: $color1;
+$contentBlockquoteBackgroundColor: $color11;
+$contentBlockquoteTextColor: unset;
+
+$contentCodeBackgroundColor: $color9;
+$contentCodeTextColor: $color11;
+$contentCodeBorderColor: $color11;
+
+$contentExampleTabBackgroundColor: $color9;
+$contentExampleTabTextColor: $color11;
+$contentExampleTabAreaBackgroundColor: $color10;
+$contentExampleActiveTabBackgroundColor: $color8;
+$contentExampleActiveTabTextColor: $color11;
+$contentExampleActiveTabAreaBackgroundColor: $color9;
+$contentExampleBackgroundColor: $color8;
+$contentExampleTextColor: $color11;
+$contentExampleBorderColor: $color11;
+
+$contentTableHeaderBackgroundColor: $color8;
+$contentTableHeaderTextColor: $color11;
+$contentTableOddLineBackgroundColor: lighten($color9, 25%);
+$contentTableOddLineTextColor: unset;
+$contentTableEvenLineBackgroundColor: lighten($color9, 35%);
+$contentTableEvenLineTextColor: unset;

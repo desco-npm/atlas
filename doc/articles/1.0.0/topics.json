@@ -1,0 +1,359 @@
+[
+  {
+    "id": "starting",
+    "icon": "far fa-flag",
+    "label": {
+        "ptbr": "Começando"
+    }
+  },
+  {
+    "id": "globals",
+    "icon":"fas fa-globe-americas",
+    "label": {
+      "ptbr": "Globais"
+    }
+  },
+  {
+    "id": "orm",
+    "icon": "fas fa-database",
+    "label": {
+        "ptbr": "ORM"
+    },
+    "children": [
+      {
+        "id": "orm.connection",
+        "label": {
+          "ptbr": "Conexão"
+        }
+      },
+      {
+        "id": "orm.model",
+        "label": {
+          "ptbr": "Model"
+        },
+        "children": [
+          
+          {
+            "id": "orm.model.create",
+            "label": {
+              "ptbr": "Criando um Model"
+            },
+            "children": [
+              {
+                "id": "orm.model.create.attrs",
+                "label": {
+                  "ptbr": "Definindo Atributos"
+                }
+              },
+              {
+                "id": "orm.model.create.validations",
+                "label": {
+                  "ptbr": "Definindo Validações"
+                }
+              },
+              {
+                "id": "orm.model.create.method",
+                "label": {
+                  "ptbr": "Definindo Métodos"
+                }
+              },
+              {
+                "id": "orm.model.create.relation",
+                "label": {
+                  "ptbr": "Definindo Relacionamentos"
+                }
+              },
+              {
+                "id": "orm.model.create.mixin",
+                "label": {
+                  "ptbr": "Definindo Mixins"
+                }
+              }
+            ]
+          },
+          {
+            "id": "orm.model.method",
+            "label": {
+              "ptbr": "Métodos"
+            },
+            "children": [
+              {
+                "id": "orm.model.method.select",
+                "label": {
+                  "ptbr": "select()"
+                },
+                "children": [
+                  {
+                    "id": "orm.model.method.select.paginate",
+                    "label": {
+                      "ptbr": "Paginação"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "orm.model.method.selectOne",
+                "label": {
+                  "ptbr": "selectOne()"
+                }
+              },
+              {
+                "id": "orm.model.method.selectById",
+                "label": {
+                  "ptbr": "selectById()"
+                }
+              },
+              {
+                "id": "orm.model.method.selectOrCreate",
+                "label": {
+                  "ptbr": "selectOrCreate()"
+                }
+              },
+              {
+                "id": "orm.model.method.save",
+                "label": {
+                  "ptbr": "save()"
+                }
+              },
+              {
+                "id": "orm.model.method.insert",
+                "label": {
+                  "ptbr": "insert()"
+                }
+              },
+              {
+                "id": "orm.model.method.change",
+                "label": {
+                  "ptbr": "change()"
+                }
+              },
+              {
+                "id": "orm.model.method.read",
+                "label": {
+                  "ptbr": "read()"
+                }
+              },
+              {
+                "id": "orm.model.method.delete",
+                "label": {
+                  "ptbr": "delete()"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "orm.sync",
+        "label": {
+          "ptbr": "Sincronização"
+        }
+      },
+      {
+        "id": "orm.migration",
+        "label": {
+          "ptbr": "Migração"
+        }
+      },
+      {
+        "id": "orm.paginate",
+        "label": {
+          "ptbr": "Paginação"
+        }
+      },
+      {
+        "id": "orm.transaction",
+        "label": {
+          "ptbr": "Transações"
+        }
+      },
+      {
+        "id": "orm.method",
+        "label": {
+          "ptbr": "Métodos"
+        },
+        "children": [
+          {
+            "id": "orm.method.sequelize",
+            "label": {
+              "ptbr": "Sequelize()"
+            }
+          },
+          {
+            "id": "orm.method.datatypes",
+            "label": {
+              "ptbr": "DataTypes()"
+            }
+          },
+          {
+            "id": "orm.method.op",
+            "label": {
+              "ptbr": "Op()"
+            }
+          },
+          {
+            "id": "orm.method.addmodel",
+            "label": {
+              "ptbr": "addModel()"
+            }
+          },
+          {
+            "id": "orm.method.transaction",
+            "label": {
+              "ptbr": "transaction()"
+            }
+          },
+          {
+            "id": "orm.method.listmodels",
+            "label": {
+              "ptbr": "listModels()"
+            }
+          },
+          {
+            "id": "orm.method.treatparameters",
+            "label": {
+              "ptbr": "treatParameters()"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "server",
+    "icon": "fas fa-server",
+    "label": {
+      "ptbr": "Servidor"
+    },
+    "children": [
+      {
+        "id": "server.create",
+        "label": {
+          "ptbr": "Criando as Rotas"
+        },
+        "children": [
+          {
+            "id": "server.create.mixin",
+            "label": {
+              "ptbr": "Mixins"
+            }
+          },
+          {
+            "id": "server.create.middleware",
+            "label": {
+              "ptbr": "Middlewares"
+            }
+          }
+        ]
+      },
+      {
+        "id": "server.default",
+        "label": {
+          "ptbr": "Rotas Padrões"
+        }
+      },
+      {
+        "id": "server.static",
+        "label": {
+          "ptbr": "Arquivos Estáticos"
+        }
+      },
+      {
+        "id": "server.method",
+        "label": {
+          "ptbr": "Métodos"
+        },
+        "children": [
+          {
+            "id": "server.method.express",
+            "label": {
+              "ptbr": "Express()"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "access",
+    "icon": "fas fa-user-lock",
+    "label": {
+      "ptbr": "Acesso"
+    },
+    "children": [
+      {
+        "id": "access.login",
+        "label": {
+          "ptbr": "Login"
+        }
+      },
+      {
+        "id": "access.permission",
+        "label": {
+          "ptbr": "Permissões"
+        }
+      },
+      {
+        "id": "access.models",
+        "label": {
+          "ptbr": "Modelos"
+        }
+      }
+    ]
+  },
+  {
+    "id": "email",
+    "icon": "fas fa-mail-bulk",
+    "label": {
+      "ptbr": "E-mails"
+    },
+    "children": []
+  },
+  {
+    "id": "pdf",
+    "icon": "fas fa-file-pdf",
+    "label": {
+      "ptbr": "PDFs"
+    },
+    "children": []
+  },
+  {
+    "id": "datetime",
+    "icon": "fas fa-calendar-alt",
+    "label": {
+      "ptbr": "Data/Hora"
+    },
+    "children": []
+  },
+  {
+    "id": "entity",
+    "tree": false,
+    "label": {
+        "ptbr": "Entidades"
+    }
+  },
+  {
+    "id": "token",
+    "icon": "fas fa-key",
+    "label": {
+      "ptbr": "Tokens"
+    },
+    "children": []
+  },
+  {
+    "id": "method",
+    "icon":"fas fa-cubes",
+    "label": {
+      "ptbr": "Métodos"
+    },
+    "children": [
+      {
+        "id": "method.arrayUnique",
+        "tree": false,
+        "label": {
+          "ptbr": "arrayUnique()"
+        }
+      }
+    ]
+  }
+]

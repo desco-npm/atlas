@@ -13,25 +13,22 @@ class Mail {
 
       transporter.name = transporter.name || `mail${k + 1}`
 
-      this.transporters[transporter.name] = nodemailer.createTransport({
-        host: transporter.host,
-        port: transporter.port,
-        secure: transporter.secure, // true for 465, false for other ports
-        auth: {
-          user: transporter.user,
-          pass: transporter.password,
-        },
+      transporter = {
+        ...transporter,
         tls: {
-          rejectUnauthorized: transporter.rejectUnauthorized || false,
+          ...transporter.tls,
+          rejectUnauthorized: transporter.tls.rejectUnauthorized || false,
         },
-      })
+      }
+
+      this.transporters[transporter.name] = nodemailer.createTransport(transporter)
     })
   }
 
-  async send (config) {
+  async send (config, callback) {
     const name = config.name || Object.keys(this.transporters)[0]
 
-    return await this.transporters[name].sendMail(config)
+    return await this.transporters[name].sendMail(config, callback)
   }
 }
 
