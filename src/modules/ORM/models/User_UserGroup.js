@@ -1,5 +1,5 @@
 module.exports = async ({ DataTypes, Orm,  }) => {
-  const defs = {}
+  const attrs = {}
 
   const opts = {}
 
@@ -7,5 +7,5 @@ module.exports = async ({ DataTypes, Orm,  }) => {
 
   const mixins = []
 
-  return Orm.addModel({ name: Orm.User_UserGroup, defs, opts, pos, mixins, })
+  return Orm.addModel({ name: Orm.User_UserGroup, attrs, opts, pos, mixins, })
 }

@@ -11,6 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@desco/tot": "file:../../tot"
+    "@desco/tot": "^1.10.1"
   }
 }

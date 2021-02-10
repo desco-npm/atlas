@@ -1,7 +1,9 @@
+# Começando
+
 O AtlasJS é um framework desenvolvido para uso pessoal e disponibilizado publicamente com o objetivo de integrar várias ferramentas de uso do dia-a-dia de desenvolvedores backend. Tais como:
 
 * ORM ([Sequelize](https://sequelize.org/)) para manipulação mais simples e dinâmica do banco de dados
-* Roteamento ([Express](https://expressjs.com/pt-br/)) com todas as rotas de CRUD já disponibilizadas
+* Roteamento ([Express](https://expressjs.com/pt-br/)) com todas as rotas de [CRUD](https://pt.wikipedia.org/wiki/CRUD) já disponibilizadas
 * Sistema de Permissionamento para restrição e liberação de acesso de usuários ou grupos de usuários aos recursos ([@desco/sequelize-permission-resources](https://www.npmjs.com/package/@desco/sequelize-permission-resources))
 * Envio de Emails ([NodeMailer](https://nodemailer.com/about/))
 * Geração de PDF direto do HTML ([html-pdf](https://www.npmjs.com/package/html-pdf)) ou mais avançado ([pdfmake](https://www.npmjs.com/package/pdfmake))
@@ -11,7 +13,7 @@ O AtlasJS é um framework desenvolvido para uso pessoal e disponibilizado public
 
 Todos esses recursos já vem instalados, configurados e organizados de forma a simplificar, porém, evitar ao máximo o engessamento, permitindo que o desenvolvedor ainda tenha acesso às ferramentas originais.
 
-# Instalando
+## Instalando
 
 Rode o seguinte comando na linha de comando de sua preferência para instalar o AtlasJS no diretório desejado:
 
@@ -24,87 +26,21 @@ Além disso, será necessário criar alguns diretórios na raiz do projeto para 
 
 Para finalizar, também é preciso criar um arquivo `.env` com as configurações do projeto (detalhes no próximo tópico).
 
-# Configurando
+## Configurando
 
 O AtlasJS necessita de um arquivo `.env` no qual são definidas as configurações, veja todas elas:
 
 {<node_env>}
 
-{<atlas_host>}
+> [Consulte as configurações de ORM aqui.](#orm)
 
-{<atlas_orm_db_name>}
+> [Consulte as configurações de Servidor aqui.](#server)
 
-{<atlas_orm_db_user>}
+> [Consulte as configurações de Permissões aqui.](#permission)
 
-{<atlas_orm_db_password>}
+> [Consulte as configurações de Email aqui.](#email)
 
-{<atlas_orm_db_host>}
-
-{<atlas_orm_db_dialog>}
-
-{<atlas_orm_db_log>}
-
-{<atlas_orm_pool_max>}
-
-{<atlas_orm_pool_min>}
-
-{<atlas_orm_pool_idle>}
-
-{<atlas_orm_pool_acquire>}
-
-{<atlas_orm_sync>}
-
-{<atlas_orm_sync_force>}
-
-{<atlas_orm_sync_alter>}
-
-{<atlas_orm_uid_default_version>}
-
-{<atlas_orm_per_page>}
-
-{<atlas_server_port>}
-
-{<atlas_server_static>}
-
-{<atlas_mail>}
-
-{<atlas_auth_secret>}
-
-{<atlas_auth_algorithm>}
-
-{<atlas_auth_model>}
-
-{<atlas_auth_user_model>}
-
-{<atlas_auth_group_model>}
-
-{<atlas_auth_psw_prop>}
-
-{<atlas_auth_login_prop>}
-
-{<atlas_auth_mail_prop>}
-
-{<atlas_auth_token_prop>}
-
-{<atlas_auth_token_type_prop>}
-
-{<atlas_auth_user_pk_prop>}
-
-{<atlas_auth_expire_token_prop>}
-
-{<atlas_google_auth>}
-
-{<atlas_google_auth_id>}
-
-{<atlas_google_auth_key>}
-
-{<atlas_google_auth_scope>}
-
-{<atlas_google_auth_google_auth_prompt>}
-
-{<atlas_permission>}
-
-# Iniciando
+## Iniciando
 
 Crie seu script de inicialização do servidor com o seguinte conteúdo para importar e executar o AtlasJS:
 

@@ -25,10 +25,10 @@ class Mail {
     })
   }
 
-  async send (config) {
+  async send (config, callback) {
     const name = config.name || Object.keys(this.transporters)[0]
 
-    return await this.transporters[name].sendMail(config)
+    return await this.transporters[name].sendMail(config, callback)
   }
 }
 

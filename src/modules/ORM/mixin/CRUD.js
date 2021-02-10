@@ -1,7 +1,7 @@
 module.exports = ({ Op, }) => {
   return {
     async select (params) {
-      return this.findAndCountAll(treatParameters(params))
+      return this.findAndCountAll(Atlas.Orm.treatParameters(params))
         .then(result => {
           result.rows = result.rows.map(i => i.toJSON())
 
@@ -12,15 +12,15 @@ module.exports = ({ Op, }) => {
         })
     },
     async selectOne (params) {
-      return this.findOne(treatParameters(params))
+      return this.findOne(Atlas.Orm.treatParameters(params))
         .then(response => response ? response.toJSON(): null)
     },
-    async selectById (id) {
-      return (await this.findByPk(id)).toJSON()
+    async selectById (id, options = {}) {
+      return (await this.findByPk(id, options)).toJSON()
     },
     async selectOrCreate (params) {
       return this.findOrCreate({
-        where: treatParameters(params).where,
+        where: Atlas.Orm.treatParameters(params).where,
         defaults: params.create,
       })
         .then(result => {
@@ -30,16 +30,16 @@ module.exports = ({ Op, }) => {
         })
         .catch(e => console.log(e))
     },
-    save (data) {
+    save (data, options = {}) {
       if (data.id) {
-        return this.change(data)
+        return this.change(data, options)
       }
       else {
-        return this.insert(data)
+        return this.insert(data, options)
       }
     },
-    insert (data) {
-      return this.create(data)
+    insert (data, options = {}) {
+      return this.create(data, options)
         .then(response => {
           return this.read(response.id)
         })
@@ -47,25 +47,22 @@ module.exports = ({ Op, }) => {
           return e
         })
     },
-    change (body, id) {
-      if (!id && body.id) {
-        id = body.id
-      }
-
-      return this.update(body, { where: { id, }, })
+    change (body, options = {}) {
+      return this.update(body, { ...options, where: { id: body.id, }, })
         .then(async () => {
-          return this.read(id)
+          return this.read(body.id)
         })
         .catch(e => {
           return e
         })
     },
-    async read (id) {
-      return (await this.findByPk(id)).toJSON()
+    async read (id, options = {}) {
+      return this.selectById(id, options)
     },
-    async delete (ids) {
+    async delete (ids, options = {}) {
       return {
         count: (await this.destroy({
+          ...options,
           where: {
             id: {
               [ Op.in ]: ids.split(';'),
@@ -75,25 +72,4 @@ module.exports = ({ Op, }) => {
       }
     },
   }
-}
-
-function treatParameters (params) {
-  params = {
-    ...params,
-    order: !params.order
-      ? [ [ 'createdAt', 'DESC', ], ]
-      : params.order.split(';').map(i => i.split(':')),
-    offset: params.offset ? parseInt(params.offset) : undefined,
-    limit: params.limit ? parseInt(params.limit) : undefined,
-  }
-
-  if (params.page) {
-    const perPage = params.perPage || process.env.Atlas.ORM_PER_PAGE
-    const init = (params.page - 1) * perPage
-
-    params.limit = parseInt(perPage)
-    params.offset = parseInt(init)
-  }
-
-  return params
 }
