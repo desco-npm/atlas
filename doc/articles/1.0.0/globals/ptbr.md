@@ -38,4 +38,4 @@ Essas globais serão abordadas mais a fundo ao longo da documentação, porém a
 * [objectMap](https://www.npmjs.com/package/object.map) - Executa um loop sobre as propriedades de um objeto;
 * [isArray](https://www.npmjs.com/package/is-array) - Verifica se uma variável contém um [Array](https://developer.mozilla.org/pt-br/docs/Web/JavaScript/Reference/Global_Objects/Array);
 * [stackTrace](https://www.npmjs.com/package/stack-trace) - Retorna uma lista com o caminho de execução ([StackTrace](https://en.wikipedia.org/wiki/Stack_trace)) da aplicação até aquele ponto;
-* [arrayUnique]() - Remove itens repetidos do [Array](https://developer.mozilla.org/pt-br/docs/Web/JavaScript/Reference/Global_Objects/Array) de forma que conste apenas uma ocorrência;
+* [arrayUnique](#method.arrayUnique) - Remove itens repetidos do [Array](https://developer.mozilla.org/pt-br/docs/Web/JavaScript/Reference/Global_Objects/Array) de forma que conste apenas uma ocorrência;
