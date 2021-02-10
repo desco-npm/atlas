@@ -16,7 +16,6 @@ class Server {
 
     this.routesDir = pathJoin(projectDir, 'routes')
     this.middlewareDir = pathJoin(projectDir, 'middleware')
-    this.mixinDir = pathJoin(atlasDir, 'modules', 'Server', 'mixin')
   }
 
   async init () {
@@ -65,50 +64,35 @@ class Server {
     return middlewareObj
   }
 
-  async loadMixinList () {
-    const mixinList = await readdir(this.mixinDir)
-    const mixinObj = {}
-
-    mixinList
-      .filter(mixin => mixin !== 'index.js')
-      .map(mixinName => {
-        mixinName = mixinName.slice(0, -3)
-        mixinObj[mixinName] = require(pathJoin(this.mixinDir, mixinName))
-      })
-
-    return mixinObj
-  }
-
   async importRoutes () {
     const routeModels = await readdir(this.routesDir)
+    const promises = []
 
     routeModels.map(routeModelName => {
       const entity = routeModelName.slice(0, -3)
 
-      this.loadRouteByEntity(entity)
+      promises.push(this.loadRouteByEntity(entity))
     })
 
-    return Promise.resolve()
+    return Promise.all(promises)
   }
 
   async loadRouteByEntity (entity) {
     const middlewareList = await this.loadMiddlewareList()
-    const mixinList = await this.loadMixinList()
 
     const routeModelAddrs = pathJoin(this.routesDir, entity)
     const routeParams = {
       express,
       entity,
       middleware: middlewareList,
-      mixin: mixinList,
       Model: Atlas.Orm.listModels()[entity],
     }
+
+    require('./mixin/CRUD')(routeParams)
 
     if (await fileExists(routeModelAddrs)) {
       require(routeModelAddrs)(routeParams)
     }
-
-    mixinList.CRUD(routeParams)
 
     return Promise.resolve()
   }

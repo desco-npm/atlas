@@ -34,7 +34,7 @@ class Permission {
     const userPkProp = process.env.Atlas.AUTH_USER_PK_PROP
     const expireTokenProp = process.env.Atlas.AUTH_EXPIRE_TOKEN_PROP
 
-    Atlas.newEntity(throughUserGroup)
+    await Atlas.newEntity(throughUserGroup)
 
     sequelizePermissionResources({
       express,

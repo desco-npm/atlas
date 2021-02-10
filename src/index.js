@@ -27,8 +27,8 @@ class Atlas {
 
     await this.Mail.init()
     await this.Orm.init()
-    await this.Server.init()
     await this.Permission.init()
+    await this.Server.init()
 
     await this.Orm.start()
     await this.Server.start()
