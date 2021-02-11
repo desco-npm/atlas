@@ -15,15 +15,27 @@ class Server {
     express.use(Helmet())
 
     this.routesDir = pathJoin(projectDir, 'routes')
-    this.middlewareDir = pathJoin(projectDir, 'middleware')
   }
 
   async init () {
     this.defineStatic()
 
+    this.useMiddleware()
+
     await this.importRoutes()
 
     return Promise.resolve()
+  }
+
+  async useMiddleware () {
+    const addrs = pathJoin(projectDir, 'middlewares.js')
+
+    if (await fileExists(addrs)) {
+      require(addrs)({
+        express,
+        models: Atlas.Orm.listModels(),
+      })
+    }
   }
 
   start () {
@@ -49,21 +61,6 @@ class Server {
     })
   }
 
-  async loadMiddlewareList () {
-    if (!fileExists(this.middlewareDir)) return {}
-
-    const middlewareList = await readdir(this.middlewareDir)
-    const middlewareObj = {}
-
-    middlewareList
-      .map(middlewareName => {
-        middlewareName = middlewareName.slice(0, -3)
-        middlewareObj[middlewareName] = require(pathJoin(this.middlewareDir, middlewareName))
-      })
-
-    return middlewareObj
-  }
-
   async importRoutes () {
     const routeModels = await readdir(this.routesDir)
     const promises = []
@@ -78,14 +75,13 @@ class Server {
   }
 
   async loadRouteByEntity (entity) {
-    const middlewareList = await this.loadMiddlewareList()
-
     const routeModelAddrs = pathJoin(this.routesDir, entity)
+    const models = Atlas.Orm.listModels()
     const routeParams = {
       express,
       entity,
-      middleware: middlewareList,
-      Model: Atlas.Orm.listModels()[entity],
+      models,
+      Model: models[entity],
     }
 
     require('./mixin/CRUD')(routeParams)
