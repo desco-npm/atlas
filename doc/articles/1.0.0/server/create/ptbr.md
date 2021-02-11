@@ -16,9 +16,15 @@ Nosso arquivo exporta uma função e ela recebe como parâmetro um [objeto](http
 
 * **express** - [Objeto](https://developer.mozilla.org/pt-BR/docs/Aprender/JavaScript/Objetos/B%C3%A1sico) contendo a instancia do [ExpressJS](https://expressjs.com/pt-br/);
 * **entity** - Nome da [entidade](#entity) da rota. Util para usar na URL das rotas para que não precise ficar mudando rota por rota caso o nome mude;
-* **models** - [Array](https://developer.mozilla.org/pt-br/docs/Web/JavaScript/Reference/Global_Objects/Array) contendo todos os [modelos](#orm.model) da aplicação;
-* **Model** - [Objeto](https://developer.mozilla.org/pt-BR/docs/Aprender/JavaScript/Objetos/B%C3%A1sico) do [Modelo](#orm.model) da [entidade](#entity);
+* **models** - [Array](https://developer.mozilla.org/pt-br/docs/Web/JavaScript/Reference/Global_Objects/Array) contendo todos os [models](#orm.model) da aplicação;
+* **Model** - [Objeto](https://developer.mozilla.org/pt-BR/docs/Aprender/JavaScript/Objetos/B%C3%A1sico) do [Model](#orm.model) da [entidade](#entity);
 
 Note que recebemos em nossa função um objeto do [ExpressJS](https://expressjs.com/pt-br/), dessa forma você pode criar as rotas exatamente como criaria em qualquer outra aplicação que usa o [ExpressJS](https://expressjs.com/pt-br/).
 
-Note também que, recebendo o [Model](#orm.model) da [entidade](#entity) e todos os outros [modelos](#orm.model), podemos executar todos os [métodos do Model](#orm.model.method) dentro da rota.
+Note também que, recebendo o [Model](#orm.model) da [entidade](#entity) e todos os outros [models](#orm.model), podemos executar todos os [métodos do Model](#orm.model.method) dentro da rota.
+
+## Rotas Órfãs
+
+Pode parecer que sim, mas uma rota não precisa estar associada a um [Model](#orm.model), por exemplo, mesmo que não tenhamos um [Model](#orm.model) chamado **Google**, ainda podemos ter um arquivo de rota chamado **Google**.
+
+Isso é especialmente útil para criar rotas genéricas ou associadas a [entidades](#entity) mais abstratas.

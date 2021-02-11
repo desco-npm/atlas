@@ -1,10 +1,10 @@
 # Modelos
 
-O sistema de acesso do AtlasJS precisa de alguns [modelos](#orm.model) e seus atributos para funcionar, vamos ver cada um deles:
+O sistema de acesso do AtlasJS precisa de alguns [models](#orm.model) e seus atributos para funcionar, vamos ver cada um deles:
 
 ## User
 
-[Modelo](#orm.model) que irá gerenciar os usuários da aplicação. Configurado em [`ATLAS_AUTH_USER_MODEL`](#access.login).
+[Model](#orm.model) que irá gerenciar os usuários da aplicação. Configurado em [`ATLAS_AUTH_USER_MODEL`](#access.login).
 
 Deve ter os seguintes atributos:
 
@@ -20,17 +20,17 @@ Deve ter os seguintes atributos:
 
 ## Group
 
-[Modelo](#orm.model) que irá gerenciar os grupos de usuários da aplicação. Configurado em [`ATLAS_AUTH_GROUP_MODEL`](#access.permission).
+[Model](#orm.model) que irá gerenciar os grupos de usuários da aplicação. Configurado em [`ATLAS_AUTH_GROUP_MODEL`](#access.permission).
 
-Esse [Modelo](#orm.model)só é necessário se `ATLAS_PERMISSION` for `true`.
+Esse [Model](#orm.model)só é necessário se `ATLAS_PERMISSION` for `true`.
 
 Não existem atributos obrigatórios, apenas um `id` para referência nos [relacionamentos](#orm.model.create.relation).
 
 ## Permission
 
-[Modelo](#orm.model) que irá gerenciar as permissões de acesso aos recursos. Configurado em [`ATLAS_AUTH_MODEL`](#access.permission).
+[Model](#orm.model) que irá gerenciar as permissões de acesso aos recursos. Configurado em [`ATLAS_AUTH_MODEL`](#access.permission).
 
-Esse [Modelo](#orm.model)só é necessário se `ATLAS_PERMISSION` for `true`.
+Esse [Model](#orm.model)só é necessário se `ATLAS_PERMISSION` for `true`.
 
 * **resource** - Nome do recurso que será liberado ou não;
 * **allow** - Se o acesso ao recurso esta liberado ao usuário ou grupo, bloqueado ou padrão (negado a menos que outra permissão libere). Deve ser `BOOLEAN`;

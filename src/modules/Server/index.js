@@ -86,7 +86,7 @@ class Server {
 
     require('./mixin/CRUD')(routeParams)
 
-    if (await fileExists(routeModelAddrs)) {
+    if (await fileExists(routeModelAddrs + '.js')) {
       require(routeModelAddrs)(routeParams)
     }
 
