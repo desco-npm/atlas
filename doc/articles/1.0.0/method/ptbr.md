@@ -8,7 +8,7 @@ O AtlasJS disponibiliza vários métodos [globalmente na aplicação](#globals).
 
 * [clone](https://www.npmjs.com/package/clone) - Executa uma clonagem completa e profunda de um objeto, o objeto criado não possuirá qualquer referência ao original;
 * [fileExists](https://nodejs.org/api/fs.html#fs_fs_existssync_path) - Verifica se um determinado arquivo existe (Atalho para `fs.existsSync`);
-* [readFileSync]() - Carrega o conteúdo de um arquivo de forma síncrona (Atalho para `fs.readFileSync`);
+* [readFileSync](https://nodejs.org/api/fs.html#fs_fs_readfilesync_path_options) - Carrega o conteúdo de um arquivo de forma síncrona (Atalho para `fs.readFileSync`);
 * [readdir](https://nodejs.org/api/fs.html#fs_fs_readfilesync_path_options) - Carrega a lista de arquivos/diretórios de um dado diretório (Atalho para `fs.readdir`);
 * [pathJoin](https://nodejs.org/docs/latest/api/path.html#path_path_join_paths) - Cria um endereço de arquivo com o separador adequado de acordo com o sistema operacional do servidor (Atalho para `path.join`);
 * [generateToken](https://www.npmjs.com/package/jsonwebtoken#jwtsignpayload-secretorprivatekey-options-callback) - Cria um token (Atalho para `jsonwebtoken.sign`);
