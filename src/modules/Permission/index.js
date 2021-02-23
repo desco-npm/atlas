@@ -18,6 +18,7 @@ class Permission {
     }
 
     const express = Atlas.Server.express()
+    const op = Atlas.Orm.Op()
     const secret = process.env.Atlas.AUTH_SECRET
     const google = process.env.Atlas.GOOGLE_AUTH
     const googleId = process.env.Atlas.GOOGLE_AUTH_ID
@@ -38,6 +39,7 @@ class Permission {
 
     sequelizePermissionResources({
       express,
+      op,
       User,
       Group,
       Permission,
