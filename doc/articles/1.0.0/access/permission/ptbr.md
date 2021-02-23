@@ -31,3 +31,21 @@ Em caso de conflito de permissão concedida ao usuário e aos grupos, a permiss�
 Por outro lado, se o conflito estiver entre os grupos, ou seja, alguns grupos liberam e outros proíbem, o acesso será negado.
 
 Por fim, embora a permissão `default` proíba o acesso, ela não irá sobrepor uma liberação de acesso em outro grupo. Ou seja, se temos dois grupos, um com permissão `default` (proíbe) e outro como `true` (libera), o acesso será liberado.
+
+## Métodos de Requisições HTTP
+
+Por padrão a URL (ou nome do recurso) será considerada para todos os [métodos de requisição HTTP](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Methods), caso deseje alterar a permissão para um método em específico, adicione o método desejado ao início da URL separando-os por um pipe `|`.
+
+Por exemplo: `POST|minha/url/`.
+
+## URLs Dinâmicas
+
+Eventualmente iremos querer URLs mais dinâmicas, contendo por exemplo o `id` de um determinado registro, mas não faz sentido adicionar uma nova permissão para cada id, certo?
+
+Para resolver isso basta adicionar uma variável na parte da URL que deseja que seja dinâmica.
+
+Por exemplo: `POST|minha/url/dinamica/(:id)` ou `POST|minha/url/dinamica(/:id)`.
+
+Nos exemplos acima, temos uma URL dinâmica cuja ultima posição poderá ser qualquer valor.
+
+> O nome das variáveis não importa, nomeie-as considerando apenas a legibilidade do código.
