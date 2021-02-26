@@ -23,6 +23,8 @@ Note que recebemos em nossa função um objeto do [ExpressJS](https://expressjs.
 
 Note também que, recebendo o [Model](#orm.model) da [entidade](#entity) e todos os outros [models](#orm.model), podemos executar todos os [métodos do Model](#orm.model.method) dentro da rota.
 
+> Todo [Model](#orm.model) criado no [ORM](#orm) automaticamente irá criar todas as [rotas padrões](#server.default).
+
 ## Rotas Órfãs
 
 Pode parecer que sim, mas uma rota não precisa estar associada a um [Model](#orm.model), por exemplo, mesmo que não tenhamos um [Model](#orm.model) chamado **Google**, ainda podemos ter um arquivo de rota chamado **Google**.
