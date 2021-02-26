@@ -247,6 +247,14 @@ class ORM {
       include: this.treateInclude(params.include),
     }
 
+    params.order = params.order.map(order => {
+      if (order.length === 3) {
+        order[0] = this.listModels()[order[0]]
+      }
+
+      return order
+    })
+
     if (params.page) {
       const perPage = params.perPage || process.env.Atlas.ORM_PER_PAGE
       const init = (params.page - 1) * perPage
@@ -254,7 +262,7 @@ class ORM {
       params.limit = parseInt(perPage)
       params.offset = parseInt(init)
     }
-
+    console.log(params)
     return params
   }
 }
