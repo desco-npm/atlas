@@ -1,3 +1,5 @@
+const isArray = require('is-array')
+const isObject = require('is-object')
 const { Sequelize, DataTypes, Op, } = require('sequelize')
 
 let sequelize
@@ -214,6 +216,25 @@ class ORM {
     return newWhere
   }
 
+  treateInclude (include) {
+    if (!include) return
+
+    try {
+      const json = JSON.parse(include)
+
+      if (isArray(json)) {
+        return json.map(i => this.treateInclude(json))
+      }
+
+      if (isObject(json) && json.model) {
+        return { ...json, model: this.treateInclude(json.model), }
+      }
+    }
+    catch {
+      return this.listModels()[include]
+    }
+  }
+
   treatParameters (params) {
     params = {
       ...params,
@@ -223,6 +244,7 @@ class ORM {
       offset: params.offset ? parseInt(params.offset) : undefined,
       limit: params.limit ? parseInt(params.limit) : undefined,
       where: this.treatWhere(params.where),
+      include: this.treateInclude(params.include),
     }
 
     if (params.page) {

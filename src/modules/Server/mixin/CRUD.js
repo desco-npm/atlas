@@ -1,9 +1,6 @@
 module.exports = ({ express, entity, Model, }) => {
   express.get(`/crud/${entity}/`, async (req, res) => {
-    res.json(await Model.select({
-      ...req.query,
-      where: req.query.where ? Model.treatWhere(req.query.where) : undefined,
-    }))
+    res.json(await Model.select(req.query))
   })
 
   express.post(`/crud/${entity}/`, async (req, res) => {
