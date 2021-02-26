@@ -26,7 +26,6 @@ class Permission {
     const googleScope = process.env.Atlas.GOOGLE_AUTH_SCOPE
     const googlePrompt = process.env.Atlas.GOOGLE_AUTH_PROMPT
     const algorithm = process.env.Atlas.AUTH_ALGORITHM
-    const throughUserGroup = [ User.name, Group.name, ].sort().join('_')
     const pswProp = process.env.Atlas.AUTH_PSW_PROP
     const loginProp = process.env.Atlas.AUTH_LOGIN_PROP
     const mailProp = process.env.Atlas.AUTH_MAIL_PROP
@@ -34,8 +33,6 @@ class Permission {
     const tokenTypeProp = process.env.Atlas.AUTH_TOKEN_TYPE_PROP
     const userPkProp = process.env.Atlas.AUTH_USER_PK_PROP
     const expireTokenProp = process.env.Atlas.AUTH_EXPIRE_TOKEN_PROP
-
-    await Atlas.newEntity(throughUserGroup)
 
     sequelizePermissionResources({
       express,
