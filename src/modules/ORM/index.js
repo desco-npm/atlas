@@ -262,7 +262,7 @@ class ORM {
       params.limit = parseInt(perPage)
       params.offset = parseInt(init)
     }
-    console.log(params)
+
     return params
   }
 }
