@@ -206,13 +206,13 @@ class ORM {
         k = Op[op]
       }
 
-      if (typeof v === 'object') {
+      if (v !== null && typeof v === 'object') {
         v = this.treatWhere(v)
       }
 
       newWhere[k] = v
     })
-
+    console.log(newWhere)
     return newWhere
   }
 
