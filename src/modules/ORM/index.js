@@ -200,7 +200,7 @@ class ORM {
     }
 
     objectMap(where, (v, k) => {
-      if (k.indexOf('Op.') === 0) {
+      if (k.toLowerCase().indexOf('op.') === 0) {
         const op = k.split('.')[1]
 
         k = Op[op]
