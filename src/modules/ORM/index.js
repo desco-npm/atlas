@@ -158,7 +158,7 @@ class ORM {
 
     const models = (await readdir(this.modelsDir))
       .map(i => i.slice(0, -3))
-      .filter(i => i !== 'index.js')
+      .filter(i => i !== 'index')
 
     models.map(modelName => {
       const modelAddrs = pathJoin(this.modelsDir, modelName)
@@ -212,7 +212,7 @@ class ORM {
 
       newWhere[k] = v
     })
-    console.log(newWhere)
+
     return newWhere
   }
 
