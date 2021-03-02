@@ -19,7 +19,7 @@ npm install --save @desco/atlas
 
 ## Documentação
 
-O pacote `@desco/atlas` já vem com uma documentação embutida através do <a href="about:blank" target="_blank">Tot</a>, para consultar rode:
+O pacote `@desco/atlas` já vem com uma documentação embutida através do <a href="https://www.npmjs.com/package/@desco/tot" target="_blank">Tot</a>, para consultar rode:
 
 ```
 cd ./node_modules/@desco/atlas/doc;
