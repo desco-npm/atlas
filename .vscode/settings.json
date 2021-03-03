@@ -25,6 +25,10 @@
     {
       "name": "feature/doc",
       "base": "develop"
+    },
+    {
+      "name": "feature/d",
+      "base": "develop"
     }
   ],
   "cSpell.words": [
