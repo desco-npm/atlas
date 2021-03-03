@@ -4,12 +4,12 @@
   </a>
 </div>
 
-<div style="text-align: center;">
+<div align="center">
   <img src="https://i.ibb.co/R2gt14C/atlas.png">
   <h1>@desco/atlas</h1>
 </div>
 
-<div style="text-align: center;">
+<div align="center">
   <img alt="Licença MIT" src="https://img.shields.io/static/v1?label=Licença&message=MIT&color=green&style=for-the-badge">
   <img alt="Versão 2.0.0" src="https://img.shields.io/static/v1?label=Versão&message=2.0.0&color=blue&style=for-the-badge">
 </div>
