@@ -30,10 +30,10 @@
 
 ## 📋 Tabela de conteúdos
 
-* [✔️ Recursos](#recursos)
-* [🛠️ Tecnologias](#tecnologias)
-* [⚙️ Instalação](#instalacao)
-* [📚 Documentação](#documentacao)
+* [✔️ Recursos](#✔️-recursos)
+* [🛠️ Tecnologias](#🛠️-tecnologias)
+* [⚙️ Instalação](#⚙️-instalação)
+* [📚 Documentação](#📚-documentação)
 
 ---
 
@@ -76,7 +76,7 @@ npm install --save @desco/atlas
 
 ---
 
-## Documentação
+## 📚 Documentação
 
 O pacote `@desco/atlas` já vem com uma documentação embutida através do <a href="https://www.npmjs.com/package/@desco/tot" target="_blank">Tot</a>, para consultar rode:
 
