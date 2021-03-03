@@ -4,7 +4,7 @@
   </a>
 </div>
 
-<table>
+<table border="0">
   <tr>
     <td><img src="https://i.ibb.co/R2gt14C/atlas.png"></td>
     <td>  
