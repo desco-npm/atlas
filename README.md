@@ -99,7 +99,7 @@ cd ./node_modules/@desco/atlas/doc;
 npm run back;
 ```
 
-Cada um dos dois comandos irá rodar o frontend e o backend respetivamente.
+Cada um dos dois comandos irá rodar o frontend e o backend respectivamente.
 
 Caso seja a primeira vez rodando a documentação, será preciso primeiro fazer as instalações das dependências:
 
