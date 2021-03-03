@@ -33,7 +33,7 @@
 * [✔️ Recursos](#Recursos)
 * [🛠️ Tecnologias](#Tecnologias)
 * [⚙️ Instalação](#Instalação)
-* [📚 Documentação](#Autor)
+* [📚 Documentação](#Documentação)
 
 ---
 
