@@ -9,6 +9,7 @@
     <td><img src="https://i.ibb.co/R2gt14C/atlas.png"></td>
     <td>  
       <h1>@desco/atlas</h1>
+      Framework/Biblioteca NodeJS que reúne, organiza e prepara várias ferramentas de terceiros de uso comum no dia-a-dia do desenvolvimento Backend.
     </td>
   </tr>
 </table>
@@ -18,7 +19,7 @@
   <img alt="Versão 2.0.0" src="https://img.shields.io/static/v1?label=Versão&message=2.0.0&color=blue&style=for-the-badge">
 </div>
 
-<p style="text-align:center;">Framework/Biblioteca NodeJS que reúne, organiza e prepara várias ferramentas de terceiros de uso comum no dia-a-dia do desenvolvimento Backend.</p>
+
 
 <h4 align="center"> 
 	🧪 Em fase Beta 🚀
