@@ -30,12 +30,14 @@
 
 ## 📋 Table of Contents
 
-* [✔️ Resources](#resources)
-* [🛠️ Technology](#technology)
-* [⚙️ Installation](#installation)
-* [📚 Documentation](#documentation)
+* [✔️ Resources](#Resources)
+* [🛠️ Technology](#Technology)
+* [⚙️ Installation](#Installation)
+* [📚 Documentation](#Documentation)
 
 ---
+
+<a name="Resources"></a>
 
 ## ✔️ Resources
 
@@ -48,6 +50,8 @@
 - [x] Creation of WebTokens;
 
 ---
+
+<a name="Technology"></a>
 
 ## 🛠️ Technology
 
@@ -65,6 +69,7 @@ The following technologies are used:
 * Vários outros pacotes para funções mais corriqueiras; 
 
 ---
+<a name="Installation"></a>
 
 ## ⚙️ Installation
 
@@ -75,6 +80,8 @@ npm install --save @desco/atlas
 > Note that it will be necessary to have **NPM** installed for the command to work.
 
 ---
+
+<a name="Documentation"></a>
 
 ## 📚 Documentation
 

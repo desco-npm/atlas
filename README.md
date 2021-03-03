@@ -30,14 +30,14 @@
 
 ## 📋 Tabela de conteúdos
 
-* [✔️ Recursos](#recursos)
-* [🛠️ Tecnologias](#tecnologias)
-* [⚙️ Instalação](#instalação)
-* [📚 Documentação](#autor)
+* [✔️ Recursos](#Recursos)
+* [🛠️ Tecnologias](#Tecnologias)
+* [⚙️ Instalação](#Instalação)
+* [📚 Documentação](#Autor)
 
 ---
 
-<a name="Recursos" />
+<a name="Recursos"></a>
 
 ## ✔️ Recursos
 
@@ -51,7 +51,7 @@
 
 ---
 
-<a name="Tecnologias" />
+<a name="Tecnologias"></a>
 
 
 ## 🛠️ Tecnologias
@@ -71,7 +71,7 @@ As seguintes tecnologias são utilizadas:
 
 ---
 
-<a name="Instalação" />
+<a name="Instalação"></a>
 
 ## ⚙️ Instalação
 
@@ -83,7 +83,7 @@ npm install --save @desco/atlas
 
 ---
 
-<a name="Documentação" />
+<a name="Documentação"></a>
 
 ## 📚 Documentação
 
