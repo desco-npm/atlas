@@ -33,7 +33,7 @@
 * [✔️ Recursos](#recursos)
 * [🛠️ Tecnologias](#tecnologias)
 * [⚙️ Instalação](#instalação)
-* [📚 Documentação](#documentação)
+* [📚 Documentação](#autor)
 
 ---
 
@@ -102,7 +102,7 @@ npm install;
 > Futuramente a documentação estará disponível online
 
 ---
-
+<a name="autor" />
 ## Autor
 
 <table>
@@ -128,7 +128,6 @@ npm install;
         <img alt="GitHub NPM @desco-npm" src="https://img.shields.io/static/v1?label=GitHub NPM&message=@desco-npm&color=black&logo=github&style=for-the-badge">
       </a>
       <a href="https://www.npmjs.com/org/desco" target="_blank">
-        <img alt="NPM @desco" src="https://img.shields.io/static/v1?label=NPM&message=@desco&color=red&logo=npm&style=for-the-badge">
       </a>
     </td>
   </tr>
