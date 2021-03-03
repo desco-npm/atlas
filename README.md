@@ -4,10 +4,14 @@
   </a>
 </div>
 
-<div align="center">
-  <img src="https://i.ibb.co/R2gt14C/atlas.png">
-  <h1>@desco/atlas</h1>
-</div>
+<table>
+  <tr>
+    <td><img src="https://i.ibb.co/R2gt14C/atlas.png"></td>
+    <td>  
+      <h1>@desco/atlas</h1>
+    </td>
+  </tr>
+</table>
 
 <div align="center">
   <img alt="Licença MIT" src="https://img.shields.io/static/v1?label=Licença&message=MIT&color=green&style=for-the-badge">
