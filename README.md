@@ -1,4 +1,4 @@
-<div style="text-align: right;">
+<div align="right">
   <a href="README.md">
     <img alt="Licença MIT" src="https://img.shields.io/static/v1?label=&message=🇺🇸 Read in American English&color=red&style=for-the-badge" style="margin-left 1rem;" />
   </a>
