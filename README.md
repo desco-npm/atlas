@@ -30,10 +30,10 @@
 
 ## 📋 Tabela de conteúdos
 
-* [✔️ Recursos](#✔️-recursos)
-* [🛠️ Tecnologias](#🛠️-tecnologias)
-* [⚙️ Instalação](#⚙️-instalação)
-* [📚 Documentação](#📚-documentação)
+* [✔️ Recursos](#recursos)
+* [🛠️ Tecnologias](#tecnologias)
+* [⚙️ Instalação](#instalação)
+* [📚 Documentação](#documentação)
 
 ---
 
