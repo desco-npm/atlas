@@ -61,7 +61,7 @@ As seguintes tecnologias são utilizadas:
 * [HtmlPdf](https://www.npmjs.com/package/html-pdf);
 * [PdfMake](https://www.npmjs.com/package/pdfmake);
 * [Moment](https://www.npmjs.com/package/moment);
-* [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken);
+* [JsonWebToken](https://www.npmjs.com/package/jsonwebtoken);
 * Vários outros pacotes para funções mais corriqueiras; 
 
 ---
