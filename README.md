@@ -37,6 +37,8 @@
 
 ---
 
+<a name="Recursos" />
+
 ## ✔️ Recursos
 
 - [x] ORM;
@@ -48,6 +50,9 @@
 - [x] Criação de WebTokens;
 
 ---
+
+<a name="Tecnologias" />
+
 
 ## 🛠️ Tecnologias
 
@@ -66,6 +71,8 @@ As seguintes tecnologias são utilizadas:
 
 ---
 
+<a name="Instalação" />
+
 ## ⚙️ Instalação
 
 ```
@@ -75,6 +82,8 @@ npm install --save @desco/atlas
 > Note que será necessário ter o **NPM** instalado para o comando funcionar.
 
 ---
+
+<a name="Documentação" />
 
 ## 📚 Documentação
 
@@ -102,7 +111,7 @@ npm install;
 > Futuramente a documentação estará disponível online
 
 ---
-<a name="autor" />
+
 ## Autor
 
 <table>
