@@ -1,6 +1,6 @@
 <div align="right">
-  <a href="README.md">
-    <img alt="Licença MIT" src="https://img.shields.io/static/v1?label=&message=🇺🇸 Read in American English&color=red&style=for-the-badge" style="margin-left 1rem;" />
+  <a href="README.US.md">
+    <img alt="Licença MIT" src="https://img.shields.io/static/v1?label=&message=🇺🇸 Read in American English&color=red&style=for-the-badge" />
   </a>
 </div>
 
@@ -61,7 +61,7 @@ As seguintes tecnologias são utilizadas:
 * [HtmlPdf](https://www.npmjs.com/package/html-pdf);
 * [PdfMake](https://www.npmjs.com/package/pdfmake);
 * [Moment](https://www.npmjs.com/package/moment);
-* [JsonWebToken]([jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken));
+* [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken);
 * Vários outros pacotes para funções mais corriqueiras; 
 
 ---
@@ -107,28 +107,28 @@ npm install;
 
 <table>
   <tr>
-    <td width="130px">
-      <img style="border-radius: 50%;" src="https://scontent.fsdu1-1.fna.fbcdn.net/v/t1.0-9/539886_235546170253505_5977326689811409130_n.jpg?_nc_cat=106&ccb=3&_nc_sid=174925&_nc_eui2=AeGgFWn_fWInwRkTo3mHSP993TbQ0TzG0Y3dNtDRPMbRjS-eZL1tr4I5maqz6O-jva9qWnIxKOsD3UtSm9CTeCys&_nc_ohc=Qw6NaDGrtIgAX9uFF2c&_nc_ht=scontent.fsdu1-1.fna&oh=5ebac9874d7a24e157c8c99fd965c2a4&oe=606539CE" width="100px;" alt=""/>
+    <td width="140px">
+      <img src="https://scontent.fsdu1-1.fna.fbcdn.net/v/t1.0-9/539886_235546170253505_5977326689811409130_n.jpg?_nc_cat=106&ccb=3&_nc_sid=174925&_nc_eui2=AeGgFWn_fWInwRkTo3mHSP993TbQ0TzG0Y3dNtDRPMbRjS-eZL1tr4I5maqz6O-jva9qWnIxKOsD3UtSm9CTeCys&_nc_ohc=Qw6NaDGrtIgAX9uFF2c&_nc_ht=scontent.fsdu1-1.fna&oh=5ebac9874d7a24e157c8c99fd965c2a4&oe=606539CE" width="100px;" alt=""/>
       <b>Rafael A. R. Dias</b>
     </td>
     <td>  
       <a href="mailto:eu@diasrafael.com.br" target="_blank" >
-        <img alt="Email eu@diasrafael.com.br" src="https://img.shields.io/static/v1?label=Email&message=eu@diasrafael.com.br&color=red&logo=gmail&style=for-the-badge" style="margin: 0 .75rem .75rem 0;">
+        <img alt="Email eu@diasrafael.com.br" src="https://img.shields.io/static/v1?label=Email&message=eu@diasrafael.com.br&color=red&logo=gmail&style=for-the-badge">
       </a>
       <a href="https://www.linkedin.com/in/diasrafael/" target="_blank">
-        <img alt="Linkedin @diasrafael" src="https://img.shields.io/static/v1?label=Linkedin&message=@diasrafael&color=blue&logo=linkedin&style=for-the-badge" style="margin: 0 .75rem .75rem 0;">
+        <img alt="Linkedin @diasrafael" src="https://img.shields.io/static/v1?label=Linkedin&message=@diasrafael&color=blue&logo=linkedin&style=for-the-badge">
       </a>
       <a href="https://www.facebook.com/eudiasrafael" target="_blank">
-        <img alt="Facebook @eudiasrafael" src="https://img.shields.io/static/v1?label=Facebook&message=@eudiasrafael&color=blue&logo=facebook&style=for-the-badge" style="margin: 0 .75rem .75rem 0;;">
+        <img alt="Facebook @eudiasrafael" src="https://img.shields.io/static/v1?label=Facebook&message=@eudiasrafael&color=blue&logo=facebook&style=for-the-badge">
       </a>
       <a href="https://github.com/descodifica" target="_blank">
-        <img alt="GitHub Geral @descodifica" src="https://img.shields.io/static/v1?label=GitHub Geral&message=@descodifica&color=black&logo=github&style=for-the-badge" style="margin: 0 .75rem .75rem 0;">
+        <img alt="GitHub Geral @descodifica" src="https://img.shields.io/static/v1?label=GitHub Geral&message=@descodifica&color=black&logo=github&style=for-the-badge">
       </a>
       <a href="https://github.com/desco-npm" target="_blank">
-        <img alt="GitHub NPM @desco-npm" src="https://img.shields.io/static/v1?label=GitHub NPM&message=@desco-npm&color=black&logo=github&style=for-the-badge" style="margin: 0 .75rem .75rem 0;">
+        <img alt="GitHub NPM @desco-npm" src="https://img.shields.io/static/v1?label=GitHub NPM&message=@desco-npm&color=black&logo=github&style=for-the-badge">
       </a>
       <a href="https://www.npmjs.com/org/desco" target="_blank">
-        <img alt="NPM @desco" src="https://img.shields.io/static/v1?label=NPM&message=@desco&color=red&logo=npm&style=for-the-badge" style="margin: 0 .75rem .75rem 0;">
+        <img alt="NPM @desco" src="https://img.shields.io/static/v1?label=NPM&message=@desco&color=red&logo=npm&style=for-the-badge">
       </a>
     </td>
   </tr>
