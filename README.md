@@ -4,7 +4,7 @@
   </a>
 </div>
 
-<table style="border: 1px solid red;">
+<table>
   <tr>
     <td><img src="https://i.ibb.co/R2gt14C/atlas.png"></td>
     <td>  
@@ -23,6 +23,7 @@
 </table>
 
 > <a href="https://github.com/desco-npm" target="_blank">Veja outros projetos NPM aqui.</a>
+
 > <a href="https://github.com/descoifica" target="_blank">Veja outros projetos aqui.</a>
 
 ---
