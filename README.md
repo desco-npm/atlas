@@ -3,9 +3,10 @@
 
   # @desco/atlas v2.0.0
 
-  **Autor: Rafael A. R. Dias <eu@diasrafaelcom.br>**
+  **Autor: Rafael A. R. Dias <eu@diasrafael.com.br>**
 
-  <a href="https://github.com/desco-npm" target="_blank">Veja outros projetos aqui</a>
+  > <a href="https://github.com/desco-npm" target="_blank">Veja outros projetos NPM aqui.</a>
+  > <a href="https://github.com/descoifica" target="_blank">Veja outros projetos aqui.</a>
 </header>
 
 ## Sobre
@@ -16,6 +17,8 @@ Framework/Biblioteca NodeJS que reúne, organiza e prepara várias ferramentas d
 ```
 npm install --save @desco/atlas
 ```
+
+> Note que será necessário ter o **NPM** instalado para o comando funcionar.
 
 ## Documentação
 
