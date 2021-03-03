@@ -10,7 +10,7 @@
     <td>  
       <h1>@desco/atlas</h1>
       Framework/Biblioteca NodeJS que reúne, organiza e prepara várias ferramentas de terceiros de uso comum no dia-a-dia do desenvolvimento Backend.
-      <br />
+      <br /><br />
       <div align="center">
         <img alt="Licença MIT" src="https://img.shields.io/static/v1?label=Licença&message=MIT&color=green&style=for-the-badge">
         <img alt="Versão 2.0.0" src="https://img.shields.io/static/v1?label=Versão&message=2.0.0&color=blue&style=for-the-badge">
