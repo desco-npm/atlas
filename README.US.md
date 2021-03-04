@@ -12,8 +12,8 @@
       NodeJS Framework / Library that gathers, organizes and prepares various third-party tools in common use in the day-to-day development of Backend.
       <br /><br />
       <div align="center">
-        <img alt="MIT License" src="https://img.shields.io/static/v1?label=Licença&message=MIT&color=green&style=for-the-badge">
-        <img alt="MIT License" src="https://img.shields.io/static/v1?label=Versão&message=2.0.0&color=blue&style=for-the-badge">
+        <img alt="MIT License" src="https://img.shields.io/static/v1?label=License&message=MIT&color=green&style=for-the-badge">
+        <img alt="Version 2.0.1" src="https://img.shields.io/static/v1?label=Version&message=2.0.1&color=blue&style=for-the-badge">
       </div>
       <h4 align="center"> 
         🧪 In Beta 🚀
@@ -73,7 +73,7 @@ The following technologies are used:
 
 ## ⚙️ Installation
 
-```
+```bash
 npm install --save @desco/atlas
 ```
 
@@ -87,12 +87,12 @@ npm install --save @desco/atlas
 
 The `@desco/atlas` package comes with built-in documentation via <a href="https://www.npmjs.com/package/@desco/tot" target="_blank">Tot</a>, to consult run:
 
-```
+```bash
 cd ./node_modules/@desco/atlas/doc;
 npm run front;
 ```
 
-```
+```bash
 cd ./node_modules/@desco/atlas/doc;
 npm run back;
 ```
@@ -101,7 +101,7 @@ Each of the two commands will run the frontend and the backend respectively.
 
 If it is the first time running the documentation, you will first need to install the facilities:
 
-```
+```bash
 cd ./node_modules/@desco/atlas/doc;
 npm install;
 ```
