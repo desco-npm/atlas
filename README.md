@@ -13,7 +13,7 @@
       <br /><br />
       <div align="center">
         <img alt="Licença MIT" src="https://img.shields.io/static/v1?label=Licença&message=MIT&color=green&style=for-the-badge">
-        <img alt="Versão 2.0.0" src="https://img.shields.io/static/v1?label=Versão&message=2.0.0&color=blue&style=for-the-badge">
+        <img alt="Versão 2.0.1" src="https://img.shields.io/static/v1?label=Versão&message=2.0.1&color=blue&style=for-the-badge">
       </div>
       <h4 align="center"> 
         🧪 Em fase Beta 🚀
@@ -75,7 +75,7 @@ As seguintes tecnologias são utilizadas:
 
 ## ⚙️ Instalação
 
-```
+```bash
 npm install --save @desco/atlas
 ```
 
@@ -89,12 +89,12 @@ npm install --save @desco/atlas
 
 O pacote `@desco/atlas` já vem com uma documentação embutida através do <a href="https://www.npmjs.com/package/@desco/tot" target="_blank">Tot</a>, para consultar rode:
 
-```
+```bash
 cd ./node_modules/@desco/atlas/doc;
 npm run front;
 ```
 
-```
+```bash
 cd ./node_modules/@desco/atlas/doc;
 npm run back;
 ```
@@ -103,7 +103,7 @@ Cada um dos dois comandos irá rodar o frontend e o backend respectivamente.
 
 Caso seja a primeira vez rodando a documentação, será preciso primeiro fazer as instalações das dependências:
 
-```
+```bash
 cd ./node_modules/@desco/atlas/doc;
 npm install;
 ```

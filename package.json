@@ -1,6 +1,6 @@
 {
   "name": "@desco/atlas",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "NodeJS Framework",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/descodifica/atlas.git"
+    "url": "git+https://github.com/desco-npm/atlas.git"
   },
   "keywords": [
     "NodeJS",
@@ -16,10 +16,7 @@
   ],
   "author": "Rafael A. R. Dias <eu@diasrafael.com.br>",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/descodifica/atlas/issues"
-  },
-  "homepage": "https://github.com/descodifica/atlas#readme",
+  "homepage": "https://github.com/desco-npm/atlas#readme",
   "dependencies": {
     "@desco/cli-header": "^1.0.0",
     "@desco/env-require": "^1.0.1",
