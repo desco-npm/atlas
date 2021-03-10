@@ -223,7 +223,7 @@ class ORM {
       const json = JSON.parse(include)
 
       if (isArray(json)) {
-        return json.map(i => this.treateInclude(json))
+        return json.map(i => this.treateInclude(i))
       }
 
       if (isObject(json) && json.model) {
