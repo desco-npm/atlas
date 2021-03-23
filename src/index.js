@@ -16,14 +16,14 @@ class Atlas {
     this.Permission = require('./modules/Permission')
   }
 
-  async init () {
+  async init (config = {}) {
     cliHeader({
       title: 'AtlasJS v' + require('../package.json').version,
       size: 25,
       align: 'center',
     })
 
-    require('./env.js')()
+    require('./env.js')(config)
 
     await this.Mail.init()
     await this.Orm.init()
@@ -43,6 +43,6 @@ class Atlas {
   }
 }
 
-module.exports = async () => {
-  return new Atlas().init()
+module.exports = async config => {
+  return new Atlas().init(config)
 }

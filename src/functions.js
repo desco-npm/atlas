@@ -2,6 +2,17 @@ global.fs = require('fs-extra')
 global.path = require('path')
 global.jsonwebtoken = require('jsonwebtoken')
 
+global._envRequire = require('@desco/env-require')(
+  path.join(atlasDir, '../'),
+  {
+    'development': {
+      '@desco/cli-header': '../cli-header',
+      '@desco/sequelize-permission-resources': '../sequelize-permission-resources',
+      '@desco/front-to-sequelize': '../front-to-sequelize',
+    },
+  }
+)
+
 global.clone = require('clone')
 global.fileExists = fs.existsSync
 global.readFileSync = fs.readFileSync
@@ -18,15 +29,6 @@ global.htmlPdf = require('html-pdf')
 global.pdfMake = require('pdfmake')
 global.moment = require('moment')
 global.deepMerge = require('deepmerge')
-global.frontToSequelize = require('../../front-to-sequelize')
+global.frontToSequelize = _envRequire('@desco/front-to-sequelize')
 
 global.arrayUnique = array => array.filter((item, key, self) => self.indexOf(item) === key)
-
-global._envRequire = require('@desco/env-require')(
-  pathJoin(atlasDir, '../'),
-  {
-    'development': {
-      '@desco/cli-header': '../cli-header',
-      '@desco/sequelize-permission-resources': '../sequelize-permission-resources',
-    },
-  })
