@@ -1,6 +1,6 @@
-module.exports = ({ express, entity, Model, }) => {
+module.exports = ({ express, entity, Model, models, }) => {
   express.get(`/crud/${entity}/`, async (req, res) => {
-    res.json(await Model.select(req.query))
+    res.json(await Model.select(frontToSequelize(req.query, models, Atlas.Orm.Sequelize())))
   })
 
   express.post(`/crud/${entity}/`, async (req, res) => {

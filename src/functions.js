@@ -17,6 +17,7 @@ global.stackTrace = require('stack-trace')
 global.htmlPdf = require('html-pdf')
 global.pdfMake = require('pdfmake')
 global.moment = require('moment')
+global.frontToSequelize = require('../../front-to-sequelize')
 
 global.arrayUnique = array => array.filter((item, key, self) => self.indexOf(item) === key)
 

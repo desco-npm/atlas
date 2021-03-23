@@ -1,7 +1,7 @@
 module.exports = ({ Op, }) => {
   return {
     async select (params) {
-      return this.findAndCountAll(Atlas.Orm.treatParameters(params))
+      return this.findAndCountAll(params)
         .then(result => {
           result.rows = result.rows.map(i => i.toJSON())
 
@@ -12,7 +12,7 @@ module.exports = ({ Op, }) => {
         })
     },
     async selectOne (params) {
-      return this.findOne(Atlas.Orm.treatParameters(params))
+      return this.findOne(params)
         .then(response => response ? response.toJSON(): null)
     },
     async selectById (id, options = {}) {
@@ -20,7 +20,7 @@ module.exports = ({ Op, }) => {
     },
     async selectOrCreate (params) {
       return this.findOrCreate({
-        where: Atlas.Orm.treatParameters(params).where,
+        where: params.where,
         defaults: params.create,
       })
         .then(result => {
