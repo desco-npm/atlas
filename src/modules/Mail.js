@@ -6,11 +6,9 @@ class Mail {
   }
 
   init () {
-    const transporters = process.env.Atlas.MAIL.split(';')
+    const transporters = process.env.Atlas.Mail
 
     transporters.map((transporter, k) => {
-      transporter = JSON.parse(transporter)
-
       transporter.name = transporter.name || `mail${k + 1}`
 
       transporter = {

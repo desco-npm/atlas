@@ -38,7 +38,7 @@ class Server {
   }
 
   start () {
-    let port = parseInt(process.env.Atlas.SERVER_PORT)
+    let port = parseInt(process.env.Atlas.Server.port)
 
     express.listen(port, () => {
       console.log(`Server listening at port ${port}`)
@@ -46,7 +46,7 @@ class Server {
   }
 
   defineStatic () {
-    const staticList = process.env.Atlas.SERVER_STATIC.split(';')
+    const staticList = process.env.Atlas.Server.static
 
     staticList.map(staticItem => {
       const [ dir, prefix, ] = staticItem.split(',')

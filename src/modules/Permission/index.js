@@ -5,11 +5,11 @@ class Permission {
   }
 
   async init () {
-    if (!process.env.Atlas.PERMISSION) return Promise.resolve()
+    if (!process.env.Atlas.Auth.permission) return Promise.resolve()
 
-    const User = Atlas.Orm.listModels()[process.env.Atlas.AUTH_USER_MODEL]
-    const Group = Atlas.Orm.listModels()[process.env.Atlas.AUTH_GROUP_MODEL]
-    const Permission = Atlas.Orm.listModels()[process.env.Atlas.AUTH_MODEL]
+    const User = Atlas.Orm.listModels()[process.env.Atlas.Auth.userModel]
+    const Group = Atlas.Orm.listModels()[process.env.Atlas.Auth.groupModel]
+    const Permission = Atlas.Orm.listModels()[process.env.Atlas.Auth.model]
 
     if (!User || !Group || !Permission) {
       console.log('Permission: will not be executed because one or more of the following models have not been defined: User, Group or Permission.')
@@ -19,20 +19,20 @@ class Permission {
 
     const express = Atlas.Server.express()
     const op = Atlas.Orm.Op()
-    const secret = process.env.Atlas.AUTH_SECRET
-    const google = process.env.Atlas.GOOGLE_AUTH
-    const googleId = process.env.Atlas.GOOGLE_AUTH_ID
-    const googleKey = process.env.Atlas.GOOGLE_AUTH_KEY
-    const googleScope = process.env.Atlas.GOOGLE_AUTH_SCOPE
-    const googlePrompt = process.env.Atlas.GOOGLE_AUTH_PROMPT
-    const algorithm = process.env.Atlas.AUTH_ALGORITHM
-    const pswProp = process.env.Atlas.AUTH_PSW_PROP
-    const loginProp = process.env.Atlas.AUTH_LOGIN_PROP
-    const mailProp = process.env.Atlas.AUTH_MAIL_PROP
-    const tokenProp = process.env.Atlas.AUTH_TOKEN_PROP
-    const tokenTypeProp = process.env.Atlas.AUTH_TOKEN_TYPE_PROP
-    const userPkProp = process.env.Atlas.AUTH_USER_PK_PROP
-    const expireTokenProp = process.env.Atlas.AUTH_EXPIRE_TOKEN_PROP
+    const secret = process.env.Atlas.Auth.secret
+    const google = process.env.Atlas.Auth.Google.auth
+    const googleId = process.env.Atlas.Auth.Google.authId
+    const googleKey = process.env.Atlas.Auth.Google.authKey
+    const googleScope = process.env.Atlas.Auth.Google.authScope
+    const googlePrompt = process.env.Atlas.Auth.Google.authPrompt
+    const algorithm = process.env.Atlas.Auth.algorithm
+    const pswProp = process.env.Atlas.Auth.pswProp
+    const loginProp = process.env.Atlas.Auth.loginProp
+    const mailProp = process.env.Atlas.Auth.mailProp
+    const tokenProp = process.env.Atlas.Auth.tokenProp
+    const tokenTypeProp = process.env.Atlas.Auth.tokenTypeProp
+    const userPkProp = process.env.Atlas.Auth.userPkProp
+    const expireTokenProp = process.env.Atlas.Auth.expireTokenProp
 
     sequelizePermissionResources({
       express,

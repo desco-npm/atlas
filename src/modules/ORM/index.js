@@ -40,18 +40,18 @@ class ORM {
     if (await this.authenticate() === true) return this
 
     sequelize = new Sequelize(
-      process.env.Atlas.ORM_DB_NAME,
-      process.env.Atlas.ORM_DB_USER,
-      process.env.Atlas.ORM_DB_PASSWORD,
+      process.env.Atlas.Orm.Db.name,
+      process.env.Atlas.Orm.Db.user,
+      process.env.Atlas.Orm.Db.password,
       {
-        logging: process.env.Atlas.ORM_DB_LOG,
-        host: process.env.Atlas.ORM_DB_HOST,
-        dialect: process.env.Atlas.ORM_DB_DIALOG,
+        logging: process.env.Atlas.Orm.Db.log,
+        host: process.env.Atlas.Orm.Db.host,
+        dialect: process.env.Atlas.Orm.Db.dialog,
         pool: {
-          max: parseInt(process.env.Atlas.ORM_POOL_MAX),
-          min: parseInt(process.env.Atlas.ORM_POOL_MIN),
-          acquire: parseInt(process.env.Atlas.ORM_POOL_IDLE),
-          idle: parseInt(process.env.Atlas.ORM_POOL_ACQUIRE),
+          max: parseInt(process.env.Atlas.Orm.pool.max),
+          min: parseInt(process.env.Atlas.Orm.pool.min),
+          acquire: parseInt(process.env.Atlas.Orm.pool.idle),
+          idle: parseInt(process.env.Atlas.Orm.pool.acquire),
         },
       }
     )
@@ -99,7 +99,7 @@ class ORM {
 
     this.pos[name] = pos
 
-    const uidDefaultVersion = parseInt(process.env.Atlas.ORM_UID_DEFAULT_VERSION)
+    const uidDefaultVersion = parseInt(process.env.Atlas.Orm.UID_DEFAULT_VERSION)
     const uidVersions = [ 1, 4, ]
 
     attrs = objectMap(attrs, v => {
@@ -170,15 +170,15 @@ class ORM {
   }
 
   sync () {
-    const sync = process.env.Atlas.ORM_SYNC
-    const forceSync = process.env.Atlas.ORM_SYNC_FORCE
-    const alterSync = process.env.Atlas.ORM_SYNC_ALTER
+    const sync = process.env.Atlas.Orm.sync
+    const forceSync = process.env.Atlas.Orm.sync_force
+    const alterSync = process.env.Atlas.Orm.sync_alter
 
     if (!sync && !forceSync && !alterSync) return
 
     return sequelize.sync({
-      force: process.env.Atlas.ORM_SYNC_FORCE,
-      alter: process.env.Atlas.ORM_SYNC_ALTER,
+      force: process.env.Atlas.Orm.sync_force,
+      alter: process.env.Atlas.Orm.sync_alter,
     })
   }
 
