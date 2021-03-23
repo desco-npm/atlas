@@ -1,7 +1,7 @@
 const Express = require('express')
 const Cors = require('cors')
 const BodyParser = require('body-parser')
-const Helmet = require('helmet')
+// const Helmet = require('helmet')
 
 let express
 
@@ -12,14 +12,13 @@ class Server {
     express.use(Cors())
     express.use(BodyParser.urlencoded({ extended: false, }))
     express.use(BodyParser.json())
-    express.use(Helmet())
+    // express.use(Helmet())
 
     this.routesDir = pathJoin(projectDir, 'routes')
   }
 
   async init () {
     this.defineStatic()
-
     this.useMiddleware()
 
     await this.importRoutes()
