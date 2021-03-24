@@ -1,3 +1,4 @@
+const isArray = require('is-array')
 const nodemailer = require('nodemailer')
 
 class Mail {
@@ -6,7 +7,9 @@ class Mail {
   }
 
   init () {
-    const transporters = process.env.Atlas.Mail
+    const transporters = isArray(process.env.Atlas.Mail)
+      ? process.env.Atlas.Mail
+      : [ process.env.Atlas.Mail, ]
 
     transporters.map((transporter, k) => {
       transporter.name = transporter.name || `mail${k + 1}`

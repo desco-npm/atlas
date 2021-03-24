@@ -10,7 +10,7 @@
     },
     "globals": {
       // "var1": "writable",
-      "deepMerge": "readonly",
+      "objectMerge": "readonly",
       "frontToSequelize": "readonly",
       "fs": "readonly",
       "path": "readonly",

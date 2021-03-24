@@ -1,18 +1,19 @@
+const { configEnvRequire, } = require('@desco/env-require')
+const { mergeAdvanced, } = require('object-merge-advanced')
+
+global._envRequire = configEnvRequire(atlasDir, {
+  'development': {
+    '@desco/cli-header': '../../cli-header',
+    '@desco/sequelize-permission-resources': '../../sequelize-permission-resources',
+    '@desco/front-to-sequelize': '../../front-to-sequelize',
+  },
+})
+
+global.configEnvRequire = configEnvRequire
 global.fs = require('fs-extra')
 global.path = require('path')
 global.jsonwebtoken = require('jsonwebtoken')
 
-global._envRequire = require('@desco/env-require')(
-  path.join(atlasDir, '../'),
-  {
-    'development': {
-      '@desco/cli-header': '../cli-header',
-      '@desco/sequelize-permission-resources': '../sequelize-permission-resources',
-      '@desco/front-to-sequelize': '../front-to-sequelize',
-    },
-  }
-)
-//
 global.clone = require('clone')
 global.fileExists = fs.existsSync
 global.readFileSync = fs.readFileSync
@@ -28,7 +29,7 @@ global.stackTrace = require('stack-trace')
 global.htmlPdf = require('html-pdf')
 global.pdfMake = require('pdfmake')
 global.moment = require('moment')
-global.deepMerge = require('deepmerge')
+global.objectMerge = mergeAdvanced
 global.frontToSequelize = _envRequire('@desco/front-to-sequelize')
 
 global.arrayUnique = array => array.filter((item, key, self) => self.indexOf(item) === key)

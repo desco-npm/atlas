@@ -1,6 +1,7 @@
 const Express = require('express')
 const Cors = require('cors')
 const BodyParser = require('body-parser')
+const isArray = require('is-array')
 // const Helmet = require('helmet')
 
 let express
@@ -46,7 +47,9 @@ class Server {
   }
 
   defineStatic () {
-    const staticList = process.env.Atlas.Server.static
+    const staticList = isArray(process.env.Atlas.Server.static)
+      ? process.env.Atlas.Server.static
+      : [ process.env.Atlas.Server.static, ]
 
     staticList.map(staticItem => {
       const [ dir, prefix, ] = staticItem.split(',')

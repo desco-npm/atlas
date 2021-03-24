@@ -1,5 +1,3 @@
-const isArray = require('is-array')
-
 module.exports = (config = {}) => {
   require('dotenv').config()
 
@@ -15,7 +13,7 @@ module.exports = (config = {}) => {
         password: process.env.ATLAS_ORM_DB_PASSWORD,
         host: process.env.ATLAS_ORM_DB_HOST,
         dialog: process.env.ATLAS_ORM_DB_DIALOG,
-        log: process.env.ATLAS_ORM_DB_LOG.toLowerCase() === 'true',
+        log: (process.env.ATLAS_ORM_DB_LOG || '').toLowerCase() === 'true',
       },
       pool: {
         max: process.env.ATLAS_ORM_POOL_MAX,
@@ -23,23 +21,19 @@ module.exports = (config = {}) => {
         idle: process.env.ATLAS_ORM_POOL_IDLE,
         acquire: process.env.ATLAS_ORM_POOL_ACQUIRE,
       },
-      sync: process.env.ATLAS_ORM_SYNC.toLowerCase() === 'true',
-      syncForce: process.env.ATLAS_ORM_SYNC_FORCE.toLowerCase() === 'true',
-      syncAlter: process.env.ATLAS_ORM_SYNC_ALTER.toLowerCase() === 'true',
+      sync: (process.env.ATLAS_ORM_SYNC || '').toLowerCase() === 'true',
+      syncForce: (process.env.ATLAS_ORM_SYNC_FORCE || '').toLowerCase() === 'true',
+      syncAlter: (process.env.ATLAS_ORM_SYNC_ALTER || '').toLowerCase() === 'true',
       uidDefaultVersion: process.env.ATLAS_ORM_UID_DEFAULT_VERSION,
       perPage: process.env.ATLAS_ORM_PER_PAGE,
     },
     Server: {
       port: process.env.ATLAS_SERVER_PORT,
-      static: isArray(process.env.ATLAS_SERVER_STATIC)
-        ? process.env.ATLAS_SERVER_STATIC
-        : [ process.env.ATLAS_SERVER_STATIC, ],
+      static: process.env.ATLAS_SERVER_STATIC || [],
     },
-    Mail: isArray(JSON.parse(process.env.ATLAS_MAIL))
-      ? JSON.parse(process.env.ATLAS_MAIL)
-      : [ JSON.parse(process.env.ATLAS_MAIL), ],
+    Mail: JSON.parse(process.env.ATLAS_MAIL || '[]'),
     Auth: {
-      permission: process.env.ATLAS_AUTH_PERMISSION.toLowerCase() === 'true',
+      permission: (process.env.ATLAS_AUTH_PERMISSION || '').toLowerCase() === 'true',
       secret: process.env.ATLAS_AUTH_SECRET,
       algorithm: process.env.ATLAS_AUTH_ALGORITHM,
       model: process.env.ATLAS_AUTH_MODEL,
@@ -53,7 +47,7 @@ module.exports = (config = {}) => {
       userPkPprop: process.env.ATLAS_AUTH_USER_PK_PROP,
       expireTokenProp: process.env.ATLAS_AUTH_EXPIRE_TOKEN_PROP,
       Google: {
-        auth: process.env.ATLAS_GOOGLE_AUTH.toLowerCase() === 'true',
+        auth: (process.env.ATLAS_GOOGLE_AUTH || '').toLowerCase() === 'true',
         auth_id: process.env.ATLAS_GOOGLE_AUTH_ID,
         auth_key: process.env.ATLAS_GOOGLE_AUTH_KEY,
         auth_scope: process.env.ATLAS_GOOGLE_AUTH_SCOPE,
@@ -62,7 +56,6 @@ module.exports = (config = {}) => {
     },
   }
 
-  process.env.Atlas = deepMerge(config, process.env.Atlas)
-
+  process.env.Atlas = objectMerge(config, process.env.Atlas)
   process.env = objectFilter(process.env, (i, k) => k.toLowerCase().indexOf('atlas_') === -1)
 }
