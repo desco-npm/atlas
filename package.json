@@ -1,6 +1,6 @@
 {
   "name": "@desco/atlas",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "NodeJS Framework",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
   "homepage": "https://github.com/desco-npm/atlas#readme",
   "dependencies": {
     "@desco/cli-header": "^1.0.0",
-    "@desco/env-require": "^2.0.0",
+    "@desco/env-require": "^1.0.1",
     "@desco/sequelize-permission-resources": "^1.2.3",
     "app-root-dir": "^1.0.2",
     "body-parser": "^1.19.0",
@@ -38,7 +38,6 @@
     "mysql2": "^2.2.5",
     "nodemailer": "^6.4.17",
     "object-filter": "^1.0.2",
-    "object-merge-advanced": "^12.0.6",
     "object.map": "^1.0.1",
     "path": "^0.12.7",
     "pdfmake": "^0.1.69",
