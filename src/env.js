@@ -14,7 +14,11 @@ module.exports = (config = {}) => {
         host: process.env.ATLAS_ORM_DB_HOST,
         port: process.env.ATLAS_ORM_DB_PORT,
         dialog: process.env.ATLAS_ORM_DB_DIALOG,
-        log: (process.env.ATLAS_ORM_DB_LOG || '').toLowerCase() === 'true',
+        log: typeof process.env.ATLAS_ORM_DB_LOG === 'undefined'
+          ? undefined
+          : ['console.log', 'true',].indexOf(process.env.ATLAS_ORM_DB_LOG.toLowerCase())
+            ? console.log
+            : false,
       },
       pool: {
         max: process.env.ATLAS_ORM_POOL_MAX,
