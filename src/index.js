@@ -11,7 +11,7 @@ class Atlas {
     global.Atlas = this
 
     this.Mail = require('./modules/Mail')
-    this.Orm = require('./modules/Orm')
+    this.Orm = require('./modules/ORM')
     this.Server = require('./modules/Server')
     this.Permission = require('./modules/Permission')
   }
