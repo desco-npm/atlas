@@ -13,7 +13,7 @@
       <br /><br />
       <div align="center">
         <img alt="MIT License" src="https://img.shields.io/static/v1?label=License&message=MIT&color=green&style=for-the-badge">
-        <img alt="Version 2.0.2" src="https://img.shields.io/static/v1?label=Version&message=2.0.2&color=blue&style=for-the-badge">
+        <img alt="Version 2.0.4" src="https://img.shields.io/static/v1?label=Version&message=2.0.4&color=blue&style=for-the-badge">
       </div>
       <h4 align="center"> 
         🧪 In Beta 🚀
@@ -30,10 +30,10 @@
 
 ## 📋 Table of Contents
 
-* [✔️ Resources](#Resources)
-* [🛠️ Technology](#Technology)
-* [⚙️ Installation](#Installation)
-* [📚 Documentation](#Documentation)
+- [✔️ Resources](#Resources)
+- [🛠️ Technology](#Technology)
+- [⚙️ Installation](#Installation)
+- [📚 Documentation](#Documentation)
 
 ---
 
@@ -57,18 +57,19 @@
 
 The following technologies are used:
 
-* [NodeJS](https://nodejs.org/en/);
-* [Sequelize](https://sequelize.org/);
-* [Express](https://expressjs.com/pt-br/);
-* [NodeMailer](https://nodemailer.com/about/);
-* [@desco/SequelizePermissionResources](https://www.npmjs.com/package/@desco/sequelize-permission-resources);
-* [HtmlPdf](https://www.npmjs.com/package/html-pdf);
-* [PdfMake](https://www.npmjs.com/package/pdfmake);
-* [Moment](https://www.npmjs.com/package/moment);
-* [JsonWebToken](https://www.npmjs.com/package/jsonwebtoken);
-* Vários outros pacotes para funções mais corriqueiras; 
+- [NodeJS](https://nodejs.org/en/);
+- [Sequelize](https://sequelize.org/);
+- [Express](https://expressjs.com/pt-br/);
+- [NodeMailer](https://nodemailer.com/about/);
+- [@desco/SequelizePermissionResources](https://www.npmjs.com/package/@desco/sequelize-permission-resources);
+- [HtmlPdf](https://www.npmjs.com/package/html-pdf);
+- [PdfMake](https://www.npmjs.com/package/pdfmake);
+- [Moment](https://www.npmjs.com/package/moment);
+- [JsonWebToken](https://www.npmjs.com/package/jsonwebtoken);
+- Vários outros pacotes para funções mais corriqueiras;
 
 ---
+
 <a name="Installation"></a>
 
 ## ⚙️ Installation

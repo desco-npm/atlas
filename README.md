@@ -13,7 +13,7 @@
       <br /><br />
       <div align="center">
         <img alt="Licença MIT" src="https://img.shields.io/static/v1?label=Licença&message=MIT&color=green&style=for-the-badge">
-        <img alt="Versão 2.0.2" src="https://img.shields.io/static/v1?label=Versão&message=2.0.2&color=blue&style=for-the-badge">
+        <img alt="Versão 2.0.4" src="https://img.shields.io/static/v1?label=Versão&message=2.0.4&color=blue&style=for-the-badge">
       </div>
       <h4 align="center"> 
         🧪 Em fase Beta 🚀
@@ -30,10 +30,10 @@
 
 ## 📋 Tabela de conteúdos
 
-* [✔️ Recursos](#Recursos)
-* [🛠️ Tecnologias](#Tecnologias)
-* [⚙️ Instalação](#Instalação)
-* [📚 Documentação](#Documentação)
+- [✔️ Recursos](#Recursos)
+- [🛠️ Tecnologias](#Tecnologias)
+- [⚙️ Instalação](#Instalação)
+- [📚 Documentação](#Documentação)
 
 ---
 
@@ -43,31 +43,30 @@
 
 - [x] ORM;
 - [x] Servidor;
-- [x] Restrição e liberação de acesso de usuários ou grupos de usuários aos recursos; 
+- [x] Restrição e liberação de acesso de usuários ou grupos de usuários aos recursos;
 - [x] Envio de E-mails;
 - [x] Criação de PDFs;
-- [x] Manipulação  de Data/Hora;
+- [x] Manipulação de Data/Hora;
 - [x] Criação de WebTokens;
 
 ---
 
 <a name="Tecnologias"></a>
 
-
 ## 🛠️ Tecnologias
 
 As seguintes tecnologias são utilizadas:
 
-* [NodeJS](https://nodejs.org/en/);
-* [Sequelize](https://sequelize.org/);
-* [Express](https://expressjs.com/pt-br/);
-* [NodeMailer](https://nodemailer.com/about/);
-* [@desco/SequelizePermissionResources](https://www.npmjs.com/package/@desco/sequelize-permission-resources);
-* [HtmlPdf](https://www.npmjs.com/package/html-pdf);
-* [PdfMake](https://www.npmjs.com/package/pdfmake);
-* [Moment](https://www.npmjs.com/package/moment);
-* [JsonWebToken](https://www.npmjs.com/package/jsonwebtoken);
-* Vários outros pacotes para funções mais corriqueiras; 
+- [NodeJS](https://nodejs.org/en/);
+- [Sequelize](https://sequelize.org/);
+- [Express](https://expressjs.com/pt-br/);
+- [NodeMailer](https://nodemailer.com/about/);
+- [@desco/SequelizePermissionResources](https://www.npmjs.com/package/@desco/sequelize-permission-resources);
+- [HtmlPdf](https://www.npmjs.com/package/html-pdf);
+- [PdfMake](https://www.npmjs.com/package/pdfmake);
+- [Moment](https://www.npmjs.com/package/moment);
+- [JsonWebToken](https://www.npmjs.com/package/jsonwebtoken);
+- Vários outros pacotes para funções mais corriqueiras;
 
 ---
 
