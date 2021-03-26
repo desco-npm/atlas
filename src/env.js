@@ -12,6 +12,7 @@ module.exports = (config = {}) => {
         user: process.env.ATLAS_ORM_DB_USER,
         password: process.env.ATLAS_ORM_DB_PASSWORD,
         host: process.env.ATLAS_ORM_DB_HOST,
+        port: process.env.ATLAS_ORM_DB_PORT,
         dialog: process.env.ATLAS_ORM_DB_DIALOG,
         log: (process.env.ATLAS_ORM_DB_LOG || '').toLowerCase() === 'true',
       },

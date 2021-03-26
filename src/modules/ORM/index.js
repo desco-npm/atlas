@@ -46,6 +46,7 @@ class ORM {
       {
         logging: process.env.Atlas.Orm.Db.log,
         host: process.env.Atlas.Orm.Db.host,
+        port: process.env.Atlas.Orm.Db.port,
         dialect: process.env.Atlas.Orm.Db.dialog,
         pool: {
           max: parseInt(process.env.Atlas.Orm.pool.max),
