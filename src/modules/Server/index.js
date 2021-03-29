@@ -2,6 +2,7 @@ const Express = require('express')
 const Cors = require('cors')
 const BodyParser = require('body-parser')
 const isArray = require('is-array')
+const { mkdir, } = require('fs-extra')
 // const Helmet = require('helmet')
 
 let express
@@ -16,6 +17,8 @@ class Server {
     // express.use(Helmet())
 
     this.routesDir = pathJoin(projectDir, 'routes')
+
+    mkdirIfNotExists(this.routesDir)
   }
 
   async init () {

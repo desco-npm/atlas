@@ -1,5 +1,3 @@
-const isArray = require('is-array')
-const isObject = require('is-object')
 const { Sequelize, DataTypes, Op, } = require('sequelize')
 
 let sequelize
@@ -8,6 +6,8 @@ class ORM {
   constructor () {
     this.modelsDir = pathJoin(projectDir, 'models')
     this.pos = {}
+
+    mkdirIfNotExists(this.modelsDir)
   }
 
   async init () {
