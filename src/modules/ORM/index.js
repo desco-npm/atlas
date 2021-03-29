@@ -96,7 +96,7 @@ class ORM {
     // Two next ones need to be before await
     const trace = stackTrace.get()
 
-    name = name || trace[1].getFileName().split('\\').pop().slice(0, -3)
+    name = name || trace[1].getFileName().split(pathSep).pop().split('.')[0]
 
     this.pos[name] = pos
 
