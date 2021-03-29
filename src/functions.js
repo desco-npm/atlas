@@ -15,7 +15,6 @@ global.path = require('path')
 global.jsonwebtoken = require('jsonwebtoken')
 
 global.clone = require('clone')
-global.fileExists = fs.existsSync
 global.readFileSync = fs.readFileSync
 global.readdir = fs.readdir
 global.pathJoin = path.join
@@ -31,5 +30,8 @@ global.pdfMake = require('pdfmake')
 global.moment = require('moment')
 global.objectMerge = mergeAdvanced
 global.frontToSequelize = _envRequire('@desco/front-to-sequelize')
+global.fileExists = fs.existsSync
+global.mkdir = fs.mkdirSync
 
 global.arrayUnique = array => array.filter((item, key, self) => self.indexOf(item) === key)
+global.mkdirIfNotExists = dir => { if (!fileExists(dir)) mkdir(dir) }
