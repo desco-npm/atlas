@@ -10,6 +10,9 @@
     },
     "globals": {
       // "var1": "writable",
+      "isWindows": "readonly",
+      "isMac": "readonly",
+      "isLinux": "readonly",
       "mkdirIfNotExists": "readonly",
       "mkdir": "readonly",
       "objectMerge": "readonly",

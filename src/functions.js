@@ -32,6 +32,10 @@ global.objectMerge = mergeAdvanced
 global.frontToSequelize = _envRequire('@desco/front-to-sequelize')
 global.fileExists = fs.existsSync
 global.mkdir = fs.mkdirSync
+global.isWindows = require('platform-is')
+global.isMac = require('platform-is').isMac
+global.isLinux = require('platform-is').isLinux
+
 
 global.arrayUnique = array => array.filter((item, key, self) => self.indexOf(item) === key)
 global.mkdirIfNotExists = dir => { if (!fileExists(dir)) mkdir(dir) }
