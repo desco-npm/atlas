@@ -1,6 +1,6 @@
 <div align="right">
   <a href="README.US.md">
-    <img alt="Read in American English" src="https://img.shields.io/endpoint?url=https://github.com/desco-npm/atlas/blob/master/doc/ptbr/badges/en.json">
+    <img alt="Read in American English" src="https://img.shields.io/static/v1?message=Read in American English&color=red&style=for-the-badge" />
   </a>
 </div>
 
