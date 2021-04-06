@@ -100,7 +100,7 @@ class ORM {
 
     this.pos[name] = pos
 
-    const uidDefaultVersion = parseInt(process.env.Atlas.Orm.UID_DEFAULT_VERSION)
+    const uidDefaultVersion = parseInt(process.env.Atlas.Orm.UID_DEFAULT_VERSION || 4)
     const uidVersions = [ 1, 4, ]
 
     attrs = objectMap(attrs, v => {
@@ -112,6 +112,7 @@ class ORM {
 
       return v
     })
+
 
     const Model = await sequelize.define(
       name,
