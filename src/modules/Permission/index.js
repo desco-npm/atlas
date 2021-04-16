@@ -32,7 +32,10 @@ class Permission {
     const tokenProp = process.env.Atlas.Auth.tokenProp
     const tokenTypeProp = process.env.Atlas.Auth.tokenTypeProp
     const userPkProp = process.env.Atlas.Auth.userPkProp
+    const groupPkProp = process.env.Atlas.Auth.groupPkProp
     const expireTokenProp = process.env.Atlas.Auth.expireTokenProp
+    const resourceProp = process.env.Atlas.Auth.resourceProp
+    const allowProp = process.env.Atlas.Auth.allowProp
 
     sequelizePermissionResources({
       express,
@@ -53,7 +56,10 @@ class Permission {
       tokenProp,
       tokenTypeProp,
       userPkProp,
+      groupPkProp,
       expireTokenProp,
+      resourceProp,
+      allowProp,
     })
 
     return Promise.resolve()
