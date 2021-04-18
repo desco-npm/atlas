@@ -9,7 +9,7 @@ class Mail {
   init () {
     const transporters = isArray(process.env.Atlas.Mail)
       ? process.env.Atlas.Mail
-      : [ process.env.Atlas.Mail, ]
+      : [process.env.Atlas.Mail,]
 
     transporters.map((transporter, k) => {
       transporter.name = transporter.name || `mail${k + 1}`
@@ -18,7 +18,7 @@ class Mail {
         ...transporter,
         tls: {
           ...transporter.tls,
-          rejectUnauthorized: transporter.tls.rejectUnauthorized || false,
+          rejectUnauthorized: (transporter.tls || {}).rejectUnauthorized || false,
         },
       }
 

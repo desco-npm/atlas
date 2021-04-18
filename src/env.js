@@ -28,6 +28,7 @@ module.exports = (config = {}) => {
         idle: process.env.ATLAS_ORM_POOL_IDLE,
         acquire: process.env.ATLAS_ORM_POOL_ACQUIRE,
       },
+      pkName: process.env.ATLAS_ORM_PK_NAME || 'id',
       sync: (process.env.ATLAS_ORM_SYNC || '').toLowerCase() === 'true',
       syncForce: (process.env.ATLAS_ORM_SYNC_FORCE || '').toLowerCase() === 'true',
       syncAlter: (process.env.ATLAS_ORM_SYNC_ALTER || '').toLowerCase() === 'true',
@@ -36,9 +37,9 @@ module.exports = (config = {}) => {
     },
     Server: {
       port: process.env.ATLAS_SERVER_PORT,
-      static: process.env.ATLAS_SERVER_STATIC || [],
+      static: process.env.ATLAS_SERVER_STATIC || undefined,
     },
-    Mail: JSON.parse(process.env.ATLAS_MAIL || '[]'),
+    Mail: process.env.ATLAS_MAIL ? JSON.parse(process.env.ATLAS_MAIL) : undefined,
     Auth: {
       permission: (process.env.ATLAS_AUTH_PERMISSION || '').toLowerCase() === 'true',
       secret: process.env.ATLAS_AUTH_SECRET,
@@ -63,6 +64,7 @@ module.exports = (config = {}) => {
     },
   }
 
-  process.env.Atlas = objectMerge(config, process.env.Atlas)
+  process.env.Atlas = objectMerge(process.env.Atlas, config)
   process.env = objectFilter(process.env, (i, k) => k.toLowerCase().indexOf('atlas_') === -1)
+  process.env.Atlas.Mail = process.env.Atlas.Mail || []
 }

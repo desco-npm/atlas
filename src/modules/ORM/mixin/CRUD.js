@@ -31,7 +31,7 @@ module.exports = ({ Op, }) => {
         .catch(e => console.log(e))
     },
     save (data, options = {}) {
-      if (data.id) {
+      if (data[process.env.Atlas.Orm.pkName]) {
         return this.change(data, options)
       }
       else {
@@ -41,16 +41,21 @@ module.exports = ({ Op, }) => {
     insert (data, options = {}) {
       return this.create(data, options)
         .then(response => {
-          return this.read(response.id)
+          return this.read(response[process.env.Atlas.Orm.pkName])
         })
         .catch(e => {
           return e
         })
     },
-    change (body, options = {}) {
-      return this.update(body, { ...options, where: { id: body.id, }, })
+    change(body, options = {}) {
+      return this.update(body, {
+        ...options,
+        where: {
+          [process.env.Atlas.Orm.pkName]: body[process.env.Atlas.Orm.pkName],
+        },
+      })
         .then(async () => {
-          return this.read(body.id)
+          return this.read(body[process.env.Atlas.Orm.pkName])
         })
         .catch(e => {
           return e

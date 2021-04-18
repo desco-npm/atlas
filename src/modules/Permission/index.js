@@ -4,7 +4,7 @@ class Permission {
   constructor () {
   }
 
-  async init () {
+  async init() {
     if (!process.env.Atlas.Auth.permission) return Promise.resolve()
 
     const User = Atlas.Orm.listModels()[process.env.Atlas.Auth.userModel]
@@ -36,10 +36,12 @@ class Permission {
     const expireTokenProp = process.env.Atlas.Auth.expireTokenProp
     const resourceProp = process.env.Atlas.Auth.resourceProp
     const allowProp = process.env.Atlas.Auth.allowProp
+    const urlLogin = process.env.Atlas.Auth.urlLogin
 
     sequelizePermissionResources({
       express,
       op,
+      urlLogin,
       User,
       Group,
       Permission,
