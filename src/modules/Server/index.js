@@ -11,12 +11,6 @@ class Server {
   constructor () {
     express = Express()
 
-    this.routesDir = pathJoin(projectDir, 'routes')
-
-    mkdirIfNotExists(this.routesDir)
-  }
-
-  async init() {
     const corsOptions = {
       origin: process.env.Atlas.Server.origin || '*',
     }
@@ -26,6 +20,12 @@ class Server {
     express.use(BodyParser.json())
     // express.use(Helmet())
 
+    this.routesDir = pathJoin(projectDir, 'routes')
+
+    mkdirIfNotExists(this.routesDir)
+  }
+
+  async init () {
     this.defineStatic()
     this.useMiddleware()
 
