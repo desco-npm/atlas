@@ -55,7 +55,7 @@ module.exports = ({ Op, }) => {
         },
       })
         .then(async () => {
-          return this.read(body[process.env.Atlas.Orm.pkName])
+          return this.read(body[process.env.Atlas.Orm.pkName], options)
         })
         .catch(e => {
           return e
