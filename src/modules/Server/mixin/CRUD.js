@@ -10,7 +10,9 @@ module.exports = ({ express, entity, Model, models, }) => {
   })
 
   express.get(`/crud/${entity}/:id`, async (req, res) => {
-    res.json(await Model.read(req.params.id))
+    res.json(
+      await Model.read(req.params.id, frontToSequelize(req.query, models, Atlas.Orm.Sequelize()))
+    )
   })
 
   express.put(`/crud/${entity}/:id`, async (req, res) => {
