@@ -17,8 +17,8 @@ class Server {
 
     express.use(Cors(corsOptions))
 
-    express.use(BodyParser.urlencoded({ extended: false, }))
-    express.use(BodyParser.json())
+    express.use(BodyParser.urlencoded({ extended: false, limit: process.env.Atlas.Server.limit, }))
+    express.use(BodyParser.json({ limit: process.env.Atlas.Server.limit, }))
     // express.use(Helmet())
 
     this.routesDir = pathJoin(projectDir, 'routes')
