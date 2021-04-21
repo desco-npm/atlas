@@ -11,11 +11,7 @@ class Server {
   constructor () {
     express = Express()
 
-    const corsOptions = {
-      origin: process.env.Atlas.Server.origin || '*',
-    }
-
-    express.use(Cors(corsOptions))
+    express.use(Cors())
     express.use(BodyParser.urlencoded({ extended: false, }))
     express.use(BodyParser.json())
     // express.use(Helmet())
