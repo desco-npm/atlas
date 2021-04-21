@@ -1,6 +1,6 @@
 {
   "name": "@desco/atlas",
-  "version": "2.5.0",
+  "version": "2.7.2",
   "description": "NodeJS Framework",
   "main": "src/index.js",
   "scripts": {

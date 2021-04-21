@@ -7,7 +7,9 @@ require('./functions')
 const cliHeader = _envRequire('@desco/cli-header')
 
 class Atlas {
-  constructor () {
+  constructor(config = {}) {
+    require('./env.js')(config)
+
     global.Atlas = this
 
     this.Mail = require('./modules/Mail')
@@ -16,14 +18,12 @@ class Atlas {
     this.Permission = require('./modules/Permission')
   }
 
-  async init (config = {}) {
+  async init () {
     cliHeader({
       title: 'AtlasJS v' + require('../package.json').version,
       size: 25,
       align: 'center',
     })
-
-    require('./env.js')(config)
 
     await this.Mail.init()
     await this.Orm.init()
@@ -44,5 +44,5 @@ class Atlas {
 }
 
 module.exports = async config => {
-  return new Atlas().init(config)
+  return new Atlas(config).init()
 }
