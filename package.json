@@ -22,6 +22,7 @@
     "@desco/env-require": "^2.0.0",
     "@desco/front-to-sequelize": "^1.0.0",
     "@desco/sequelize-permission-resources": "^1.3.1",
+    "@smakss/random-string": "^1.1.24",
     "app-root-dir": "^1.0.2",
     "body-parser": "^1.19.0",
     "clone": "^2.1.2",
@@ -45,7 +46,6 @@
     "pdfmake": "^0.1.69",
     "pg": "^8.6.0",
     "platform-is": "^1.0.4",
-    "randomstring": "^1.1.5",
     "sequelizer": "^1.1.4",
     "stack-trace": "0.0.10"
   },

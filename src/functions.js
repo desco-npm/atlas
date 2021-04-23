@@ -35,7 +35,7 @@ global.mkdir = fs.mkdirSync
 global.isWindows = require('platform-is')
 global.isMac = require('platform-is').isMac
 global.isLinux = require('platform-is').isLinux
-global.randomstring = require('randomstring').generate
+global.randomstring = require('@smakss/random-string')
 
 
 global.arrayUnique = array => array.filter((item, key, self) => self.indexOf(item) === key)
