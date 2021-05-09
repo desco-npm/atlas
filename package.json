@@ -19,7 +19,7 @@
   "homepage": "https://github.com/desco-npm/atlas#readme",
   "dependencies": {
     "@desco/cli-header": "^1.0.0",
-    "@desco/env-require": "^2.0.0",
+    "@desco/env-require": "^3.0.1",
     "@desco/front-to-sequelize": "^1.0.0",
     "@desco/sequelize-permission-resources": "^1.3.1",
     "@smakss/random-string": "^1.1.24",
