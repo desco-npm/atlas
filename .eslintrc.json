@@ -20,8 +20,6 @@
       "fs": "readonly",
       "path": "readonly",
       "jsonwebtoken": "readonly",
-      "_envRequire": "readonly",
-      "envRequire": "readonly",
       "Atlas": "readonly",
       "clone": "readonly",
       "fileExists": "readonly",

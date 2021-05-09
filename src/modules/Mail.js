@@ -18,7 +18,7 @@ class Mail {
         ...transporter,
         tls: {
           ...transporter.tls,
-          rejectUnauthorized: transporter.tls.rejectUnauthorized || false,
+          rejectUnauthorized: (transporter.tls || {}).rejectUnauthorized || false,
         },
       }
 

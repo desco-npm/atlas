@@ -1,4 +1,4 @@
-const sequelizePermissionResources = _envRequire('@desco/sequelize-permission-resources')
+const sequelizePermissionResources = global.atlas_envRequire('@desco/sequelize-permission-resources', 'atlas')
 
 class Permission {
   constructor () {

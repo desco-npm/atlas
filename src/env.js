@@ -14,13 +14,7 @@ module.exports = (config = {}) => {
         host: process.env.ATLAS_ORM_DB_HOST,
         port: process.env.ATLAS_ORM_DB_PORT,
         dialog: process.env.ATLAS_ORM_DB_DIALOG,
-        log: [
-          typeof process.env.ATLAS_ORM_DB_LOG, process.env.ATLAS_ORM_DB_LOG,
-        ].indexOf('undefined') !== -1
-          ? undefined
-          : ['console.log', 'true',].indexOf(process.env.ATLAS_ORM_DB_LOG.toLowerCase())
-            ? console.log
-            : false,
+        log: (process.env.ATLAS_ORM_DB_LOG || '').toLowerCase() === 'true'
       },
       pool: {
         max: process.env.ATLAS_ORM_POOL_MAX,
@@ -63,6 +57,14 @@ module.exports = (config = {}) => {
     },
   }
 
+  
   process.env.Atlas = objectMerge(config, process.env.Atlas)
+  
   process.env = objectFilter(process.env, (i, k) => k.toLowerCase().indexOf('atlas_') === -1)
+
+  process.env.Atlas.Orm.Db.log = typeof process.env.Atlas.Orm.Db.log === 'function'
+    ? process.env.Atlas.Orm.Db.log
+    : process.env.Atlas.Orm.Db.log
+      ? console.log
+      : () => {}
 }
