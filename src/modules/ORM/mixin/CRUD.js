@@ -41,7 +41,9 @@ module.exports = ({ Op, }) => {
     insert (data, options = {}) {
       return this.create(data, options)
         .then(response => {
-          return this.read(response[process.env.Atlas.Orm.pkName])
+          const id = response.toJSON()[process.env.Atlas.Orm.pkName]
+
+          return this.read(id)
         })
         .catch(e => {
           return e

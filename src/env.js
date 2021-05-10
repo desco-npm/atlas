@@ -22,7 +22,7 @@ module.exports = (config = {}) => {
         idle: process.env.ATLAS_ORM_POOL_IDLE,
         acquire: process.env.ATLAS_ORM_POOL_ACQUIRE,
       },
-      pkName: process.env.ATLAS_ORM_PK_NAME || 'id',
+      pkName: process.env.ATLAS_ORM_PK_NAME,
       sync: (process.env.ATLAS_ORM_SYNC || '').toLowerCase() === 'true',
       syncForce: (process.env.ATLAS_ORM_SYNC_FORCE || '').toLowerCase() === 'true',
       syncAlter: (process.env.ATLAS_ORM_SYNC_ALTER || '').toLowerCase() === 'true',
@@ -68,4 +68,6 @@ module.exports = (config = {}) => {
     : process.env.Atlas.Orm.Db.log
       ? console.log
       : () => {}
+
+      process.env.Atlas.Orm.pkName = process.env.Atlas.Orm.pkName || 'id'
 }
