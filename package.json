@@ -21,7 +21,7 @@
     "@desco/cli-header": "^1.0.0",
     "@desco/env-require": "^3.0.1",
     "@desco/front-to-sequelize": "^1.0.0",
-    "@desco/sequelize-permission-resources": "^1.4.0",
+    "@desco/sequelize-permission-resources": "^1.4.1",
     "@smakss/random-string": "^1.1.27",
     "app-root-dir": "^1.0.2",
     "body-parser": "^1.19.0",
