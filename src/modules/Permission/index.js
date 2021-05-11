@@ -37,8 +37,10 @@ class Permission {
     const resourceProp = process.env.Atlas.Auth.resourceProp
     const allowProp = process.env.Atlas.Auth.allowProp
     const urlLogin = process.env.Atlas.Auth.urlLogin
+    const loginCallback = User[process.env.Atlas.Auth.loginCallback]
 
     sequelizePermissionResources({
+      loginCallback,
       express,
       op,
       urlLogin,

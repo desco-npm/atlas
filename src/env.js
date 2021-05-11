@@ -36,6 +36,7 @@ module.exports = (config = {}) => {
     Mail: process.env.ATLAS_MAIL ? JSON.parse(process.env.ATLAS_MAIL) : undefined,
     Auth: {
       permission: (process.env.ATLAS_AUTH_PERMISSION || '').toLowerCase() === 'true',
+      loginCallback: 'loginCallback',
       secret: process.env.ATLAS_AUTH_SECRET,
       algorithm: process.env.ATLAS_AUTH_ALGORITHM,
       model: process.env.ATLAS_AUTH_MODEL,
@@ -58,7 +59,6 @@ module.exports = (config = {}) => {
     },
   }
 
-  
   process.env.Atlas = objectMerge(config, process.env.Atlas)
   
   process.env = objectFilter(process.env, (i, k) => k.toLowerCase().indexOf('atlas_') === -1)
