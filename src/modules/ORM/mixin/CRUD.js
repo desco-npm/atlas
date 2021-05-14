@@ -71,7 +71,7 @@ module.exports = ({ Op, }) => {
         count: (await this.destroy({
           ...options,
           where: {
-            id: {
+            [process.env.Atlas.Orm.pkName]: {
               [ Op.in ]: ids.split(';'),
             },
           },
