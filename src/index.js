@@ -1,6 +1,3 @@
-//TODO: DiscordBot - https://trello.com/c/iK7f9pRi/31-discordbot
-//TODO: HTTPS - https://trello.com/c/qrJqWZCi/44-https
-
 const configEnvRequire = require('@desco/env-require')
 
 const dynamicImports = require('./dynamicImports')
@@ -35,11 +32,12 @@ class Atlas {
 
     await this.Mail.init()
     await this.Orm.init()
-    await this.Permission.init()
     await this.Server.init()
+    await this.Permission.init()
 
     await this.Orm.start()
     await this.Server.start()
+    await this.Permission.start()
 
     return this
   }

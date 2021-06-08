@@ -14,7 +14,7 @@ module.exports = (config = {}) => {
         host: process.env.ATLAS_ORM_DB_HOST,
         port: process.env.ATLAS_ORM_DB_PORT,
         dialog: process.env.ATLAS_ORM_DB_DIALOG,
-        log: (process.env.ATLAS_ORM_DB_LOG || '').toLowerCase() === 'true'
+        log: (process.env.ATLAS_ORM_DB_LOG || '').toLowerCase() === 'true',
       },
       pool: {
         max: process.env.ATLAS_ORM_POOL_MAX,
@@ -34,33 +34,50 @@ module.exports = (config = {}) => {
       static: process.env.ATLAS_SERVER_STATIC || undefined,
     },
     Mail: process.env.ATLAS_MAIL ? JSON.parse(process.env.ATLAS_MAIL) : undefined,
-    Auth: {
-      permission: (process.env.ATLAS_AUTH_PERMISSION || '').toLowerCase() === 'true',
-      loginCallback: 'loginCallback',
-      secret: process.env.ATLAS_AUTH_SECRET,
-      algorithm: process.env.ATLAS_AUTH_ALGORITHM,
-      model: process.env.ATLAS_AUTH_MODEL,
-      userModel: process.env.ATLAS_AUTH_USER_MODEL,
-      groupModel: process.env.ATLAS_AUTH_GROUP_MODEL,
-      pswProp: process.env.ATLAS_AUTH_PSW_PROP,
-      loginProp: process.env.ATLAS_AUTH_LOGIN_PROP,
-      mailProp: process.env.ATLAS_AUTH_MAIL_PROP,
-      tokenProp: process.env.ATLAS_AUTH_TOKEN_PROP,
-      tokenTypeProp: process.env.ATLAS_AUTH_TOKEN_TYPE_PROP,
-      userPkPprop: process.env.ATLAS_AUTH_USER_PK_PROP,
-      expireTokenProp: process.env.ATLAS_AUTH_EXPIRE_TOKEN_PROP,
-      Google: {
-        auth: (process.env.ATLAS_GOOGLE_AUTH || '').toLowerCase() === 'true',
-        auth_id: process.env.ATLAS_GOOGLE_AUTH_ID,
-        auth_key: process.env.ATLAS_GOOGLE_AUTH_KEY,
-        auth_scope: process.env.ATLAS_GOOGLE_AUTH_SCOPE,
-        auth_google_auth_prompt: process.env.ATLAS_GOOGLE_AUTH_GOOGLE_AUTH_PROMPT,
+    Permission: {
+      Model: {
+        User: process.env.ATLAS_PERMISSION_USER_MODEL,
+        Group: process.env.ATLAS_PERMISSION_GROUP_MODEL,
+        PermissionModel: process.env.ATLAS_PERMISSION_MODEL,
       },
+      prop: {
+        login: process.env.ATLAS_PERMISSION_LOGIN_PROP,
+        password: process.env.ATLAS_PERMISSION_PASSWORD_PROP,
+        activationCode: process.env.ATLAS_PERMISSION_ACTIVATION_CODE_PROP,
+        recoverCode: process.env.ATLAS_PERMISSION_RECOVER_CODE_PROP,
+        token: process.env.ATLAS_PERMISSION_TOKEN_PROP,
+        validateToken: process.env.ATLAS_PERMISSION_VALIDATE_TOKEN_PROP,
+        active: process.env.ATLAS_PERMISSION_ACTIVE_PROP,
+      },
+      mail: {
+        activationFrom: process.env.ATLAS_PERMISSION_ACTIVATION_MAIL_FROM,
+        activationSubject: process.env.ATLAS_PERMISSION_ACTIVATION_MAIL_SUBJECT,
+        activationText: process.env.ATLAS_PERMISSION_ACTIVATION_MAIL_TEXT,
+        activationHtml: process.env.ATLAS_PERMISSION_ACTIVATION_MAIL_HTML,
+        recoverPasswordFrom: process.env.ATLAS_PERMISSION_ACTIVATION_MAIL_FROM,
+        recoverPasswordSubject: process.env.ATLAS_PERMISSION_ACTIVATION_MAIL_SUBJECT,
+        recoverPasswordText: process.env.ATLAS_PERMISSION_RECOVER_PASSWORD_MAIL_TEXT,
+        recoverPasswordHtml: process.env.ATLAS_PERMISSION_RECOVER_PASSWORD_MAIL_HTML,
+      },
+      route: {
+        login: process.env.ATLAS_PERMISSION_LOGIN_ROUTE,
+        register: process.env.ATLAS_PERMISSION_REGISTER_ROUTE,
+        refreshActiveCode: process.env.ATLAS_PERMISSION_REFRESH_ACTIVE_CODE_ROUTE,
+        activeCode: process.env.ATLAS_PERMISSION_ACTIVE_CODE_ROUTE,
+        sendPasswordRecoverCode: (
+          process.env.ATLAS_PERMISSION_SEND_PASSWORD_RECOVER_CODE_ROUTE_ROUTE
+        ),
+        refreshPassword: process.env.ATLAS_PERMISSION_REFRESH_PASSWORD_ROUTE,
+      },
+    },
+    hash: {
+      algorithm: undefined,
+      key: undefined,
     },
   }
 
   process.env.Atlas = objectMerge(config, process.env.Atlas)
-  
+
   process.env = objectFilter(process.env, (i, k) => k.toLowerCase().indexOf('atlas_') === -1)
 
   process.env.Atlas.Orm.Db.log = typeof process.env.Atlas.Orm.Db.log === 'function'
@@ -69,5 +86,5 @@ module.exports = (config = {}) => {
       ? console.log
       : () => {}
 
-      process.env.Atlas.Orm.pkName = process.env.Atlas.Orm.pkName || 'id'
+  process.env.Atlas.Orm.pkName = process.env.Atlas.Orm.pkName || 'id'
 }

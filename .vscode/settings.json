@@ -5,60 +5,11 @@
   "editor.renderWhitespace": "all",
   "editor.dragAndDrop": false,
   "editor.minimap.enabled": true,
-  "editor.rulers": [
-    100
-  ],
-  "eslint.alwaysShowStatus": true,
-  "eslint.debug": true,
-  "eslint.format.enable": true,
-  "eslint.lintTask.enable": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "editor.fontSize": 14,
-  "workbench.tree.indent": 15,
-  "gitflow4code.features": [
-    {
-      "name": "feature/pre",
-      "base": "develop"
-    },
-    {
-      "name": "feature/doc",
-      "base": "develop"
-    },
-    {
-      "name": "feature/d",
-      "base": "develop"
-    }
+  "editor.rulers": [
+    100
   ],
-  "cSpell.words": [
-    "CRUD",
-    "Permissionamento",
-    "an",
-    "anônima",
-    "desenvolvedor",
-    "desenvolvedores",
-    "engessamento",
-    "expir",
-    "expirável",
-    "framework",
-    "gerenciar",
-    "hasheamento",
-    "libera",
-    "liberação",
-    "nima",
-    "o",
-    "populado",
-    "registrar",
-    "registro",
-    "registros",
-    "terceiriza",
-    "vel"
-  ],
-  "cSpell.language": "pt",
-  "cSpell.ignoreWords": [
-    "addrs",
-    "production",
-    "starttls"
-  ]
+  "editor.fontSize": 14
 }

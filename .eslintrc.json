@@ -10,6 +10,7 @@
     },
     "globals": {
       // "var1": "writable",
+      "randomstring": "readonly",
       "isWindows": "readonly",
       "isMac": "readonly",
       "isLinux": "readonly",
