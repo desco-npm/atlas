@@ -2,24 +2,28 @@ const Express = require('express')
 const Cors = require('cors')
 const BodyParser = require('body-parser')
 const isArray = require('is-array')
-const { mkdir, } = require('fs-extra')
 // const Helmet = require('helmet')
-
-let express
 
 class Server {
   constructor () {
-    express = Express()
+    this.express = Express()
 
     const corsOptions = {
       origin: process.env.Atlas.Server.origin || '*',
     }
 
-    express.use(Cors(corsOptions))
+    this.express.use(Cors(corsOptions))
 
-    express.use(BodyParser.urlencoded({ extended: false, limit: process.env.Atlas.Server.limit, }))
-    express.use(BodyParser.json({ limit: process.env.Atlas.Server.limit, }))
-    // express.use(Helmet())
+    this.express.use(BodyParser.urlencoded({
+      extended: false,
+      limit: process.env.Atlas.Server.limit,
+    }))
+
+    this.express.use(BodyParser.json({
+      limit: process.env.Atlas.Server.limit,
+    }))
+
+    // this.express.use(Helmet())
 
     this.routesDir = pathJoin(projectDir, 'routes')
 
@@ -27,29 +31,17 @@ class Server {
   }
 
   async init () {
-    this.defineStatic()
-    this.useMiddleware()
-
-    await this.importRoutes()
-
     return Promise.resolve()
   }
 
-  async useMiddleware () {
-    const addrs = pathJoin(projectDir, 'middlewares.js')
+  async start () {
+    this.defineStatic()
 
-    if (await fileExists(addrs)) {
-      require(addrs)({
-        express,
-        models: Atlas.Orm.listModels(),
-      })
-    }
-  }
+    await this.importRoutes()
 
-  start () {
     let port = parseInt(process.env.Atlas.Server.port)
 
-    express.listen(port, () => {
+    this.express.listen(port, () => {
       console.log(`Server listening at port ${port}`)
     })
   }
@@ -63,10 +55,10 @@ class Server {
       const [ dir, prefix, ] = staticItem.split(',')
 
       if (prefix) {
-        express.use(prefix, Express.static(pathJoin(projectDir, dir)))
+        this.express.use(prefix, Express.static(pathJoin(projectDir, dir)))
       }
       else {
-        express.use(Express.static(pathJoin(projectDir, dir)))
+        this.express.use(Express.static(pathJoin(projectDir, dir)))
       }
     })
   }
@@ -88,7 +80,7 @@ class Server {
     const routeModelAddrs = pathJoin(this.routesDir, entity)
     const models = Atlas.Orm.listModels()
     const routeParams = {
-      express,
+      express: this.express,
       entity,
       models,
       Model: models[entity],
@@ -101,10 +93,6 @@ class Server {
     }
 
     return Promise.resolve()
-  }
-
-  express () {
-    return express
   }
 }
 

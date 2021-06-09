@@ -1,4 +1,10 @@
+const urlPattern = require('url-pattern')
+
 class Permission {
+  constructor () {
+    this.setMiddlewares()
+  }
+
   async init () {
     this.User = global.Atlas.Orm.listModels()[process.env.Atlas.Permission.Model.User]
 
@@ -19,6 +25,10 @@ class Permission {
     this.tokenProp = process.env.Atlas.Permission.prop.token || 'token'
 
     this.validateTokenProp = process.env.Atlas.Permission.prop.validateToken || 'validateToken'
+
+    this.resourceProp = process.env.Atlas.Permission.prop.resource || 'resource'
+
+    this.allowProp = process.env.Atlas.Permission.prop.allow || 'allow'
 
     this.activationMailFrom = process.env.Atlas.Permission.activationMailFrom || 'Activation Code'
 
@@ -72,8 +82,22 @@ class Permission {
   }
 
   start () {
+    this.defineRelations()
     this.setMethods()
     this.setRouters()
+  }
+
+  defineRelations () {
+    const throughUserGroup = [ this.User.name, this.Group.name, ].sort().join('_')
+
+    this.User.belongsToMany(this.Group, { through: throughUserGroup, })
+    this.Group.belongsToMany(this.User, { through: throughUserGroup, })
+
+    this.User.hasMany(this.Permission)
+    this.Permission.belongsTo(this.User)
+
+    this.Group.hasMany(this.Permission)
+    this.Permission.belongsTo(this.Group)
   }
 
   setMethods () {
@@ -193,10 +217,10 @@ class Permission {
       const token = generateToken(
         { [process.env.Atlas.Orm.pkName]: user[process.env.Atlas.Orm.pkName], time: new Date(), },
         process.env.Atlas.hash.key,
-        { algorithm: process.env.Atlas.hash.algorithm, }
+        { algorithm: process.env.Atlas.hash.algorithm, expiresIn: '1h', }
       )
 
-      const decoded = decodeToken(token, {complete: true,})
+      const decoded = this.User.decodeToken(token, {complete: true,})
 
       const loggedUser = await this.User.save({
         ...user,
@@ -212,6 +236,10 @@ class Permission {
       }
     }
 
+    this.User.decodeToken = token => {
+      return decodeToken(token, {complete: true,})
+    }
+
     this.User.loginCallback = data => {
       return {
         [process.env.Altas.Orm.pkName]: data[process.env.Altas.Orm.pkName],
@@ -220,10 +248,67 @@ class Permission {
         [this.activeProp]: data[this.activeProp],
       }
     }
+
+    this.User.checkToken = async req => {
+      const token = req.headers.authorization.split('Bearer')[1].trim()
+      const user = await this.User.selectOne({
+        where: { [this.tokenProp]: token, },
+        include: [
+          this.Permission,
+          {
+            model: this.Group,
+            include: this.Permission,
+          },
+        ],
+      })
+
+      return Promise.resolve({ user, token, })
+    }
+
+    this.User.checkPermission = async (req, user) => {
+      const publicPermissions = await this.Permission.select({
+        where: {
+          [this.User.name + 'Id']: null,
+          [this.Group.name + 'Id']: null,
+        },
+      })
+
+      const publicAllowed = publicPermissions.rows
+        .filter(p => {
+          const resource = p[this.resourceProp].split('|')
+          const url = new urlPattern(resource[1])
+
+          return url.match(req.url) !== null && [ 'ALL', req.method, ].indexOf(resource[0]) !== -1
+        })
+        .length === 1
+
+      if (!user) return publicAllowed
+
+      let userPermissions = await this.Permission.select({
+        where: {
+          [this.User.name + 'Id']: user[process.env.Atlas.Orm.pkName],
+        },
+      })
+
+      userPermissions = userPermissions.rows
+        .filter(p => {
+          const resource = p[this.resourceProp].split('|')
+          const url = new urlPattern(resource[1])
+
+          return url.match(req.url) !== null && [ 'ALL', req.method, ].indexOf(resource[0]) !== -1
+        })
+
+      const userAllowed = userPermissions.filter(p => p[this.allowProp === true]).length === 1
+      const userDenied = userPermissions.filter(p => p[this.allowProp === false]).length === 1
+
+      console.log(Object.keys(this.Group))
+
+      return publicAllowed || (userAllowed && !userDenied)
+    }
   }
 
   setRouters () {
-    Atlas.Server.express().post(this.registerRoute, async (req, res) => {
+    Atlas.Server.express.post(this.registerRoute, async (req, res) => {
       req.body[this.activationCodeProp] = await this.User.generateActiveCode()
 
       req.body = this.pushRegisterData(req.body)
@@ -235,7 +320,7 @@ class Permission {
       res.json({ [process.env.Atlas.Orm.pkName]: user[process.env.Atlas.Orm.pkName], })
     })
 
-    Atlas.Server.express().post(this.refreshActiveCodeRoute, async (req, res) => {
+    Atlas.Server.express.post(this.refreshActiveCodeRoute, async (req, res) => {
       req.body[this.activationCodeProp] = await this.User.generateActiveCode()
 
       const user = await this.User.refreshActiveCode(req.body)
@@ -245,7 +330,7 @@ class Permission {
       res.json({ [process.env.Atlas.Orm.pkName]: user[process.env.Atlas.Orm.pkName], })
     })
 
-    Atlas.Server.express().put(this.activeCodeRoute, async (req, res) => {
+    Atlas.Server.express.put(this.activeCodeRoute, async (req, res) => {
       const data = {
         [process.env.Atlas.Orm.pkName]: req.body[process.env.Atlas.Orm.pkName],
         [this.activationCodeProp]: (req.body[this.activationCodeProp] || '').toUpperCase(),
@@ -256,7 +341,7 @@ class Permission {
         .catch(e => res.status(500).json(e))
     })
 
-    Atlas.Server.express().post(this.sendPasswordRecoverCodeRoute, async (req, res) => {
+    Atlas.Server.express.post(this.sendPasswordRecoverCodeRoute, async (req, res) => {
       const data = {
         [process.env.Atlas.Orm.pkName]: req.body[process.env.Atlas.Orm.pkName],
         [this.loginProp]: req.body[this.loginProp],
@@ -271,7 +356,7 @@ class Permission {
         .catch(e => res.status(500).json(e))
     })
 
-    Atlas.Server.express().put(this.refreshPasswordRoute, async (req, res) => {
+    Atlas.Server.express.put(this.refreshPasswordRoute, async (req, res) => {
       const data = {
         [this.passwordProp]: req.body[this.passwordProp],
         [this.recoverCodeProp]: (req.body[this.recoverCodeProp] || '').toUpperCase(),
@@ -285,8 +370,21 @@ class Permission {
         .catch(e => res.status(500).json(e))
     })
 
-    Atlas.Server.express().post(this.loginRoute, async (req, res) => {
+    Atlas.Server.express.post(this.loginRoute, async (req, res) => {
       res.json(await this.User.login(req.body[this.loginProp], req.body[this.passwordProp]))
+    })
+  }
+
+  setMiddlewares () {
+    Atlas.Server.express.use(async (req, res, next) => {
+      const { user, token, } = await this.User.checkToken(req)
+
+      if (await this.User.checkPermission(req, user)) {
+        next()
+      }
+      else {
+        res.status(403).json({ msg: 'Invalid token', token, })
+      }
     })
   }
 }

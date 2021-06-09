@@ -36,8 +36,8 @@ class Atlas {
     await this.Permission.init()
 
     await this.Orm.start()
-    await this.Server.start()
     await this.Permission.start()
+    await this.Server.start()
 
     return this
   }

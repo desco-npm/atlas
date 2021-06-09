@@ -48,6 +48,8 @@ module.exports = (config = {}) => {
         token: process.env.ATLAS_PERMISSION_TOKEN_PROP,
         validateToken: process.env.ATLAS_PERMISSION_VALIDATE_TOKEN_PROP,
         active: process.env.ATLAS_PERMISSION_ACTIVE_PROP,
+        resource: process.env.ATLAS_PERMISSION_RESOURCE_PROP,
+        allow: process.env.ATLAS_PERMISSION_allow_PROP,
       },
       mail: {
         activationFrom: process.env.ATLAS_PERMISSION_ACTIVATION_MAIL_FROM,
