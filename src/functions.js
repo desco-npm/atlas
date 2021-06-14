@@ -26,7 +26,7 @@ global.isMac = require('platform-is').isMac
 global.isLinux = require('platform-is').isLinux
 global.randomstring = require('@smakss/random-string')
 global.frontToSequelize = global.atlas_envRequire('@desco/front-to-sequelize')
-
+global.inflection = require('inflection')
 
 global.arrayUnique = array => array.filter((item, key, self) => self.indexOf(item) === key)
 global.mkdirIfNotExists = dir => { if (!fileExists(dir)) mkdir(dir) }

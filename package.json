@@ -32,6 +32,7 @@
     "googleapis": "^67.0.0",
     "helmet": "^4.3.1",
     "html-pdf": "^2.2.0",
+    "inflection": "^1.13.1",
     "is-array": "^1.0.1",
     "is-object": "^1.0.2",
     "jsonwebtoken": "^8.5.1",
@@ -46,7 +47,8 @@
     "pg": "^8.6.0",
     "platform-is": "^1.0.4",
     "sequelizer": "^1.1.4",
-    "stack-trace": "0.0.10"
+    "stack-trace": "0.0.10",
+    "url-pattern": "^1.0.3"
   },
   "devDependencies": {
     "eslint": "^7.17.0"

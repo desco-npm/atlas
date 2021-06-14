@@ -249,7 +249,9 @@ class Permission {
       }
     }
 
-    this.User.checkToken = async req => {
+    this.Permission.checkToken = async req => {
+      if (!req.headers.authorization) return Promise.resolve({ user: null, token: null, })
+
       const token = req.headers.authorization.split('Bearer')[1].trim()
       const user = await this.User.selectOne({
         where: { [this.tokenProp]: token, },
@@ -265,45 +267,69 @@ class Permission {
       return Promise.resolve({ user, token, })
     }
 
-    this.User.checkPermission = async (req, user) => {
-      const publicPermissions = await this.Permission.select({
+    this.Permission.checkPermission = async (req, user) => {
+      const publicAllowed = await this.Permission.checkPublicPermission(req)
+
+      if (publicAllowed) return true
+
+      if (!user) return false
+
+      const userAllowed = await this.Permission.checkUserPermission(req, user)
+
+      if (userAllowed) return true
+
+      const groupAllowed = await this.Permission.checkGroupPermission(req, user)
+
+      if (groupAllowed) return true
+
+      return false
+    }
+
+    this.Permission.checkPublicPermission = async req => {
+      const permissions = await this.Permission.select({
         where: {
           [this.User.name + 'Id']: null,
           [this.Group.name + 'Id']: null,
         },
       })
 
-      const publicAllowed = publicPermissions.rows
-        .filter(p => {
-          const resource = p[this.resourceProp].split('|')
-          const url = new urlPattern(resource[1])
+      return this.Permission.filterByPattern(permissions.rows, req).length === 1
+    }
 
-          return url.match(req.url) !== null && [ 'ALL', req.method, ].indexOf(resource[0]) !== -1
-        })
-        .length === 1
-
-      if (!user) return publicAllowed
-
-      let userPermissions = await this.Permission.select({
+    this.Permission.checkUserPermission = async (req, user) => {
+      const permissions = await this.Permission.select({
         where: {
-          [this.User.name + 'Id']: user[process.env.Atlas.Orm.pkName],
+          [this.User.name + 'Id']: user.Id,
         },
       })
 
-      userPermissions = userPermissions.rows
+      return this.Permission.filterByPattern(permissions.rows, req).length === 1
+    }
+
+    this.Permission.checkGroupPermission = async (req, user) => {
+      const ids = user[inflection.pluralize(this.Group.name)]
+        .map(i => i[process.env.Atlas.Orm.pkName])
+
+      const permissions = await this.Permission.select({
+        where: {
+          [this.Group.name + 'Id']: ids,
+        },
+      })
+
+      return this.Permission.filterByPattern(permissions.rows, req).length === 1
+    }
+
+    this.Permission.filterByPattern = (permissions, req) => {
+      return permissions
         .filter(p => {
           const resource = p[this.resourceProp].split('|')
+
+          if (resource.length === 1) resource.unshift('ALL')
+
           const url = new urlPattern(resource[1])
 
           return url.match(req.url) !== null && [ 'ALL', req.method, ].indexOf(resource[0]) !== -1
         })
-
-      const userAllowed = userPermissions.filter(p => p[this.allowProp === true]).length === 1
-      const userDenied = userPermissions.filter(p => p[this.allowProp === false]).length === 1
-
-      console.log(Object.keys(this.Group))
-
-      return publicAllowed || (userAllowed && !userDenied)
     }
   }
 
@@ -377,9 +403,9 @@ class Permission {
 
   setMiddlewares () {
     Atlas.Server.express.use(async (req, res, next) => {
-      const { user, token, } = await this.User.checkToken(req)
+      const { user, token, } = await this.Permission.checkToken(req)
 
-      if (await this.User.checkPermission(req, user)) {
+      if (await this.Permission.checkPermission(req, user)) {
         next()
       }
       else {
