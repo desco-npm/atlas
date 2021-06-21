@@ -325,10 +325,12 @@ class Permission {
           const resource = p[this.resourceProp].split('|')
 
           if (resource.length === 1) resource.unshift('ALL')
+          const url = new urlPattern(resource[1].split('?')[0])
 
-          const url = new urlPattern(resource[1])
-
-          return url.match(req.url) !== null && [ 'ALL', req.method, ].indexOf(resource[0]) !== -1
+          return (
+            url.match(req.url.split('?')[0]) !== null &&
+            [ 'ALL', req.method, ].indexOf(resource[0]) !== -1
+          )
         })
     }
   }
