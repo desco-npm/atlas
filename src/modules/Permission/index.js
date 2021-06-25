@@ -170,11 +170,9 @@ class Permission {
     this.User.refreshPassword = async data => {
       const user = await this.User.selectOne({
         where: {
-          [this.loginProp]: data[this.loginProp],
           [this.recoverCodeProp]: data[this.recoverCodeProp],
         },
       })
-
 
       if (!user) return Promise.reject({ msg: 'Invalid Recover Code', })
 
@@ -193,15 +191,17 @@ class Permission {
       const fromName = this.recoverPasswordMailFrom
       const fromMail = process.env.Atlas.Mail.auth.user
 
-      return Atlas.Mail.send({
+      const params = {
         from: `${fromName} <${fromMail}>`,
         to: data[this.loginProp],
         subject: this.recoverPasswordMailSubject,
         text: this.recoverPasswordMailText
-          .replace('{{code}}', data[this.activationCodeProp]),
-        html: process.env.Atlas.Permission.recoverPasswordMailHtml
-          .replace('{{code}}', data[this.activationCodeProp]),
-      })
+          .replace('{{code}}', data[this.recoverCodeProp]),
+        html: this.recoverPasswordMailHtml
+          .replace('{{code}}', data[this.recoverCodeProp]),
+      }
+
+      return Atlas.Mail.send(params)
     }
 
     this.User.login = async (login, password) => {
@@ -348,7 +348,7 @@ class Permission {
       res.json({ [process.env.Atlas.Orm.pkName]: user[process.env.Atlas.Orm.pkName], })
     })
 
-    Atlas.Server.express.post(this.refreshActiveCodeRoute, async (req, res) => {
+    Atlas.Server.express.put(this.refreshActiveCodeRoute, async (req, res) => {
       req.body[this.activationCodeProp] = await this.User.generateActiveCode()
 
       const user = await this.User.refreshActiveCode(req.body)
@@ -388,7 +388,6 @@ class Permission {
       const data = {
         [this.passwordProp]: req.body[this.passwordProp],
         [this.recoverCodeProp]: (req.body[this.recoverCodeProp] || '').toUpperCase(),
-        [this.loginProp]: req.body[this.loginProp],
       }
 
       this.User.refreshPassword(data)
