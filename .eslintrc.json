@@ -10,6 +10,7 @@
     },
     "globals": {
       // "var1": "writable",
+      "objectPath": "readonly",
       "inflection": "readonly",
       "randomstring": "readonly",
       "isWindows": "readonly",

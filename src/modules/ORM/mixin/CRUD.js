@@ -31,7 +31,7 @@ module.exports = ({ Op, }) => {
         .catch(e => console.log(e))
     },
     save (data, options = {}) {
-      if (data[process.env.Atlas.Orm.pkName]) {
+      if (data[Atlas.Config.get('Orm.pkName')]) {
         return this.change(data, options)
       }
       else {
@@ -41,7 +41,7 @@ module.exports = ({ Op, }) => {
     insert (data, options = {}) {
       return this.create(data, options)
         .then(response => {
-          const id = response.toJSON()[process.env.Atlas.Orm.pkName]
+          const id = response.toJSON()[Atlas.Config.get('Orm.pkName')]
 
           return this.read(id)
         })
@@ -53,11 +53,11 @@ module.exports = ({ Op, }) => {
       return this.update(body, {
         ...options,
         where: {
-          [process.env.Atlas.Orm.pkName]: body[process.env.Atlas.Orm.pkName],
+          [Atlas.Config.get('Orm.pkName')]: body[Atlas.Config.get('Orm.pkName')],
         },
       })
         .then(async () => {
-          return this.read(body[process.env.Atlas.Orm.pkName], options)
+          return this.read(body[Atlas.Config.get('Orm.pkName')], options)
         })
         .catch(e => {
           return e
@@ -71,7 +71,7 @@ module.exports = ({ Op, }) => {
         count: (await this.destroy({
           ...options,
           where: {
-            [process.env.Atlas.Orm.pkName]: {
+            [Atlas.Config.get('config.Orm.pkName')]: {
               [ Op.in ]: ids.split(';'),
             },
           },

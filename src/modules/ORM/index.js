@@ -8,6 +8,8 @@ class ORM {
     this.pos = {}
 
     mkdirIfNotExists(this.modelsDir)
+
+    Atlas.Config.setDefault('Orm.Uid.DefaultVersion', 4)
   }
 
   async init () {
@@ -40,19 +42,19 @@ class ORM {
     if (await this.authenticate() === true) return this
 
     sequelize = new Sequelize(
-      process.env.Atlas.Orm.Db.name,
-      process.env.Atlas.Orm.Db.user,
-      process.env.Atlas.Orm.Db.password,
+      Atlas.Config.get('Orm.Db.name'),
+      Atlas.Config.get('Orm.Db.user'),
+      Atlas.Config.get('Orm.Db.password'),
       {
-        logging: process.env.Atlas.Orm.Db.log,
-        host: process.env.Atlas.Orm.Db.host,
-        port: process.env.Atlas.Orm.Db.port,
-        dialect: process.env.Atlas.Orm.Db.dialog,
+        logging: Atlas.Config.get('Orm.Db.log'),
+        host: Atlas.Config.get('Orm.Db.host'),
+        port: Atlas.Config.get('Orm.Db.port'),
+        dialect: Atlas.Config.get('Orm.Db.dialog'),
         pool: {
-          max: parseInt(process.env.Atlas.Orm.pool.max),
-          min: parseInt(process.env.Atlas.Orm.pool.min),
-          acquire: parseInt(process.env.Atlas.Orm.pool.idle),
-          idle: parseInt(process.env.Atlas.Orm.pool.acquire),
+          max: parseInt(Atlas.Config.get('Orm.pool.max')),
+          min: parseInt(Atlas.Config.get('Orm.pool.min')),
+          acquire: parseInt(Atlas.Config.get('Orm.pool.idle')),
+          idle: parseInt(Atlas.Config.get('Orm.pool.acquire')),
         },
       }
     )
@@ -100,7 +102,7 @@ class ORM {
 
     this.pos[name] = pos
 
-    const uidDefaultVersion = parseInt(process.env.Atlas.Orm.UID_DEFAULT_VERSION || 4)
+    const uidDefaultVersion = parseInt(Atlas.Config.get('Orm.Uid.DefaultVersion'))
     const uidVersions = [ 1, 4, ]
 
     attrs = objectMap(attrs, v => {
@@ -172,15 +174,15 @@ class ORM {
   }
 
   sync () {
-    const sync = process.env.Atlas.Orm.sync
-    const forceSync = process.env.Atlas.Orm.sync_force
-    const alterSync = process.env.Atlas.Orm.sync_alter
+    const sync = Atlas.Config.get('Orm.sync')
+    const forceSync = Atlas.Config.get('Orm.sync_force')
+    const alterSync = Atlas.Config.get('Orm.sync_alter')
 
     if (!sync && !forceSync && !alterSync) return
 
     return sequelize.sync({
-      force: process.env.Atlas.Orm.sync_force,
-      alter: process.env.Atlas.Orm.sync_alter,
+      force: Atlas.Config.get('Orm.sync_force'),
+      alter: Atlas.Config.get('Orm.sync_alter'),
     })
   }
 

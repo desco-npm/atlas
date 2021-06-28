@@ -12,8 +12,8 @@ require('./functions')
 const cliHeader = global.atlas_envRequire('@desco/cli-header', 'atlas')
 
 class Atlas {
-  constructor(config = {}) {
-    require('./env.js')(config)
+  constructor(config, env) {
+    this.Config = require('./modules/Config')(config, env)
 
     global.Atlas = this
 
@@ -49,6 +49,6 @@ class Atlas {
   }
 }
 
-module.exports = async config => {
-  return new Atlas(config).init()
+module.exports = async (config, env) => {
+  return new Atlas(config, env).init()
 }

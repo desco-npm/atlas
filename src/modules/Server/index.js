@@ -6,21 +6,22 @@ const isArray = require('is-array')
 
 class Server {
   constructor () {
-    this.express = Express()
+    Atlas.Config.setDefault('Server.origin', '*')
 
+    this.express = Express()
     const corsOptions = {
-      origin: process.env.Atlas.Server.origin || '*',
+      origin: Atlas.Config.get('Server.origin'),
     }
 
     this.express.use(Cors(corsOptions))
 
     this.express.use(BodyParser.urlencoded({
       extended: false,
-      limit: process.env.Atlas.Server.limit,
+      limit: Atlas.Config.get('Server.limit'),
     }))
 
     this.express.use(BodyParser.json({
-      limit: process.env.Atlas.Server.limit,
+      limit: Atlas.Config.get('Server.limit'),
     }))
 
     // this.express.use(Helmet())
@@ -39,7 +40,7 @@ class Server {
 
     await this.importRoutes()
 
-    let port = parseInt(process.env.Atlas.Server.port)
+    let port = parseInt(Atlas.Config.get('Server.port'))
 
     this.express.listen(port, () => {
       console.log(`Server listening at port ${port}`)
@@ -47,9 +48,9 @@ class Server {
   }
 
   defineStatic () {
-    const staticList = isArray(process.env.Atlas.Server.static)
-      ? process.env.Atlas.Server.static
-      : [ process.env.Atlas.Server.static, ]
+    const staticList = isArray(Atlas.Config.get('Server.static'))
+      ? Atlas.Config.get('Server.static')
+      : [ Atlas.Config.get('Server.static'), ]
 
     staticList.map(staticItem => {
       const [ dir, prefix, ] = staticItem.split(',')

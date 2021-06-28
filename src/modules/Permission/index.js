@@ -3,82 +3,114 @@ const urlPattern = require('url-pattern')
 class Permission {
   constructor () {
     this.setMiddlewares()
+
+    Atlas.Config.setDefault('Permission.prop.login', 'login')
+
+    Atlas.Config.setDefault('Permission.prop.password', 'password')
+
+    Atlas.Config.setDefault('Permission.prop.activationCode', 'activationCode')
+
+    Atlas.Config.setDefault('Permission.prop.active', 'active')
+
+    Atlas.Config.setDefault('Permission.prop.recoverCode', 'recoverCode')
+
+    Atlas.Config.setDefault('Permission.prop.token', 'token')
+
+    Atlas.Config.setDefault('Permission.prop.validateToken', 'validateToken')
+
+    Atlas.Config.setDefault('Permission.prop.resource', 'resource')
+
+    Atlas.Config.setDefault('Permission.prop.allow', 'allow')
+
+    Atlas.Config.setDefault('Permission.activationMailFrom', 'Activation Code')
+
+    Atlas.Config.setDefault('Permission.mail.activationSubject', 'Activation Code')
+
+    Atlas.Config.setDefault('Permission.mail.activationText', 'Your activation code is {{code}}')
+
+    Atlas.Config.setDefault(
+      'Permission.mail.activationHtml', 'Your activation code is <b>{{code}}</b>'
+    )
+
+    Atlas.Config.setDefault('Permission.mail.recoverPasswordFrom', 'Recover Password Code')
+
+    Atlas.Config.setDefault('Permission.mail.recoverPasswordSubject', 'Recover Password Code')
+
+    Atlas.Config.setDefault('Permission.mail.recoverPasswordText', 'Your recover code is {{code}}')
+
+    Atlas.Config.setDefault(
+      'Permission.mail.recoverPasswordHtml', 'Permission.mail.recoverPasswordText'
+    )
+
+    Atlas.Config.setDefault('Permission.route.login', '/Login')
+
+    Atlas.Config.setDefault('Permission.route.register', '/Register')
+
+    Atlas.Config.setDefault('Permission.route.refreshActiveCode', '/RefreshActiveCodeRoute')
+
+    Atlas.Config.setDefault('Permission.route.activeCode', '/ActiveAccount')
+
+    Atlas.Config.setDefault('Permission.route.sendPasswordRecoverCode', '/SendPasswordRecoverCode')
+
+    Atlas.Config.setDefault('Permission.route.refreshPassword', '/RefreshPassword')
+
+    Atlas.Config.setDefault('Permission.pushRegisterData', (i => i))
   }
 
   async init () {
-    this.User = global.Atlas.Orm.listModels()[process.env.Atlas.Permission.Model.User]
+    this.User = Atlas.Orm.listModels()[Atlas.Config.get('Permission.Model.User')]
 
-    this.Group = global.Atlas.Orm.listModels()[process.env.Atlas.Permission.Model.Group]
+    this.Group = Atlas.Orm.listModels()[Atlas.Config.get('Permission.Model.Group')]
 
-    this.Permission = global.Atlas.Orm.listModels()[process.env.Atlas.Permission.Model.Permission]
+    this.Permission = Atlas.Orm.listModels()[Atlas.Config.get('Permission.Model.Permission')]
 
-    this.loginProp = process.env.Atlas.Permission.prop.login || 'login'
+    this.loginProp = Atlas.Config.get('Permission.prop.login')
 
-    this.passwordProp = process.env.Atlas.Permission.prop.password || 'password'
+    this.passwordProp = Atlas.Config.get('Permission.prop.password')
 
-    this.activationCodeProp = process.env.Atlas.Permission.prop.activationCode || 'activationCode'
+    this.activationCodeProp = Atlas.Config.get('Permission.prop.activationCode')
 
-    this.activeProp = process.env.Atlas.Permission.prop.active || 'active'
+    this.activeProp = Atlas.Config.get('Permission.prop.active')
 
-    this.recoverCodeProp = process.env.Atlas.Permission.prop.recoverCode || 'recoverCode'
+    this.recoverCodeProp = Atlas.Config.get('Permission.prop.recoverCode')
 
-    this.tokenProp = process.env.Atlas.Permission.prop.token || 'token'
+    this.tokenProp = Atlas.Config.get('Permission.prop.token')
 
-    this.validateTokenProp = process.env.Atlas.Permission.prop.validateToken || 'validateToken'
+    this.validateTokenProp = Atlas.Config.get('Permission.prop.validateToken')
 
-    this.resourceProp = process.env.Atlas.Permission.prop.resource || 'resource'
+    this.resourceProp = Atlas.Config.get('Permission.prop.resource')
 
-    this.allowProp = process.env.Atlas.Permission.prop.allow || 'allow'
+    this.allowProp = Atlas.Config.get('Permission.prop.allow')
 
-    this.activationMailFrom = process.env.Atlas.Permission.activationMailFrom || 'Activation Code'
+    this.activationMailFrom = Atlas.Config.get('Permission.activationMailFrom')
 
-    this.activationMailSubject = (
-      process.env.Atlas.Permission.mail.activationSubject || 'Activation Code'
-    )
+    this.activationMailSubject = Atlas.Config.get('Permission.mail.activationSubject')
 
-    this.activationMailText = (
-      process.env.Atlas.Permission.mail.activationText || 'Your activation code is {{code}}'
-    )
+    this.activationMailText = Atlas.Config.get('Permission.mail.activationText')
 
-    this.activationMailHtml = (
-      process.env.Atlas.Permission.mail.activationHtml || 'Your activation code is <b>{{code}}</b>'
-    )
+    this.activationMailHtml = Atlas.Config.get('Permission.mail.activationHtml')
 
-    this.recoverPasswordMailFrom = (
-      process.env.Atlas.Permission.mail.recoverPasswordFrom || 'Recover Password Code'
-    )
+    this.recoverPasswordMailFrom = Atlas.Config.get('Permission.mail.recoverPasswordFrom')
 
-    this.recoverPasswordMailSubject = (
-      process.env.Atlas.Permission.mail.recoverPasswordSubject || 'Recover Password Code'
-    )
+    this.recoverPasswordMailSubject = Atlas.Config.get('Permission.mail.recoverPasswordSubject')
 
-    this.recoverPasswordMailText = (
-      process.env.Atlas.Permission.mail.recoverPasswordText || 'Your recover code is {{code}}'
-    )
+    this.recoverPasswordMailText = Atlas.Config.get('')
 
-    this.recoverPasswordMailHtml = (
-      process.env.Atlas.Permission.mail.recoverPasswordHtml || 'Your recover code is <b>{{code}}</b>'
-    )
+    this.recoverPasswordMailHtml = Atlas.Config.get('Permission.mail.recoverPasswordHtml')
 
-    this.loginRoute = process.env.Atlas.Permission.route.login || '/login'
+    this.loginRoute = Atlas.Config.get('Permission.route.login')
 
-    this.registerRoute = process.env.Atlas.Permission.route.register || '/register'
+    this.registerRoute = Atlas.Config.get('Permission.route.register')
 
-    this.refreshActiveCodeRoute = (
-      process.env.Atlas.Permission.route.refreshActiveCode || '/refreshActiveCodeRoute'
-    )
+    this.refreshActiveCodeRoute = Atlas.Config.get('Permission.route.refreshActiveCode')
 
-    this.activeCodeRoute = process.env.Atlas.Permission.route.activeCode || '/active-account'
+    this.activeCodeRoute = Atlas.Config.get('Permission.route.activeCode')
 
-    this.sendPasswordRecoverCodeRoute = (
-      process.env.Atlas.Permission.route.sendPasswordRecoverCode || '/send-password-recover-code'
-    )
+    this.sendPasswordRecoverCodeRoute = Atlas.Config.get('Permission.route.sendPasswordRecoverCode')
 
-    this.refreshPasswordRoute = (
-      process.env.Atlas.Permission.route.refreshPassword || '/refresh-password'
-    )
+    this.refreshPasswordRoute = Atlas.Config.get('Permission.route.refreshPassword')
 
-    this.pushRegisterData = process.env.Atlas.Permission.pushRegisterData || (i => i)
+    this.pushRegisterData = Atlas.Config.get('Permission.pushRegisterData')
   }
 
   start () {
@@ -107,14 +139,14 @@ class Permission {
 
     this.User.refreshActiveCode = async data => {
       return this.User.change({
-        [process.env.Atlas.Orm.pkName]: data[process.env.Atlas.Orm.pkName],
+        [Atlas.Config.get('Orm.pkName')]: data[Atlas.Config.get('Orm.pkName')],
         [this.activationCodeProp]: data[this.activationCodeProp],
       })
     }
 
     this.User.sendActiveCodeMail = data => {
       const fromName = this.activationMailFrom
-      const fromMail = process.env.Atlas.Mail.auth.user
+      const fromMail = Atlas.Config.get('Mail.auth.user')
 
       return Atlas.Mail.send({
         from: `${fromName} <${fromMail}>`,
@@ -128,7 +160,7 @@ class Permission {
     }
 
     this.User.activeCode = async data => {
-      const user = await this.User.read(data[process.env.Atlas.Orm.pkName])
+      const user = await this.User.read(data[Atlas.Config.get('Orm.pkName')])
 
       if (!user) {
         return Promise.reject({ msg: 'User not found', })
@@ -146,8 +178,8 @@ class Permission {
     this.User.generatePasswordRecoveryCode = async data => {
       const options = { where: {}, }
 
-      if (data[process.env.Atlas.Orm.pkName]) {
-        options.where[process.env.Atlas.Orm.pkName] = data[process.env.Atlas.Orm.pkName]
+      if (data[Atlas.Config.get('Orm.pkName')]) {
+        options.where[Atlas.Config.get('Orm.pkName')] = data[Atlas.Config.get('Orm.pkName')]
       }
       else if (data[this.loginProp]) {
         options.where[this.loginProp] = data[this.loginProp]
@@ -189,7 +221,7 @@ class Permission {
 
     this.User.sendRecoverPasswordMail = data => {
       const fromName = this.recoverPasswordMailFrom
-      const fromMail = process.env.Atlas.Mail.auth.user
+      const fromMail = Atlas.Config.get('Mail.auth.user')
 
       const params = {
         from: `${fromName} <${fromMail}>`,
@@ -215,9 +247,12 @@ class Permission {
       if (!user) return {}
 
       const token = generateToken(
-        { [process.env.Atlas.Orm.pkName]: user[process.env.Atlas.Orm.pkName], time: new Date(), },
-        process.env.Atlas.hash.key,
-        { algorithm: process.env.Atlas.hash.algorithm, expiresIn: '1h', }
+        {
+          [Atlas.Config.get('Orm.pkName')]: user[Atlas.Config.get('Orm.pkName')],
+          time: new Date(),
+        },
+        Atlas.ConfigAtlas.Config.get('hash.key'),
+        { algorithm: Atlas.Config.get('hash.algorithm'), expiresIn: '1h', }
       )
 
       const decoded = this.User.decodeToken(token, {complete: true,})
@@ -229,7 +264,7 @@ class Permission {
       })
 
       return {
-        [process.env.Atlas.Orm.pkName]: loggedUser[process.env.Atlas.Orm.pkName],
+        [Atlas.Config.get('Orm.pkName')]: loggedUser[Atlas.Config.get('Orm.pkName')],
         [this.loginProp]: loggedUser[this.loginProp],
         [this.tokenProp]: loggedUser[this.tokenProp],
         [this.validateTokenProp]: loggedUser[this.validateTokenProp],
@@ -308,7 +343,7 @@ class Permission {
 
     this.Permission.checkGroupPermission = async (req, user) => {
       const ids = user[inflection.pluralize(this.Group.name)]
-        .map(i => i[process.env.Atlas.Orm.pkName])
+        .map(i => i[Atlas.Config.get('Orm.pkName')])
 
       const permissions = await this.Permission.select({
         where: {
@@ -345,7 +380,7 @@ class Permission {
 
       await this.User.sendActiveCodeMail(user)
 
-      res.json({ [process.env.Atlas.Orm.pkName]: user[process.env.Atlas.Orm.pkName], })
+      res.json({ [Atlas.Config.get('Orm.pkName')]: user[Atlas.Config.get('Orm.pkName')], })
     })
 
     Atlas.Server.express.put(this.refreshActiveCodeRoute, async (req, res) => {
@@ -355,12 +390,12 @@ class Permission {
 
       await this.User.sendActiveCodeMail(user)
 
-      res.json({ [process.env.Atlas.Orm.pkName]: user[process.env.Atlas.Orm.pkName], })
+      res.json({ [Atlas.Config.get('Orm.pkName')]: user[Atlas.Config.get('Orm.pkName')], })
     })
 
     Atlas.Server.express.put(this.activeCodeRoute, async (req, res) => {
       const data = {
-        [process.env.Atlas.Orm.pkName]: req.body[process.env.Atlas.Orm.pkName],
+        [Atlas.Config.get('Orm.pkName')]: req.body[Atlas.Config.get('Orm.pkName')],
         [this.activationCodeProp]: (req.body[this.activationCodeProp] || '').toUpperCase(),
       }
 
@@ -371,7 +406,7 @@ class Permission {
 
     Atlas.Server.express.post(this.sendPasswordRecoverCodeRoute, async (req, res) => {
       const data = {
-        [process.env.Atlas.Orm.pkName]: req.body[process.env.Atlas.Orm.pkName],
+        [Atlas.Config.get('Orm.pkName')]: req.body[Atlas.Config.get('Orm.pkName')],
         [this.loginProp]: req.body[this.loginProp],
       }
 
@@ -379,7 +414,7 @@ class Permission {
         .then(async user => {
           await this.User.sendRecoverPasswordMail(user)
 
-          res.json({ [process.env.Atlas.Orm.pkName]: user[process.env.Atlas.Orm.pkName], })
+          res.json({ [Atlas.Config.get('Orm.pkName')]: user[Atlas.Config.get('Orm.pkName')], })
         })
         .catch(e => res.status(500).json(e))
     })

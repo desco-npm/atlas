@@ -7,9 +7,9 @@ class Mail {
   }
 
   init () {
-    const transporters = isArray(process.env.Atlas.Mail)
-      ? process.env.Atlas.Mail
-      : [process.env.Atlas.Mail,]
+    const transporters = isArray(Atlas.Config.get('Mail'))
+      ? Atlas.Config.get('Mail')
+      : [Atlas.Config.get('Mail'),]
 
     transporters.map((transporter, k) => {
       transporter.name = transporter.name || `mail${k + 1}`
