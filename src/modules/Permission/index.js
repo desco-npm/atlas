@@ -2,6 +2,8 @@ const urlPattern = require('url-pattern')
 
 class Permission {
   constructor () {
+    if (!Atlas.Config.get('Orm')) return
+
     this.setMiddlewares()
 
     Atlas.Config.setDefault('Permission.prop.login', 'login')
@@ -58,6 +60,8 @@ class Permission {
   }
 
   async init () {
+    if (!Atlas.Config.get('Orm')) return Promise.resolve()
+
     this.User = Atlas.Orm.listModels()[Atlas.Config.get('Permission.Model.User')]
 
     this.Group = Atlas.Orm.listModels()[Atlas.Config.get('Permission.Model.Group')]
@@ -114,6 +118,8 @@ class Permission {
   }
 
   start () {
+    if (!Atlas.Config.get('Orm')) return
+
     this.defineRelations()
     this.setMethods()
     this.setRouters()

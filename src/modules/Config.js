@@ -1,14 +1,6 @@
 class Config {
   constructor (config = {}, env = {}) {
     this.config = objectMerge(config, env[config.env || 'production'])
-
-    this.config.Orm.Db.log = typeof this.config.Orm.Db.log === 'function'
-      ? this.config.Orm.Db.log
-      : this.config.Orm.Db.log
-        ? console.log
-        : () => {}
-
-    this.config.Orm.pkName = this.config.Orm.pkName || 'id'
   }
 
   get (path) {

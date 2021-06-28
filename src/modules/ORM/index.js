@@ -4,15 +4,27 @@ let sequelize
 
 class ORM {
   constructor () {
+    if (!Atlas.Config.get('Orm')) return
+
+    Atlas.Config.setDefault('Orm.Uid.DefaultVersion', 4)
+
+    Atlas.Config.setDefault('Orm.Db.log', typeof this.config.Orm.Db.log === 'function'
+      ? this.config.Orm.Db.log
+      : this.config.Orm.Db.log
+        ? console.log
+        : () => {}
+    )
+
+    Atlas.Config.setDefault('Orm.pkName', 'id')
+
     this.modelsDir = pathJoin(projectDir, 'models')
     this.pos = {}
 
     mkdirIfNotExists(this.modelsDir)
-
-    Atlas.Config.setDefault('Orm.Uid.DefaultVersion', 4)
   }
 
   async init () {
+    if (!Atlas.Config.get('Orm')) return Promise.resolve()
     await this.connect()
     await this.importModels()
     await this.posDefines()
@@ -21,6 +33,8 @@ class ORM {
   }
 
   async start () {
+    if (!Atlas.Config.get('Orm')) return Promise.resolve()
+
     await this.sync()
 
     return Promise.resolve()

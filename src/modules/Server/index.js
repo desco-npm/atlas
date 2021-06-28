@@ -65,6 +65,8 @@ class Server {
   }
 
   async importRoutes () {
+    if (!Atlas.Config.get('Orm')) return Promise.resolve()
+
     const routes = (await readdir(this.routesDir)).map(i => i.slice(0, -3))
     const models = Object.keys(Atlas.Orm.listModels())
     const entities = [ ...routes, ...models, ]
