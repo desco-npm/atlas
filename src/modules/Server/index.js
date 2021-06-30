@@ -65,10 +65,8 @@ class Server {
   }
 
   async importRoutes () {
-    if (!Atlas.Config.get('Orm')) return Promise.resolve()
-
     const routes = (await readdir(this.routesDir)).map(i => i.slice(0, -3))
-    const models = Object.keys(Atlas.Orm.listModels())
+    const models = Atlas.Config.get('Orm') ? Object.keys(Atlas.Orm.listModels()) : []
     const entities = [ ...routes, ...models, ]
     const promises = []
 
@@ -81,7 +79,7 @@ class Server {
 
   async loadRouteByEntity (entity) {
     const routeModelAddrs = pathJoin(this.routesDir, entity)
-    const models = Atlas.Orm.listModels()
+    const models = Atlas.Config.get('Orm') ? Atlas.Orm.listModels() : []
     const routeParams = {
       express: this.express,
       entity,

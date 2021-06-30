@@ -49,6 +49,7 @@
     "platform-is": "^1.0.4",
     "sequelizer": "^1.1.4",
     "stack-trace": "0.0.10",
+    "trello": "^0.10.0",
     "url-pattern": "^1.0.3"
   },
   "devDependencies": {
