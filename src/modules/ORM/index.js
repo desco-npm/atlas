@@ -8,9 +8,9 @@ class ORM {
 
     Atlas.Config.setDefault('Orm.Uid.DefaultVersion', 4)
 
-    Atlas.Config.setDefault('Orm.Db.log', typeof this.config.Orm.Db.log === 'function'
-      ? this.config.Orm.Db.log
-      : this.config.Orm.Db.log
+    Atlas.Config.setDefault('Orm.Db.log', typeof Atlas.Config.get('Orm.Db.log') === 'function'
+      ? Atlas.Config.get('Orm.Db.log')
+      : Atlas.Config.get('Orm.Db.log')
         ? console.log
         : () => {}
     )
