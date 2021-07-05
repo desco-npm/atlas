@@ -1,7 +1,12 @@
 const Express = require('express')
 const Cors = require('cors')
 const BodyParser = require('body-parser')
-const isArray = require('is-array')
+const isArray = require('../../../lib/isArray')
+const fileExists = require('../../../lib/fileExists')
+const readDir = require('../../../lib/readDir')
+const mkdirIfNotExists = require('../../../lib/mkdirIfNotExists')
+const pathJoin = require('../../../lib/pathJoin')
+
 // const Helmet = require('helmet')
 
 class Server {
@@ -65,7 +70,7 @@ class Server {
   }
 
   async importRoutes () {
-    const routes = (await readdir(this.routesDir)).map(i => i.slice(0, -3))
+    const routes = (await readDir(this.routesDir)).map(i => i.slice(0, -3))
     const models = Atlas.Config.get('Orm') ? Object.keys(Atlas.Orm.listModels()) : []
     const entities = [ ...routes, ...models, ]
     const promises = []
