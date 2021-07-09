@@ -12,7 +12,6 @@ global.isArray = require('is-array')
 global.stackTrace = require('stack-trace')
 global.htmlPdf = require('html-pdf')
 global.pdfMake = require('pdfmake')
-global.moment = require('moment')
 global.objectMerge = mergeAdvanced
 global.isWindows = require('platform-is')
 global.isMac = require('platform-is').isMac
