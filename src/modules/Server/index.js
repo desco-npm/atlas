@@ -1,6 +1,7 @@
 const Express = require('express')
 const Cors = require('cors')
 const BodyParser = require('body-parser')
+const FileUpload = require('express-fileupload')
 const isArray = require('../../../lib/isArray')
 const fileExists = require('../../../lib/fileExists')
 const readDir = require('../../../lib/readDir')
@@ -24,6 +25,8 @@ class Server {
       extended: false,
       limit: Atlas.Config.get('Server.limit'),
     }))
+
+    this.express.use(FileUpload())
 
     this.express.use(BodyParser.json({
       limit: Atlas.Config.get('Server.limit'),
