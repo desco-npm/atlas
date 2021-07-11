@@ -17,28 +17,30 @@ class Message {
   }
 
   // Escreve uma mensagem
-  put (text: string): void {
-    console.log(text)
+  put (text: string, level = 0): void {
+    const tab = ''.padStart(level * this.tab, ' ')
+
+    console.log(tab + text)
   }
 
   // Escreve uma mensagem de sucesso
-  success (text: string): void {
-    this.put(text.green)
+  success (text: string, level: number): void {
+    this.put(text.green, level)
   }
 
   // Escreve uma mensagem de erro
-  error (text: string): void {
-    this.put(text.red)
+  error (text: string, level: number): void {
+    this.put(text.red, level)
   }
 
   // Escreve uma mensagem de alerta
-  warning (text: string): void {
-    this.put(text.yellow)
+  warning (text: string, level: number): void {
+    this.put(text.yellow, level)
   }
 
   // Escreve uma mensagem de informação
-  info (text: string): void {
-    this.put(text.cyan)
+  info (text: string, level: number): void {
+    this.put(text.cyan, level)
   }
 }
 

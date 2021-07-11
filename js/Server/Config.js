@@ -31,7 +31,7 @@ var ServerConfig = /** @class */ (function (_super) {
         _this.setDefaults({
             port: 3000,
             queryString: { extended: false, },
-            callback: function () { return Message_1.default.info("Server running on port " + _this.get('port')); }
+            callback: function () { return Message_1.default.success("Server running on port " + _this.get('port')); }
         });
         return _this;
     }

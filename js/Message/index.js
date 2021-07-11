@@ -11,6 +11,7 @@ var Message = /** @class */ (function () {
     function Message() {
         this.tab = 2; // Quantos espaços de recuo a cada nível de mensagem
     }
+    // Escreve o cabeçalho
     Message.prototype.header = function () {
         cliHeader_1.default({
             title: 'AtlasJS v' + require('../../package.json').version,
@@ -18,20 +19,27 @@ var Message = /** @class */ (function () {
             align: 'center',
         });
     };
-    Message.prototype.put = function (text) {
-        console.log(text);
+    // Escreve uma mensagem
+    Message.prototype.put = function (text, level) {
+        if (level === void 0) { level = 0; }
+        var tab = ''.padStart(level * this.tab, ' ');
+        console.log(tab + text);
     };
-    Message.prototype.success = function (text) {
-        this.put(text.green);
+    // Escreve uma mensagem de sucesso
+    Message.prototype.success = function (text, level) {
+        this.put(text.green, level);
     };
-    Message.prototype.error = function (text) {
-        return this.put(text.red);
+    // Escreve uma mensagem de erro
+    Message.prototype.error = function (text, level) {
+        this.put(text.red, level);
     };
-    Message.prototype.warning = function (text) {
-        return this.put(text.yellow);
+    // Escreve uma mensagem de alerta
+    Message.prototype.warning = function (text, level) {
+        this.put(text.yellow, level);
     };
-    Message.prototype.info = function (text) {
-        return this.put(text.cyan);
+    // Escreve uma mensagem de informação
+    Message.prototype.info = function (text, level) {
+        this.put(text.cyan, level);
     };
     return Message;
 }());
