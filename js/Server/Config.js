@@ -19,6 +19,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// Módulos do framework
+var Message_1 = __importDefault(require("../Message"));
 // Partes necessárias
 var Config_1 = __importDefault(require("../Config")); // Classe genérica de configuações
 var ServerConfig = /** @class */ (function (_super) {
@@ -29,7 +31,7 @@ var ServerConfig = /** @class */ (function (_super) {
         _this.setDefaults({
             port: 3000,
             queryString: { extended: false, },
-            callback: function () { return console.log("Rodando na porta " + _this.get('port')); }
+            callback: function () { return Message_1.default.info("Server running on port " + _this.get('port')); }
         });
         return _this;
     }

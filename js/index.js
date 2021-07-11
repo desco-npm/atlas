@@ -4,7 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Importa módulos do framework
+// Módulos do framework
+var Message_1 = __importDefault(require("./Message"));
 var Server_1 = __importDefault(require("./Server"));
 var Atlas = /** @class */ (function () {
     function Atlas() {
@@ -22,6 +23,7 @@ var Atlas = /** @class */ (function () {
     Atlas.prototype.start = function () {
         // Prepara o Atlas
         this.prepare();
+        Message_1.default.header();
         Server_1.default.start();
     };
     return Atlas;

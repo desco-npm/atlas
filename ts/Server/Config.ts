@@ -1,5 +1,8 @@
 /* Configurações do servidor */
 
+// Módulos do framework
+import Message from '../Message'
+
 // Partes necessárias
 import Config from '../Config' // Classe genérica de configuações
 
@@ -14,7 +17,7 @@ class ServerConfig extends Config {
     this.setDefaults({
       port: 3000,
       queryString: { extended: false, },
-      callback: () => console.log(`Rodando na porta ${this.get('port')}`)
+      callback: () => Message.success(`Server running on port ${this.get('port')}`)
     } as IServerConfig)
   }
 }

@@ -1,4 +1,4 @@
-/* O servidor */
+/* O módulo de servidor */
 
 // Módulos de terceiros
 import express from 'express'

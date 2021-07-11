@@ -3,7 +3,8 @@
 // Tipos do Atlas
 import { IAtlasConfig, } from './types'
 
-// Importa módulos do framework
+// Módulos do framework
+import Message from './Message'
 import Server from './Server'
 
 class Atlas {
@@ -24,6 +25,7 @@ class Atlas {
     // Prepara o Atlas
     this.prepare()
 
+    Message.header()
     Server.start()
   }
 }

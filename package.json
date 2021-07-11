@@ -18,7 +18,9 @@
   "license": "ISC",
   "homepage": "https://github.com/desco-npm/atlas",
   "dependencies": {
+    "@desco/cli-header": "^1.0.5",
     "body-parser": "^1.19.0",
+    "colors": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "object-path": "^0.11.5"
