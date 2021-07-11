@@ -1,7 +1,5 @@
 // Required parts
 import Config from '../Config' // Generic class of configations
-
-// Exception Interface
 import { IExceptionConfig, } from './types'
 
 /** AtlasJS Exception Settings */

@@ -17,7 +17,7 @@ class Exception {
    * @param config Configures the AtlasJS Exception Module
    **/
      config (config: IExceptionConfig | undefined): this {
-      // Arrow settings
+      // Set settings
       this.Config.set(config)
   
       return this
