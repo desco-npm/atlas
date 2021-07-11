@@ -1,7 +1,7 @@
-/*
-  Conversor de HTML para PDF 
+/**
+  HTML to PDF converter that uses phantomjs
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/html-pdf
 */

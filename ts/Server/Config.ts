@@ -1,20 +1,19 @@
-/* Configurações do servidor */
-
-// Módulos do framework
+// Framework Modules
 import Message from '../Message'
 
-// Partes necessárias
-import Config from '../Config' // Classe genérica de configuações
-import dictionary from './dictionary' // Classe genérica de configuações
+// Necessary parts
+import Config from '../Config' // Generic class of configations
+import dictionary from './dictionary' // Generic class of configations
 
-// Interface das configurações do servidor
+// Server Settings Interface
 import { IServerConfig, } from './types'
 
+/** AtlasJS Server Module */
 class ServerConfig extends Config {
   constructor () {
     super()
 
-    // Seta as configurações padrões
+    // Set the default settings
     this.setDefaults({
       port: 3000,
       queryString: { extended: false, },

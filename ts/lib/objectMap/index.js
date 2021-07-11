@@ -1,7 +1,8 @@
-/*
-  Semelhante ao map for arrays, isso cria um novo objeto chamando o retorno de chamada em cada propriedade do objeto original.
+/**
+  Similar to map for arrays, this creates a new object by calling the callback on each property of
+  the original object
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/object.map
 */

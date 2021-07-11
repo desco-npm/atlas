@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /*
   Substitui todas as ocorrências de uma string em uma string por outra string
 
-  Recurso de terceiros
+  Third Party Resource
 
   https://www.npmjs.com/package/string-replace-all
 */

@@ -1,7 +1,7 @@
-/*
-  Verifique se o dado valueé um Array
+/**
+  Check if the given value is an Array
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/is-array
 */

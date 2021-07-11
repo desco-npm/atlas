@@ -1,7 +1,7 @@
-/*
-  Acesse propriedades profundas usando um caminho
+/**
+  Access deep properties using a path
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/object-path
 */

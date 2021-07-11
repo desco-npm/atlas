@@ -1,7 +1,7 @@
-/*
-  Retorna se o sistema operacional é MAC
+/**
+  Returns if the operating system is MAC
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/platform-is
 */

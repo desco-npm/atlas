@@ -1,23 +1,28 @@
-/* Tipos do módulo de mensagens */
+/** Message Module Types */
 
-// Mensagens nos idiomas
+/** Messages in Languages */
 export interface IDictionary {
   ptbr: {},
   en: {},
 }
 
-// Idiomas suportados pelo framework
+/** Languages supported by AtlasJS */
 export enum EMessageLangs  {
+  /** Portugês Brasileiro */
   ptbr = 'ptbr',
+  /** American English */
   en = 'en',
 }
 
+/** AtlasJS Message Module Settings */
 export interface IMessageConfig { 
-  lang?: EMessageLangs, // Idioma em uso
-  tab?: number, // Quantos espaços de recuo a cada nível de mensagem
+  /** Language in use */
+  lang?: EMessageLangs,
+  /** How many retreat spaces to each message level */
+  tab?: number,
 };
 
-// Cores por tipo de mensagem
+/** Colors by message type */
 export enum EMessageColorType  {
   success = 'green',
   error = 'red',
@@ -25,9 +30,12 @@ export enum EMessageColorType  {
   cyan = 'info',
 }
 
-// Opções do método put
+/** AtlasJS Message Put Method Options **/
 export interface EMessagePutOptions  {
+  /** How many levels of identification that the message should have */
   level?: number,
+  /** Message type  */
   type?: EMessageColorType,
+  /** What information adds to the dynamic parts of the message */
   bind?: {}
 }

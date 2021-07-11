@@ -1,28 +1,43 @@
-// Importa recursos do framework
+// Import framework resources
 import objectPath from '../lib/objectPath'
 
-// Classe de configurações
+/** AtlasJS Settings Module */
 class Config {
-  private defaults = {} // Configurações padrões
-  private configs = {} // Configurações definidas
+  /** Default settings */
+  private defaults = {}
 
-  // Seta as configurações padrões
+  /** Settings defined */
+  private configs = {}
+
+  /**
+   * Set the default settings
+   * 
+   * @param defaults: Default settings to be added to the module
+   **/
   setDefaults (defaults: {}): this {
-    this.defaults = defaults // Define os padrões
+    this.defaults = defaults // Sets the standards
 
-    this.set(this.configs) // Adiciona padrões as configurações
+    this.set(this.configs) // Add defaults to settings
 
     return this
   }
 
-  // Seta as configurações
+  /**
+   * Set the settings
+   * 
+   * @param configs Settings to be added to the module
+   **/
   set (configs: {} | undefined): this {
-    this.configs = { ...this.defaults, ...configs, }
+    this.configs = { ...this.defaults, ...configs, } // Merge user settings with defaults
 
     return this
   }
 
-  // Retorna uma configuração
+  /**
+   * Returns a Configuration
+   
+   * @param path Address of the configuration you want to access.Use points to access levels deeper
+   */
   get (path: string): any {
     return objectPath.get(this.configs, path)
   }

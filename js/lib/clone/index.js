@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
   oferece clonagem profunda infalível de objetos, matrizes, números, strings, mapas, conjuntos,
   promessas, etc. em JavaScript.
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/clone
 */

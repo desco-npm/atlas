@@ -1,15 +1,15 @@
-/* O AtlasJS */
-
-// Tipos do Atlas
+/** Types of Atlas */
 import { IAtlasConfig, } from './types'
 
-// Módulos do framework
+// Framework Modules
 import Message from './Message'
 import Server from './Server'
 
 class Atlas {
   /**
    * Configure the AtlasJS
+   * 
+   * @param config Configures the AtlasJS
    **/
   config (Config: IAtlasConfig): this {
     Message.config(Config.Message)

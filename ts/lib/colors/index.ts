@@ -1,7 +1,7 @@
-/*
-  Permite adicionar cores nas mensagens do console
+/**
+  Get color and style in your node.js console
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/colors
 */

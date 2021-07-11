@@ -1,5 +1,7 @@
-import { IDictionary, } from '../Message/types'
+// Necessary parts
+import { IDictionary, } from '../Message/types' // Types of Dictionary
 
+/** Dictionary of the AtlasJS Server Module */
 export default {
   en: {
     listingOnPort: `Server running on port [[PORT]]`

@@ -1,7 +1,7 @@
-/*
-  Retorna se o sistema operacional é WINDOWS
+/**
+  Returns if the operating system is WINDOWS
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/platform-is
 */

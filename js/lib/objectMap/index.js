@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /*
   Semelhante ao map for arrays, isso cria um novo objeto chamando o retorno de chamada em cada propriedade do objeto original.
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/object.map
 */

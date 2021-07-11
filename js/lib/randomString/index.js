@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
   ou fornecidos, você também pode indicar o comprimento de sua string aleatória desejada. Caso você
   não se importe com exclusividade e não queira usar UUID, este o ajudará a conseguir o que deseja.
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/@smakss/random-string
 */

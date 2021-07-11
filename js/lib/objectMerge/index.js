@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
   Recursivamente, mesclagem profunda de qualquer coisa (objetos, matrizes, strings ou aninhados),
   que pesa o conteúdo por hierarquia de tipo para garantir que o conteúdo máximo seja retido
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/object-merge-advanced
 */

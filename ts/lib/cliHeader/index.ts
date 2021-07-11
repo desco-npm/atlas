@@ -1,5 +1,5 @@
-/*
-  Pacote NPM que permite imprimir um cabeçalho para o programa de linha de comando.
+/**
+  NPM package that allows you to print a header for the command line program
 
   Recursos @desco
 

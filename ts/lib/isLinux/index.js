@@ -1,7 +1,7 @@
-/*
-  Retorna se o sistema operacional é LINUX
+/**
+  Returns if the operating system is Linux
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/platform-is
 */

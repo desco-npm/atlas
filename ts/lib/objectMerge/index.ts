@@ -1,8 +1,8 @@
-/*
-  Recursivamente, mesclagem profunda de qualquer coisa (objetos, matrizes, strings ou aninhados),
-  que pesa o conteúdo por hierarquia de tipo para garantir que o conteúdo máximo seja retido
+/**
+  Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs
+  contents by type hierarchy to ensure the maximum content is retained
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/object-merge-advanced
 */

@@ -1,7 +1,7 @@
-/*
-  Uma implementação de JSON Web Tokens
+/**
+  An implementation of JSON Web Tokens
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/jsonwebtoken
 */

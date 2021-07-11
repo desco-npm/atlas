@@ -1,7 +1,7 @@
-/*
-  Substitui todas as ocorrências de uma string em uma string por outra string
+/**
+  Replaces all the occurrences of a string into a string with another string
 
-  Recurso de terceiros
+  Third Party Resource
 
   https://www.npmjs.com/package/string-replace-all
 */

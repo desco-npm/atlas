@@ -1,8 +1,7 @@
-/*
-  Biblioteca de geração de documentos PDF para uso do lado do servidor e do lado do cliente em
-  JavaScript puro.
+/**
+  PDF document generation library for server-side and client-side usage in pure JavaScript
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/pdfmake
 */

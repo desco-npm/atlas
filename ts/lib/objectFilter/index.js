@@ -1,7 +1,7 @@
-/*
-  Array.prototype.filter para objetos
+/**
+  Array.prototype.filter for objects.
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/object-filter
 */

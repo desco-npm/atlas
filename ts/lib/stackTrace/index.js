@@ -1,7 +1,7 @@
-/*
-  Obtenha rastreamentos de pilha v8 como uma matriz de objetos CallSite.
+/**
+  Get v8 stack traces as an array of CallSite objects
 
-  Recurso de terceiros
+  Third Party Resource
 
   NPM: https://www.npmjs.com/package/stack-trace
 */

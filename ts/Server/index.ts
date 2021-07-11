@@ -1,30 +1,35 @@
-/* O módulo de servidor */
-
-// Módulos de terceiros
+// Third-party modules
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 
-// Partes necessárias
+// Necessary parts
 import ServerConfig from './Config'
 import { IServerConfig, } from './types'
 
-// A classe de servidor
+/** Atlasjs Server Module */
 class Server {
-  protected Core = express() // O coração do servidor (Express)
-  protected Config = ServerConfig // As configurações do servidor
+  /** The Heart of the Server (Express) */
+  protected Core = express()
 
-  // Configura o servidor
+  /** Server Settings */
+  protected Config = ServerConfig
+
+  /**
+   * Configures the server
+   * 
+   * @param config Configures the AtlasJS Server Module
+   */
   config (config: IServerConfig | undefined): this {
-    // Seta as configurações
+    // Set settings
     this.Config.set(config)
 
     return this
   }
 
-  // Prepara o servidor
+  /** Prepares the server */
   private prepare (): this {
-    // Configure o core
+    // configure the core
     this.Core.use(cors()) // Trata o CORS
     this.Core.use(bodyParser.urlencoded(this.Config.get('queryString'))) // Reconhece QueryString
     this.Core.use(bodyParser.json(this.Config.get('body'))) // Reconhece Body
@@ -32,12 +37,12 @@ class Server {
     return this
   }
 
-  // Inicia o servidor
+  /** Starts the server */
   start (): void {
-    // Prepara o servidor
+    // Prepares the server
     this.prepare()
 
-    // Fica escutando a porta
+    // Listening to the door
     this.Core.listen(this.Config.get('port'), this.Config.get('callback'))
   }
 }

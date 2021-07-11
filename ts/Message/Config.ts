@@ -1,16 +1,15 @@
-/* Configurações do servidor */
-
-// Partes necessárias
+// Required parts
 import Config from '../Config' // Classe genérica de configuações
 
-// Interface das condifurações do servidor
+// Server Conditions Interface
 import { IMessageConfig, } from './types'
 
+/** AtlasJS Message Settings */
 class ServerConfig extends Config {
   constructor () {
     super()
 
-    // Seta as configurações padrões
+    // Set the default settings
     this.setDefaults({
       lang: 'en',
       tab: 0,
