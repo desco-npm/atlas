@@ -1,4 +1,4 @@
-// Import framework resources
+// Framework resources
 import objectPath from '../lib/objectPath'
 
 /** AtlasJS Settings Module */

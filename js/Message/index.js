@@ -14,10 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Third party resources
+// Framework resources
 require("../lib/colors");
 var cliHeader_1 = __importDefault(require("../lib/cliHeader"));
-// Matters Framework Resources
 var objectMap_1 = __importDefault(require("../lib/objectMap"));
 var replaceAll_1 = __importDefault(require("../lib/replaceAll"));
 // Necessary parts

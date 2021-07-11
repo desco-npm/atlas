@@ -1,8 +1,6 @@
-// Third party resources
+// Framework resources
 import '../lib/colors'
 import cliHeader from "../lib/cliHeader" 
-
-// Matters Framework Resources
 import objectMap from '../lib/objectMap'
 import replaceAll from '../lib/replaceAll'
 

@@ -19,19 +19,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // Required parts
-var Config_1 = __importDefault(require("../Config")); //Generic class of configations
-/** AtlasJS Message Settings */
-var ServerConfig = /** @class */ (function (_super) {
-    __extends(ServerConfig, _super);
-    function ServerConfig() {
+var Config_1 = __importDefault(require("../Config")); // Generic class of configations
+/** AtlasJS Exception Settings */
+var ExceptionConfig = /** @class */ (function (_super) {
+    __extends(ExceptionConfig, _super);
+    function ExceptionConfig() {
         var _this = _super.call(this) || this;
         // Set the default settings
-        _this.setDefaults({
-            lang: 'en',
-            tab: 0,
-        });
+        _this.setDefaults({});
         return _this;
     }
-    return ServerConfig;
+    return ExceptionConfig;
 }(Config_1.default));
-exports.default = new ServerConfig();
+exports.default = new ExceptionConfig();

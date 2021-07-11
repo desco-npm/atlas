@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Import framework resources
+// Framework resources
 var objectPath_1 = __importDefault(require("../lib/objectPath"));
 /** AtlasJS Settings Module */
 var Config = /** @class */ (function () {

@@ -1,8 +1,9 @@
-/** Types of Atlas */
-import { IAtlasConfig, } from './types'
+// Necessary parts
+import { IAtlasConfig, } from './types' // Types of Atlas
 
 // Framework Modules
 import Message from './Message'
+import Exception from './Exception'
 import Server from './Server'
 
 class Atlas {
@@ -13,6 +14,7 @@ class Atlas {
    **/
   config (Config: IAtlasConfig): this {
     Message.config(Config.Message)
+    Exception.config(Config.Exception)
     Server.config(Config.Server)
 
     return this

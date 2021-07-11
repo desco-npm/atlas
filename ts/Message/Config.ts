@@ -1,7 +1,7 @@
 // Required parts
-import Config from '../Config' // Classe genérica de configuações
+import Config from '../Config' //Generic class of configations
 
-// Server Conditions Interface
+// Config Interface
 import { IMessageConfig, } from './types'
 
 /** AtlasJS Message Settings */
