@@ -11,8 +11,8 @@ import { IServerConfig, } from './types'
 
 // A classe de servidor
 class Server {
-  Core = express() // O coração do servidor (Express)
-  Config = ServerConfig // As configurações do servidor
+  protected Core = express() // O coração do servidor (Express)
+  protected Config = ServerConfig // As configurações do servidor
 
   // Configura o servidor
   config (config: IServerConfig): this {
@@ -23,7 +23,7 @@ class Server {
   }
 
   // Prepara o servidor
-  prepare (): this {
+  private prepare (): this {
     // Configure o core
     this.Core.use(cors()) // Trata o CORS
     this.Core.use(bodyParser.urlencoded(this.Config.get('queryString'))) // Reconhece QueryString

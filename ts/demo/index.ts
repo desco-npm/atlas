@@ -1,4 +1,4 @@
-import Server from '../Server'
+import Atlas from '../index'
 
-Server
+Atlas
   .start()
