@@ -1,10 +1,10 @@
-'use strict'
-Object.defineProperty(exports, '__esModule', { value: true, })
-/*
-  Permite adicionar cores nas mensagens do console
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+  Get color and style in your node.js console
 
   Third Party Resource
 
   NPM: https://www.npmjs.com/package/colors
 */
-require('colors')
+require("colors");

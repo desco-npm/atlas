@@ -1,5 +1,4 @@
 "use strict";
-/* Configurações do servidor */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -19,13 +18,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Partes necessárias
+// Required parts
 var Config_1 = __importDefault(require("../Config")); // Classe genérica de configuações
+/** AtlasJS Message Settings */
 var ServerConfig = /** @class */ (function (_super) {
     __extends(ServerConfig, _super);
     function ServerConfig() {
         var _this = _super.call(this) || this;
-        // Seta as configurações padrões
+        // Set the default settings
         _this.setDefaults({
             lang: 'en',
             tab: 0,

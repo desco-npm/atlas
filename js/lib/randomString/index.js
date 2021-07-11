@@ -3,10 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/*
-  Este pacote irá gerar uma string fictícia aleatória com base no conjunto de caracteres disponíveis
-  ou fornecidos, você também pode indicar o comprimento de sua string aleatória desejada. Caso você
-  não se importe com exclusividade e não queira usar UUID, este o ajudará a conseguir o que deseja.
+/**
+  This package will generate a random dummy string based on the available set of characters or
+  provided ones, you can also indicate the length of your desired random string. In case you don't
+  care about uniqueness and don't want to use UUID this one will help you to achieve what you want
 
   Third Party Resource
 

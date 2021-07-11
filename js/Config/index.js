@@ -14,26 +14,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Importa recursos do framework
+// Import framework resources
 var objectPath_1 = __importDefault(require("../lib/objectPath"));
-// Classe de configurações
+/** AtlasJS Settings Module */
 var Config = /** @class */ (function () {
     function Config() {
-        this.defaults = {}; // Configurações padrões
-        this.configs = {}; // Configurações definidas
+        /** Default settings */
+        this.defaults = {};
+        /** Settings defined */
+        this.configs = {};
     }
-    // Seta as configurações padrões
+    /**
+     * Set the default settings
+     *
+     * @param defaults: Default settings to be added to the module
+     **/
     Config.prototype.setDefaults = function (defaults) {
-        this.defaults = defaults; // Define os padrões
-        this.set(this.configs); // Adiciona padrões as configurações
+        this.defaults = defaults; // Sets the standards
+        this.set(this.configs); // Add defaults to settings
         return this;
     };
-    // Seta as configurações
+    /**
+     * Set the settings
+     *
+     * @param configs Settings to be added to the module
+     **/
     Config.prototype.set = function (configs) {
-        this.configs = __assign(__assign({}, this.defaults), configs);
+        this.configs = __assign(__assign({}, this.defaults), configs); // Merge user settings with defaults
         return this;
     };
-    // Retorna uma configuração
+    /**
+     * Returns a Configuration
+     
+     * @param path Address of the configuration you want to access.Use points to access levels deeper
+     */
     Config.prototype.get = function (path) {
         return objectPath_1.default.get(this.configs, path);
     };

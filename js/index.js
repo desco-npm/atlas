@@ -1,26 +1,33 @@
 "use strict";
-/* O AtlasJS */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Módulos do framework
+// Framework Modules
 var Message_1 = __importDefault(require("./Message"));
 var Server_1 = __importDefault(require("./Server"));
 var Atlas = /** @class */ (function () {
     function Atlas() {
     }
-    // Configura o Atlas
+    /**
+     * Configure the AtlasJS
+     *
+     * @param config Configures the AtlasJS
+     **/
     Atlas.prototype.config = function (Config) {
         Message_1.default.config(Config.Message);
         Server_1.default.config(Config.Server);
         return this;
     };
-    // Prepara o Atlas
+    /**
+     * Prepare the AtlasJS
+     */
     Atlas.prototype.prepare = function () {
         return this;
     };
-    // Inicia o servidor
+    /**
+     * Start AtlasJS
+     */
     Atlas.prototype.start = function () {
         // Prepara o Atlas
         this.prepare();

@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/*
-  Recursivamente, mesclagem profunda de qualquer coisa (objetos, matrizes, strings ou aninhados),
-  que pesa o conteúdo por hierarquia de tipo para garantir que o conteúdo máximo seja retido
+/**
+  Recursively, deeply merge of anything (objects, arrays, strings or nested thereof), which weighs
+  contents by type hierarchy to ensure the maximum content is retained
 
   Third Party Resource
 

@@ -1,5 +1,4 @@
 "use strict";
-/* O módulo de mensagens */
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -15,26 +14,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Recursos de terceiros
+// Third party resources
 require("../lib/colors");
 var cliHeader_1 = __importDefault(require("../lib/cliHeader"));
-// Importa recursos do framework
+// Matters Framework Resources
 var objectMap_1 = __importDefault(require("../lib/objectMap"));
 var replaceAll_1 = __importDefault(require("../lib/replaceAll"));
-// Partes necessárias
+// Necessary parts
 var Config_1 = __importDefault(require("./Config"));
 var types_1 = require("./types");
+/** AtlasJS Message Module */
 var Message = /** @class */ (function () {
     function Message() {
-        this.Config = Config_1.default; // As configurações das mensagens
+        /** Message settings */
+        this.Config = Config_1.default;
     }
-    // Configura o servidor
+    /**
+     * Configures the AtlasJS Message Module
+     *
+     * @param config Configures the AtlasJS Message Module
+     **/
     Message.prototype.config = function (config) {
-        // Seta as configurações
+        // Arrow settings
         this.Config.set(config);
         return this;
     };
-    // Escreve o cabeçalho
+    /** Write the header */
     Message.prototype.header = function () {
         cliHeader_1.default({
             title: 'AtlasJS v' + require('../../package.json').version,
@@ -42,13 +47,23 @@ var Message = /** @class */ (function () {
             align: 'center',
         });
     };
-    // Escreve uma mensagem
+    /**
+     * Write a message
+     *
+     * @param id Message ID within the Dictionary of Module Messages
+     * @param dictionary Module Message Dictionary
+     * @param options Extra options
+     **/
     Message.prototype.put = function (id, dictionary, options) {
+        // Generates message level tab according to configuration
         var tab = ''.padStart(((options === null || options === void 0 ? void 0 : options.level) || 1) * this.Config.get('tab'), ' ');
+        // Retrieves message from the dictionary, according to the language defined in the settings
         var text = tab + dictionary[this.Config.get('lang')][id];
+        // Exchange variables by informed values
         objectMap_1.default((options === null || options === void 0 ? void 0 : options.bind) || {}, function (replaceThis, withThis) {
             text = replaceAll_1.default(text, "[[" + withThis + "]]", replaceThis);
         });
+        // A type was informed, format accordingly
         if (options === null || options === void 0 ? void 0 : options.type) {
             console.log(text[options === null || options === void 0 ? void 0 : options.type]);
         }
@@ -56,19 +71,43 @@ var Message = /** @class */ (function () {
             console.log(text);
         }
     };
-    // Escreve uma mensagem de sucesso
+    /**
+     * Write a successful message
+     *
+     * @param id Message ID within the Dictionary of Module Messages
+     * @param dictionary Module Message Dictionary
+     * @param options Extra options
+     **/
     Message.prototype.success = function (id, dictionary, options) {
         this.put(id, dictionary, __assign(__assign({}, options), { type: types_1.EMessageColorType.success }));
     };
-    // Escreve uma mensagem de erro
+    /**
+     * Write an error message
+     *
+     * @param id Message ID within the Dictionary of Module Messages
+     * @param dictionary Module Message Dictionary
+     * @param options Extra options
+     **/
     Message.prototype.error = function (id, dictionary, options) {
         this.put(id, dictionary, __assign(__assign({}, options), { type: types_1.EMessageColorType.error }));
     };
-    // Escreve uma mensagem de alerta
+    /**
+     * Write an alert message
+     *
+     * @param id Message ID within the Dictionary of Module Messages
+     * @param dictionary Module Message Dictionary
+     * @param options Extra options
+     **/
     Message.prototype.warning = function (id, dictionary, options) {
         this.put(id, dictionary, __assign(__assign({}, options), { type: types_1.EMessageColorType.warning }));
     };
-    // Escreve uma mensagem de informação
+    /**
+     * Write an information message
+     *
+     * @param id Message ID within the Dictionary of Module Messages
+     * @param dictionary Module Message Dictionary
+     * @param options Extra options
+     **/
     Message.prototype.info = function (id, dictionary, options) {
         this.put(id, dictionary, __assign(__assign({}, options), { type: types_1.EMessageColorType.success }));
     };

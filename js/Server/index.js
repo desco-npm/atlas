@@ -1,40 +1,45 @@
 "use strict";
-/* O módulo de servidor */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Módulos de terceiros
+// Third-party modules
 var express_1 = __importDefault(require("express"));
 var cors_1 = __importDefault(require("cors"));
 var body_parser_1 = __importDefault(require("body-parser"));
-// Partes necessárias
+// Necessary parts
 var Config_1 = __importDefault(require("./Config"));
-// A classe de servidor
+/** Atlasjs Server Module */
 var Server = /** @class */ (function () {
     function Server() {
-        this.Core = express_1.default(); // O coração do servidor (Express)
-        this.Config = Config_1.default; // As configurações do servidor
+        /** The Heart of the Server (Express) */
+        this.Core = express_1.default();
+        /** Server Settings */
+        this.Config = Config_1.default;
     }
-    // Configura o servidor
+    /**
+     * Configures the server
+     *
+     * @param config Configures the AtlasJS Server Module
+     */
     Server.prototype.config = function (config) {
-        // Seta as configurações
+        // Set settings
         this.Config.set(config);
         return this;
     };
-    // Prepara o servidor
+    /** Prepares the server */
     Server.prototype.prepare = function () {
-        // Configure o core
+        // configure the core
         this.Core.use(cors_1.default()); // Trata o CORS
         this.Core.use(body_parser_1.default.urlencoded(this.Config.get('queryString'))); // Reconhece QueryString
         this.Core.use(body_parser_1.default.json(this.Config.get('body'))); // Reconhece Body
         return this;
     };
-    // Inicia o servidor
+    /** Starts the server */
     Server.prototype.start = function () {
-        // Prepara o servidor
+        // Prepares the server
         this.prepare();
-        // Fica escutando a porta
+        // Listening to the door
         this.Core.listen(this.Config.get('port'), this.Config.get('callback'));
     };
     return Server;

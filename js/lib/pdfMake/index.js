@@ -3,9 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/*
-  Biblioteca de geração de documentos PDF para uso do lado do servidor e do lado do cliente em
-  JavaScript puro.
+/**
+  PDF document generation library for server-side and client-side usage in pure JavaScript
 
   Third Party Resource
 

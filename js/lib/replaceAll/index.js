@@ -3,8 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/*
-  Substitui todas as ocorrências de uma string em uma string por outra string
+/**
+  Replaces all the occurrences of a string into a string with another string
 
   Third Party Resource
 

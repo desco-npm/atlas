@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/*
-  oferece clonagem profunda infalível de objetos, matrizes, números, strings, mapas, conjuntos,
-  promessas, etc. em JavaScript.
+/**
+  Offers foolproof deep cloning of objects, arrays, numbers, strings, maps, sets, promises, etc. in
+  JavaScript.
 
   Third Party Resource
 
