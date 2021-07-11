@@ -12,6 +12,7 @@ var Atlas = /** @class */ (function () {
     }
     // Configura o Atlas
     Atlas.prototype.config = function (Config) {
+        Message_1.default.config(Config.Message);
         Server_1.default.config(Config.Server);
         return this;
     };

@@ -5,8 +5,9 @@ import Message from '../Message'
 
 // Partes necessárias
 import Config from '../Config' // Classe genérica de configuações
+import dictionary from './dictionary' // Classe genérica de configuações
 
-// Interface das condifurações do servidor
+// Interface das configurações do servidor
 import { IServerConfig, } from './types'
 
 class ServerConfig extends Config {
@@ -17,7 +18,9 @@ class ServerConfig extends Config {
     this.setDefaults({
       port: 3000,
       queryString: { extended: false, },
-      callback: () => Message.success(`Server running on port ${this.get('port')}`)
+      callback: () => {
+        return Message.success('listingOnPort', dictionary, { bind: { PORT: this.get('port')} })
+      },
     } as IServerConfig)
   }
 }

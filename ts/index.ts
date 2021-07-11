@@ -8,19 +8,26 @@ import Message from './Message'
 import Server from './Server'
 
 class Atlas {
-  // Configura o Atlas
+  /**
+   * Configure the AtlasJS
+   **/
   config (Config: IAtlasConfig): this {
+    Message.config(Config.Message)
     Server.config(Config.Server)
 
     return this
   }
 
-  // Prepara o Atlas
+  /**
+   * Prepare the AtlasJS
+   */
   private prepare (): this {
     return this
   }
 
-  // Inicia o servidor
+  /**
+   * Start AtlasJS
+   */
   start (): void {
     // Prepara o Atlas
     this.prepare()

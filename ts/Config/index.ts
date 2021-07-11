@@ -16,7 +16,7 @@ class Config {
   }
 
   // Seta as configurações
-  set (configs: {}): this {
+  set (configs: {} | undefined): this {
     this.configs = { ...this.defaults, ...configs, }
 
     return this

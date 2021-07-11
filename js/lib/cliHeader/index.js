@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /*
   Pacote NPM que permite imprimir um cabeçalho para o programa de linha de comando.
 
-  Recursos de terceiros
+  Recursos @desco
 
   NPM: https://www.npmjs.com/package/@desco/cli-header
 */

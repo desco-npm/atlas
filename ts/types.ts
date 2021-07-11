@@ -1,5 +1,7 @@
+import { IMessageConfig, } from './Message/types'
 import { IServerConfig, } from './Server/types'
 
 export interface IAtlasConfig {
-  Server: IServerConfig
+  Message?: IMessageConfig,
+  Server?: IServerConfig
 }

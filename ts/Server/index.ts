@@ -15,7 +15,7 @@ class Server {
   protected Config = ServerConfig // As configurações do servidor
 
   // Configura o servidor
-  config (config: IServerConfig): this {
+  config (config: IServerConfig | undefined): this {
     // Seta as configurações
     this.Config.set(config)
 

@@ -19,11 +19,24 @@
   "homepage": "https://github.com/desco-npm/atlas",
   "dependencies": {
     "@desco/cli-header": "^1.0.5",
+    "@smakss/random-string": "^1.2.1",
     "body-parser": "^1.19.0",
+    "clone": "^2.1.2",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "object-path": "^0.11.5"
+    "html-pdf": "^3.0.1",
+    "inflection": "^1.13.1",
+    "is-array": "^1.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "object-filter": "^1.0.2",
+    "object-merge-advanced": "^12.1.0",
+    "object-path": "^0.11.5",
+    "object.map": "^1.0.1",
+    "pdfmake": "^0.2.0",
+    "platform-is": "^1.0.4",
+    "stack-trace": "^1.0.0-pre1",
+    "string-replace-all": "^1.0.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

@@ -19,22 +19,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Módulos do framework
-var Message_1 = __importDefault(require("../Message"));
 // Partes necessárias
 var Config_1 = __importDefault(require("../Config")); // Classe genérica de configuações
-var dictionary_1 = __importDefault(require("./dictionary")); // Classe genérica de configuações
 var ServerConfig = /** @class */ (function (_super) {
     __extends(ServerConfig, _super);
     function ServerConfig() {
         var _this = _super.call(this) || this;
         // Seta as configurações padrões
         _this.setDefaults({
-            port: 3000,
-            queryString: { extended: false, },
-            callback: function () {
-                return Message_1.default.success('listingOnPort', dictionary_1.default, { bind: { PORT: _this.get('port') } });
-            },
+            lang: 'en',
+            tab: 0,
         });
         return _this;
     }

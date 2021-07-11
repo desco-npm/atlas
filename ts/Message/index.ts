@@ -4,8 +4,24 @@
 import '../lib/colors'
 import cliHeader from "../lib/cliHeader" 
 
+// Importa recursos do framework
+import objectMap from '../lib/objectMap'
+import replaceAll from '../lib/replaceAll'
+
+// Partes necessárias
+import MessageConfig from './Config'
+import { IMessageConfig, IDictionary, EMessagePutOptions, EMessageColorType, } from './types'
+
 class Message {
-  private tab = 2 // Quantos espaços de recuo a cada nível de mensagem
+  protected Config = MessageConfig // As configurações das mensagens
+
+  // Configura o servidor
+  config (config: IMessageConfig | undefined): this {
+    // Seta as configurações
+    this.Config.set(config)
+
+    return this
+  }
 
   // Escreve o cabeçalho
   header (): void {
@@ -17,30 +33,40 @@ class Message {
   }
 
   // Escreve uma mensagem
-  put (text: string, level = 0): void {
-    const tab = ''.padStart(level * this.tab, ' ')
+  put (id: string, dictionary: IDictionary, options?: EMessagePutOptions): void {
+    const tab = ''.padStart((options?.level || 1)  * this.Config.get('tab'), ' ')
+    let text = tab + dictionary[this.Config.get('lang')][id]
 
-    console.log(tab + text)
+    objectMap(options?.bind || {}, (replaceThis, withThis) => {
+      text = replaceAll(text, `[[${withThis}]]`, replaceThis)
+    })
+
+    if (options?.type) {
+      console.log(text[options?.type])
+    }
+    else {
+      console.log(text)
+    }
   }
 
   // Escreve uma mensagem de sucesso
-  success (text: string, level: number): void {
-    this.put(text.green, level)
+  success (id: string, dictionary: IDictionary, options?: EMessagePutOptions): void {
+    this.put(id, dictionary, { ...options, type: EMessageColorType.success, })
   }
 
   // Escreve uma mensagem de erro
-  error (text: string, level: number): void {
-    this.put(text.red, level)
+  error (id: string, dictionary: IDictionary, options?: EMessagePutOptions): void {
+    this.put(id, dictionary, { ...options, type: EMessageColorType.error, })
   }
 
   // Escreve uma mensagem de alerta
-  warning (text: string, level: number): void {
-    this.put(text.yellow, level)
+  warning (id: string, dictionary: IDictionary, options?: EMessagePutOptions): void {
+    this.put(id, dictionary, { ...options, type: EMessageColorType.warning, })
   }
 
   // Escreve uma mensagem de informação
-  info (text: string, level: number): void {
-    this.put(text.cyan, level)
+  info (id: string, dictionary: IDictionary, options?: EMessagePutOptions): void {
+    this.put(id, dictionary, { ...options, type: EMessageColorType.success, })
   }
 }
 
