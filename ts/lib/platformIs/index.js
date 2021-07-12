@@ -5,6 +5,6 @@
 
   NPM: https://www.npmjs.com/package/platform-is
 */
-import { isLinux, } from 'platform-is'
+export { isLinux, isMac, isWindows } from 'platform-is'
 
-export default isLinux
+export default { isLinux, isMac, isLinux, }
