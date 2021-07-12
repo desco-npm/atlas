@@ -7,7 +7,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var cors_1 = __importDefault(require("cors"));
 var body_parser_1 = __importDefault(require("body-parser"));
-var readDir_1 = __importDefault(require("../lib/readDir"));
 // Necessary parts
 var Config_1 = __importDefault(require("./Config"));
 /** Atlasjs Server Module */
@@ -34,8 +33,6 @@ var Server = /** @class */ (function () {
         this.Core.use(cors_1.default()); // Trata o CORS
         this.Core.use(body_parser_1.default.urlencoded(this.Config.get('queryString'))); // Reconhece QueryString
         this.Core.use(body_parser_1.default.json(this.Config.get('body'))); // Reconhece Body
-        console.log(readDir_1.default);
-        process.exit();
         return this;
     };
     /** Starts the server */
