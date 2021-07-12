@@ -8,5 +8,6 @@ export interface IServerConfig {
   port?: number, // Door where to run the server
   callback?: () => void, // Function to be performed when you start the server
   queryString?: OptionsUrlencoded // Request URL Encoded Options
-  body?: OptionsJson // Requisition Body Data Encodes Options
+  body?: OptionsJson // Requisition Body Data Encodes Options,
+  routerDir?: string // Server routes directory
 };

@@ -2,6 +2,7 @@
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import readDir from '../lib/readDir'
 
 // Necessary parts
 import ServerConfig from './Config'
