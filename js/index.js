@@ -25,8 +25,6 @@ var Atlas = /** @class */ (function () {
      * @param config Configures the AtlasJS
      **/
     Atlas.prototype.config = function (Config) {
-        console.log(this.projectDir);
-        process.exit();
         Message_1.default.config(Config.Message);
         Exception_1.default.config(Config.Exception);
         Server_1.default.config(Config.Server);
@@ -34,18 +32,10 @@ var Atlas = /** @class */ (function () {
     };
     /** Prepare the AtlasJS */
     Atlas.prototype.prepare = function () {
-        // this.enviroments()
         return this;
     };
-    // /** Set the environment variables */
-    // private enviroments (): void {
-    //   this.projectDir = appRootDir.get()
-    //   this.atlasDir = __dirname
-    //   this.pathSep = path.sep
-    // }
     /** Start AtlasJS */
     Atlas.prototype.start = function () {
-        // Prepara o Atlas
         this.prepare();
         Message_1.default.header();
         Server_1.default.start();

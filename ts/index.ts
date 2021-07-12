@@ -12,13 +12,13 @@ import { IAtlasConfig, } from './types' // Types of Atlas
 
 class Atlas {
   /** Directory of the project using AtlasJS */
-  protected projectDir: string = appRootDir.get()
+  public projectDir = appRootDir.get()
 
   /** AtlasJS directory in use */
-  protected atlasDir: string = __dirname
+  public atlasDir = __dirname
 
   /** Default operating system directory separator in use */
-  protected pathSep: string = path.sep
+  public pathSep = path.sep
 
   /**
    * Configure the AtlasJS
@@ -40,7 +40,6 @@ class Atlas {
 
   /** Start AtlasJS */
   start (): void {
-    // Prepara o Atlas
     this.prepare()
 
     Message.header()

@@ -3,6 +3,9 @@
 // Body-Parser package types that are used here
 import { OptionsUrlencoded, OptionsJson } from 'body-parser' 
 
+// Express package types that are used here
+import * as ExpressCore from 'express-serve-static-core';
+
 /** Server Settings Type */
 export interface IServerConfig { 
   port?: number, // Door where to run the server
@@ -10,4 +13,10 @@ export interface IServerConfig {
   queryString?: OptionsUrlencoded // Request URL Encoded Options
   body?: OptionsJson // Requisition Body Data Encodes Options,
   routerDir?: string // Server routes directory
+};
+
+/** Parameters of a route */
+export interface IServerRouterParams { 
+  Express: ExpressCore.Express, // Express application
+  entity: string, // Function to be performed when you start the server
 };
