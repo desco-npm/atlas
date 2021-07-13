@@ -1,7 +1,7 @@
 // Necessary parts
-import { IMessageConfig, } from './Message/types'
-import { IExceptionConfig, } from './Exception/types'
-import { IServerConfig, } from './Server/types'
+import { IMessageConfig, } from './Message'
+import { IExceptionConfig, } from './Exception'
+import { IServerConfig, } from './Server'
 
 /**
  * AtlasJS Settings Type

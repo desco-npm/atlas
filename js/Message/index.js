@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.EMessageColorType = exports.EMessageLangs = void 0;
 // Framework resources
 require("../lib/colors");
 var cliHeader_1 = __importDefault(require("../lib/cliHeader"));
@@ -21,7 +22,6 @@ var objectMap_1 = __importDefault(require("../lib/objectMap"));
 var replaceAll_1 = __importDefault(require("../lib/replaceAll"));
 // Necessary parts
 var Config_1 = __importDefault(require("./Config"));
-var types_1 = require("./types");
 /** AtlasJS Message Module */
 var Message = /** @class */ (function () {
     function Message() {
@@ -78,7 +78,7 @@ var Message = /** @class */ (function () {
      * @param options Extra options
      **/
     Message.prototype.success = function (id, dictionary, options) {
-        this.put(id, dictionary, __assign(__assign({}, options), { type: types_1.EMessageColorType.success }));
+        this.put(id, dictionary, __assign(__assign({}, options), { type: EMessageColorType.success }));
     };
     /**
      * Write an error message
@@ -88,7 +88,7 @@ var Message = /** @class */ (function () {
      * @param options Extra options
      **/
     Message.prototype.error = function (id, dictionary, options) {
-        this.put(id, dictionary, __assign(__assign({}, options), { type: types_1.EMessageColorType.error }));
+        this.put(id, dictionary, __assign(__assign({}, options), { type: EMessageColorType.error }));
     };
     /**
      * Write an alert message
@@ -98,7 +98,7 @@ var Message = /** @class */ (function () {
      * @param options Extra options
      **/
     Message.prototype.warning = function (id, dictionary, options) {
-        this.put(id, dictionary, __assign(__assign({}, options), { type: types_1.EMessageColorType.warning }));
+        this.put(id, dictionary, __assign(__assign({}, options), { type: EMessageColorType.warning }));
     };
     /**
      * Write an information message
@@ -108,8 +108,25 @@ var Message = /** @class */ (function () {
      * @param options Extra options
      **/
     Message.prototype.info = function (id, dictionary, options) {
-        this.put(id, dictionary, __assign(__assign({}, options), { type: types_1.EMessageColorType.success }));
+        this.put(id, dictionary, __assign(__assign({}, options), { type: EMessageColorType.success }));
     };
     return Message;
 }());
+/** Languages supported by AtlasJS */
+var EMessageLangs;
+(function (EMessageLangs) {
+    /** Portugês Brasileiro */
+    EMessageLangs["ptbr"] = "ptbr";
+    /** American English */
+    EMessageLangs["en"] = "en";
+})(EMessageLangs = exports.EMessageLangs || (exports.EMessageLangs = {}));
+;
+/** Colors by message type */
+var EMessageColorType;
+(function (EMessageColorType) {
+    EMessageColorType["success"] = "green";
+    EMessageColorType["error"] = "red";
+    EMessageColorType["warning"] = "yellow";
+    EMessageColorType["cyan"] = "info";
+})(EMessageColorType = exports.EMessageColorType || (exports.EMessageColorType = {}));
 exports.default = new Message();

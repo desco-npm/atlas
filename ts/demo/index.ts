@@ -1,5 +1,5 @@
 import Atlas from '../index'
-import { EMessageLangs } from '../Message/types'
+import { EMessageLangs } from '../Message'
 import { IAtlasConfig } from '../types'
 
 import router from './routers/index'

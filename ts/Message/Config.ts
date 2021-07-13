@@ -2,7 +2,7 @@
 import Config from '../Config' //Generic class of configations
 
 // Config Interface
-import { IMessageConfig, } from './types'
+import { IMessageConfig, } from './'
 
 /** AtlasJS Message Settings */
 class ServerConfig extends Config {

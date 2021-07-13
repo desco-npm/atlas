@@ -3,8 +3,7 @@ import Message from '../Message'
 
 // Necessary parts
 import ExceptionConfig from './Config'
-import { IExceptionConfig, } from './types'
-import { IDictionary, } from '../Message/types'
+import { IDictionary, } from '../Message'
 
 /** AtlasJS Exception Module */
 class Exception {
@@ -37,5 +36,9 @@ class Exception {
       process.exit()
     }
 }
+
+/** AtlasJS Exception Module Settings */
+export interface IExceptionConfig { 
+};
 
 export default new Exception()

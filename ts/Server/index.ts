@@ -5,7 +5,9 @@ import bodyParser from 'body-parser'
 
 // Necessary parts
 import ServerConfig from './Config'
-import { IServerConfig, IServerRouterParams, } from './types'
+import { OptionsUrlencoded, OptionsJson } from 'body-parser' 
+import * as ExpressCore from 'express-serve-static-core';
+
 /** Atlasjs Server Module */
 class Server {
   /** The Heart of the Server (Express) */
@@ -45,5 +47,31 @@ class Server {
     this.Core.listen(this.Config.get('port'), this.Config.get('callback'))
   }
 }
+
+/** Parameters of a preRoute */
+export interface IServerPreRouterParams { 
+  /** Express application */
+  Express: ExpressCore.Express,
+};
+
+/** Server Settings Type */
+export interface IServerConfig { 
+  /** Door where to run the server */
+  port?: number,
+  /** Function to be performed when you start the server */
+  callback?: () => void,
+  /** Request URL Encoded Options */
+  queryString?: OptionsUrlencoded,
+  /** Requisition Body Data Encodes Options, */
+  body?: OptionsJson,
+  /** Router function */
+  router: (params: IServerRouterParams) => void
+};
+
+/** Parameters of a route */
+export interface IServerRouterParams { 
+  /** Express application */
+  Express: ExpressCore.Express,
+};
 
 export default new Server()

@@ -5,9 +5,5 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var teste_1 = __importDefault(require("./teste"));
 exports.default = (function (params) {
-    params.Express.use(function (req, res, next) {
-        console.log('ok');
-        next();
-    });
     teste_1.default(params);
 });
