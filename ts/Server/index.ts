@@ -2,17 +2,10 @@
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
-import readDir from '../lib/readDir'
-import path from '../lib/path'
-import mkdirIfNotExists from '../lib/mkdirIfNotExists'
-
-// Framework Modules
-import Atlas from '../'
 
 // Necessary parts
 import ServerConfig from './Config'
-import { IServerConfig, } from './types'
-
+import { IServerConfig, IServerRouterParams, } from './types'
 /** Atlasjs Server Module */
 class Server {
   /** The Heart of the Server (Express) */
@@ -20,9 +13,6 @@ class Server {
 
   /** Server Settings */
   public Config = ServerConfig
-
-  /** Routes directory */
-  public routerDir = ''
 
   /**
    * Configures the server
@@ -43,26 +33,7 @@ class Server {
     this.Core.use(bodyParser.urlencoded(this.Config.get('queryString'))) // Recognize QueryString
     this.Core.use(bodyParser.json(this.Config.get('body'))) // Recognize Body
 
-    // Set dynamic properties
-    this.routerDir = path.join(Atlas.projectDir, this.Config.get('routerDir'))
-
-    this.loadRouters()
-  }
-
-  /** Load project routes */
-  private loadRouters () {
-    // Create route directory if it does not exist
-    mkdirIfNotExists(this.routerDir)
-    
-    // List the routes
-    const routers = readDir(this.routerDir)
-
-    // Cycle through and execute all routes
-    routers.map(routerName => {
-      const router = require(path.join(this.routerDir, routerName)).default
-
-      router({ Express: this.Core, entity: routerName.slice(0, -3), })
-    })
+    this.Config.get('router')({ Express: this.Core, } as IServerRouterParams)
   }
 
   /** Starts the server */

@@ -35,7 +35,6 @@ var ServerConfig = /** @class */ (function (_super) {
             callback: function () {
                 return Message_1.default.success('listingOnPort', dictionary_1.default, { bind: { PORT: _this.get('port') } });
             },
-            routerDir: 'routers',
         });
         return _this;
     }

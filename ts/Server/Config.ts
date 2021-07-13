@@ -20,7 +20,6 @@ class ServerConfig extends Config {
       callback: () => {
         return Message.success('listingOnPort', dictionary, { bind: { PORT: this.get('port')} })
       },
-      routerDir: 'routers',
     } as IServerConfig)
   }
 }

@@ -6,17 +6,28 @@ import { OptionsUrlencoded, OptionsJson } from 'body-parser'
 // Express package types that are used here
 import * as ExpressCore from 'express-serve-static-core';
 
+/** Parameters of a preRoute */
+export interface IServerPreRouterParams { 
+  /** Express application */
+  Express: ExpressCore.Express,
+};
+
 /** Server Settings Type */
 export interface IServerConfig { 
-  port?: number, // Door where to run the server
-  callback?: () => void, // Function to be performed when you start the server
-  queryString?: OptionsUrlencoded // Request URL Encoded Options
-  body?: OptionsJson // Requisition Body Data Encodes Options,
-  routerDir?: string // Server routes directory
+  /** Door where to run the server */
+  port?: number,
+  /** Function to be performed when you start the server */
+  callback?: () => void,
+  /** Request URL Encoded Options */
+  queryString?: OptionsUrlencoded,
+  /** Requisition Body Data Encodes Options, */
+  body?: OptionsJson,
+  /** Router function */
+  router: (params: IServerRouterParams) => void
 };
 
 /** Parameters of a route */
 export interface IServerRouterParams { 
-  Express: ExpressCore.Express, // Express application
-  entity: string, // Function to be performed when you start the server
+  /** Express application */
+  Express: ExpressCore.Express,
 };

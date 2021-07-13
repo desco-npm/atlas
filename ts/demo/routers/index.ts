@@ -1,9 +1,6 @@
 import { IServerRouterParams, } from '../../Server/types'
+import teste from './teste'
 
 export default (params: IServerRouterParams) => {
-  const { Express, } = params
-
-  Express.get(`/teste`, (req, res) => {
-    res.json({ ok: 1})
-  })
+  teste(params)
 }
