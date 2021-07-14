@@ -1,6 +1,6 @@
 {
   "name": "@desco/atlas",
-  "version": "2.13.0",
+  "version": "2.14.0",
   "description": "NodeJS Framework",
   "main": "src/index.js",
   "scripts": {
@@ -31,6 +31,7 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
     "express-formidable": "^1.2.0",
+    "filter-obj": "^2.0.2",
     "fs-extra": "^9.0.1",
     "googleapis": "^67.0.0",
     "helmet": "^4.3.1",
@@ -42,7 +43,6 @@
     "moment": "^2.29.1",
     "mysql2": "^2.2.5",
     "nodemailer": "^6.4.17",
-    "object-filter": "^1.0.2",
     "object-merge-advanced": "^12.0.7",
     "object-path": "^0.11.5",
     "object.map": "^1.0.1",

@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes, Op, } = require('sequelize')
 const pathJoin = require('../../../lib/pathJoin')
+const objectMap = require('../../../lib/objectMap')
 
 let sequelize
 
