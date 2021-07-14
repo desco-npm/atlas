@@ -113,17 +113,12 @@ export interface IDictionary {
 }
 
 /** Languages supported by AtlasJS */
-export enum EMessageLangs  {
-  /** Portugês Brasileiro */
-  ptbr = 'ptbr',
-  /** American English */
-  en = 'en',
-}
+type lang  =  'ptbr' |  'en'
 
 /** AtlasJS Message Module Settings */
 export interface IMessageConfig { 
   /** Language in use */
-  lang?: EMessageLangs,
+  lang?: lang,
   /** How many retreat spaces to each message level */
   tab?: number,
 };

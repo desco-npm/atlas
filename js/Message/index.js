@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EMessageColorType = exports.EMessageLangs = void 0;
+exports.EMessageColorType = void 0;
 // Framework resources
 require("../lib/colors");
 var cliHeader_1 = __importDefault(require("../lib/cliHeader"));
@@ -112,14 +112,6 @@ var Message = /** @class */ (function () {
     };
     return Message;
 }());
-/** Languages supported by AtlasJS */
-var EMessageLangs;
-(function (EMessageLangs) {
-    /** Portugês Brasileiro */
-    EMessageLangs["ptbr"] = "ptbr";
-    /** American English */
-    EMessageLangs["en"] = "en";
-})(EMessageLangs = exports.EMessageLangs || (exports.EMessageLangs = {}));
 ;
 /** Colors by message type */
 var EMessageColorType;

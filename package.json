@@ -4,7 +4,8 @@
   "description": "NodeJS Framework",
   "main": "src/index.js",
   "scripts": {
-    "compile": " node ./node_modules/typescript/bin/tsc"
+    "compile": "tsc",
+    "tsc": "tsc --watch"
   },
   "repository": {
     "type": "git",
