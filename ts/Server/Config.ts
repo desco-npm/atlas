@@ -6,7 +6,7 @@ import Config from '../Config' // Generic class of configations
 import dictionary from './dictionary' // Generic class of configations
 
 // Server Settings Interface
-import { IServerConfig, } from './'
+import { ServerConfig as ServerConfigType, } from './types'
 
 /** AtlasJS Server Module */
 class ServerConfig extends Config {
@@ -20,7 +20,7 @@ class ServerConfig extends Config {
       callback: () => {
         return Message.success('listingOnPort', dictionary, { bind: { PORT: this.get('port')} })
       },
-    } as IServerConfig)
+    } as ServerConfigType)
   }
 }
 

@@ -14,12 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EMessageColorType = void 0;
 // Framework resources
 require("../lib/colors");
 var cliHeader_1 = __importDefault(require("../lib/cliHeader"));
 var objectMap_1 = __importDefault(require("../lib/objectMap"));
 var replaceAll_1 = __importDefault(require("../lib/replaceAll"));
+// Types
+var types_1 = require("./types");
 // Necessary parts
 var Config_1 = __importDefault(require("./Config"));
 /** AtlasJS Message Module */
@@ -78,7 +79,7 @@ var Message = /** @class */ (function () {
      * @param options Extra options
      **/
     Message.prototype.success = function (id, dictionary, options) {
-        this.put(id, dictionary, __assign(__assign({}, options), { type: EMessageColorType.success }));
+        this.put(id, dictionary, __assign(__assign({}, options), { type: types_1.MessageColorType.success }));
     };
     /**
      * Write an error message
@@ -88,7 +89,7 @@ var Message = /** @class */ (function () {
      * @param options Extra options
      **/
     Message.prototype.error = function (id, dictionary, options) {
-        this.put(id, dictionary, __assign(__assign({}, options), { type: EMessageColorType.error }));
+        this.put(id, dictionary, __assign(__assign({}, options), { type: types_1.MessageColorType.error }));
     };
     /**
      * Write an alert message
@@ -98,7 +99,7 @@ var Message = /** @class */ (function () {
      * @param options Extra options
      **/
     Message.prototype.warning = function (id, dictionary, options) {
-        this.put(id, dictionary, __assign(__assign({}, options), { type: EMessageColorType.warning }));
+        this.put(id, dictionary, __assign(__assign({}, options), { type: types_1.MessageColorType.warning }));
     };
     /**
      * Write an information message
@@ -108,17 +109,8 @@ var Message = /** @class */ (function () {
      * @param options Extra options
      **/
     Message.prototype.info = function (id, dictionary, options) {
-        this.put(id, dictionary, __assign(__assign({}, options), { type: EMessageColorType.success }));
+        this.put(id, dictionary, __assign(__assign({}, options), { type: types_1.MessageColorType.success }));
     };
     return Message;
 }());
-;
-/** Colors by message type */
-var EMessageColorType;
-(function (EMessageColorType) {
-    EMessageColorType["success"] = "green";
-    EMessageColorType["error"] = "red";
-    EMessageColorType["warning"] = "yellow";
-    EMessageColorType["cyan"] = "info";
-})(EMessageColorType = exports.EMessageColorType || (exports.EMessageColorType = {}));
 exports.default = new Message();

@@ -4,20 +4,23 @@ import cliHeader from "../lib/cliHeader"
 import objectMap from '../lib/objectMap'
 import replaceAll from '../lib/replaceAll'
 
+// Types
+import { MessageConfig, Dictionary, MessagePutOptions, MessageColorType, } from './types'
+
 // Necessary parts
-import MessageConfig from './Config'
+import ModuleConfig from './Config'
 
 /** AtlasJS Message Module */
 class Message {
   /** Message settings */
-  protected Config = MessageConfig
+  protected Config = ModuleConfig
 
   /**
    * Configures the AtlasJS Message Module
    * 
    * @param config Configures the AtlasJS Message Module
    **/
-  config (config: IMessageConfig | undefined): this {
+  config (config: MessageConfig | undefined): this {
     // Arrow settings
     this.Config.set(config)
 
@@ -40,7 +43,7 @@ class Message {
    * @param dictionary Module Message Dictionary
    * @param options Extra options
    **/
-  put (id: string, dictionary: IDictionary, options?: EMessagePutOptions): void {
+  put (id: string, dictionary: Dictionary, options?: MessagePutOptions): void {
     // Generates message level tab according to configuration
     const tab = ''.padStart((options?.level || 1)  * this.Config.get('tab'), ' ')
 
@@ -68,8 +71,8 @@ class Message {
    * @param dictionary Module Message Dictionary
    * @param options Extra options
    **/
-  success (id: string, dictionary: IDictionary, options?: EMessagePutOptions): void {
-    this.put(id, dictionary, { ...options, type: EMessageColorType.success, })
+  success (id: string, dictionary: Dictionary, options?: MessagePutOptions): void {
+    this.put(id, dictionary, { ...options, type: MessageColorType.success, })
   }
 
   /**
@@ -79,8 +82,8 @@ class Message {
    * @param dictionary Module Message Dictionary
    * @param options Extra options
    **/
-  error (id: string, dictionary: IDictionary, options?: EMessagePutOptions): void {
-    this.put(id, dictionary, { ...options, type: EMessageColorType.error, })
+  error (id: string, dictionary: Dictionary, options?: MessagePutOptions): void {
+    this.put(id, dictionary, { ...options, type: MessageColorType.error, })
   }
 
   /**
@@ -90,8 +93,8 @@ class Message {
    * @param dictionary Module Message Dictionary
    * @param options Extra options
    **/
-  warning (id: string, dictionary: IDictionary, options?: EMessagePutOptions): void {
-    this.put(id, dictionary, { ...options, type: EMessageColorType.warning, })
+  warning (id: string, dictionary: Dictionary, options?: MessagePutOptions): void {
+    this.put(id, dictionary, { ...options, type: MessageColorType.warning, })
   }
 
   /**
@@ -101,44 +104,9 @@ class Message {
    * @param dictionary Module Message Dictionary
    * @param options Extra options
    **/
-  info (id: string, dictionary: IDictionary, options?: EMessagePutOptions): void {
-    this.put(id, dictionary, { ...options, type: EMessageColorType.success, })
+  info (id: string, dictionary: Dictionary, options?: MessagePutOptions): void {
+    this.put(id, dictionary, { ...options, type: MessageColorType.success, })
   }
-}
-
-/** Messages in Languages */
-export interface IDictionary {
-  ptbr: {},
-  en: {},
-}
-
-/** Languages supported by AtlasJS */
-type lang  =  'ptbr' |  'en'
-
-/** AtlasJS Message Module Settings */
-export interface IMessageConfig { 
-  /** Language in use */
-  lang?: lang,
-  /** How many retreat spaces to each message level */
-  tab?: number,
-};
-
-/** Colors by message type */
-export enum EMessageColorType  {
-  success = 'green',
-  error = 'red',
-  warning = 'yellow',
-  cyan = 'info',
-}
-
-/** AtlasJS Message Put Method Options **/
-export interface EMessagePutOptions  {
-  /** How many levels of identification that the message should have */
-  level?: number,
-  /** Message type  */
-  type?: EMessageColorType,
-  /** What information adds to the dynamic parts of the message */
-  bind?: {}
 }
 
 export default new Message()

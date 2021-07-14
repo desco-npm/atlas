@@ -2,13 +2,13 @@
 import appRootDir from './lib/appRootDir'
 import path from './lib/path'
 
+// Types
+import { AtlasConfig } from './types'
+
 // Framework Modules
 import Message from './Message'
 import Exception from './Exception'
 import Server from './Server'
-
-// Necessary parts
-import { IAtlasConfig, } from './types' // Types of Atlas
 
 class Atlas {
   /** Directory of the project using AtlasJS */
@@ -25,7 +25,7 @@ class Atlas {
    * 
    * @param config Configures the AtlasJS
    **/
-  config (Config: IAtlasConfig): this {
+  config (Config: AtlasConfig): this {
     Message.config(Config.Message)
     Exception.config(Config.Exception)
     Server.config(Config.Server)

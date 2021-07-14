@@ -2,20 +2,21 @@
 import Message from '../Message'
 
 // Necessary parts
-import ExceptionConfig from './Config'
-import { IDictionary, } from '../Message'
+import ModuleConfig from './Config'
+import { ExceptionConfig, } from './types'
+import { Dictionary, } from '../Message/types'
 
 /** AtlasJS Exception Module */
 class Exception {
   /** Exception settings */
-  protected Config = ExceptionConfig
+  protected Config = ModuleConfig
 
   /**
    * Configures the AtlasJS Exception Module
    * 
    * @param config Configures the AtlasJS Exception Module
    **/
-     config (config: IExceptionConfig | undefined): this {
+     config (config: ExceptionConfig | undefined): this {
       // Set settings
       this.Config.set(config)
   
@@ -29,16 +30,12 @@ class Exception {
      * error Error id
      * Error Error Object Returned by Node
      */
-    discharge (id: string, e: Error, dictionary: IDictionary): void {
+    discharge (id: string, e: Error, dictionary: Dictionary): void {
       Message.error(id + 'Title', dictionary)
       Message.error(id + 'Message', dictionary)
 
       process.exit()
     }
 }
-
-/** AtlasJS Exception Module Settings */
-export interface IExceptionConfig { 
-};
 
 export default new Exception()

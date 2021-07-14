@@ -37,5 +37,4 @@ var Exception = /** @class */ (function () {
     };
     return Exception;
 }());
-;
 exports.default = new Exception();

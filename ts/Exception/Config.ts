@@ -1,6 +1,6 @@
 // Required parts
 import Config from '../Config' // Generic class of configations
-import { IExceptionConfig, } from './'
+import { ExceptionConfig, } from './'
 
 /** AtlasJS Exception Settings */
 class ExceptionConfig extends Config {
@@ -9,7 +9,7 @@ class ExceptionConfig extends Config {
 
     // Set the default settings
     this.setDefaults({
-    } as IExceptionConfig)
+    } as ExceptionConfig)
   }
 }
 
