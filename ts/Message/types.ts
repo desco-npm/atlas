@@ -1,5 +1,5 @@
 /** Messages in Languages */
-export interface Dictionary {
+export type Dictionary = {
   ptbr: {},
   en: {},
 }
@@ -8,7 +8,7 @@ export interface Dictionary {
 type lang  =  'ptbr' |  'en'
 
 /** AtlasJS Message Module Settings */
-export interface MessageConfig { 
+export type MessageConfig = { 
   /** Language in use */
   lang?: lang,
   /** How many retreat spaces to each message level */
@@ -16,7 +16,7 @@ export interface MessageConfig {
 };
 
 /** Colors by message type */
-export enum MessageColorType  {
+export enum MessageColorType {
   success = 'green',
   error = 'red',
   warning = 'yellow',
@@ -24,7 +24,7 @@ export enum MessageColorType  {
 }
 
 /** AtlasJS Message Put Method Options **/
-export interface MessagePutOptions  {
+export type MessagePutOptions = {
   /** How many levels of identification that the message should have */
   level?: number,
   /** Message type  */

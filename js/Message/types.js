@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessageColorType = void 0;
-;
 /** Colors by message type */
 var MessageColorType;
 (function (MessageColorType) {

@@ -1,4 +1,4 @@
-import { ServerRouterParams, } from '../../Server'
+import { ServerRouterParams, } from '../../Server/types'
 
 export default (params: ServerRouterParams) => {
   const { Express, } = params

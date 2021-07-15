@@ -14,3 +14,8 @@ export type AtlasConfig = {
   /** AtlasJS Server Module Settings */
   Server?: ServerConfig
 }
+
+// Exporting types from other modules
+export { Dictionary, MessageColorType, MessageConfig } from './Message/types'
+export { ExceptionConfig, } from './Exception/types'
+export { ServerConfig, ServerRouterParams, ServerPreRouterParams, } from './Server/types'

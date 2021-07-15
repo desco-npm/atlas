@@ -1,3 +1,3 @@
 /** AtlasJS Exception Module Settings */
-export interface ExceptionConfig { 
+export type ExceptionConfig = { 
 };

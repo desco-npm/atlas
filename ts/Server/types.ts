@@ -2,13 +2,13 @@ import { OptionsUrlencoded, OptionsJson } from 'body-parser'
 import * as ExpressCore from 'express-serve-static-core';
 
 /** Parameters of a preRoute */
-export interface ServerPreRouterParams { 
+export type ServerPreRouterParams = { 
   /** Express application */
   Express: ExpressCore.Express,
 };
 
 /** Server Settings Type */
-export interface ServerConfig { 
+export type ServerConfig = { 
   /** Door where to run the server */
   port?: number,
   /** Function to be performed when you start the server */
@@ -22,7 +22,7 @@ export interface ServerConfig {
 };
 
 /** Parameters of a route */
-export interface ServerRouterParams { 
+export type ServerRouterParams = { 
   /** Express application */
   Express: ExpressCore.Express,
 };
