@@ -1,7 +1,7 @@
 // Required parts
 import Config from '../Config' //Generic class of configations
 
-// Config Interface
+// Types
 import { MessageConfig, } from './types'
 
 /** AtlasJS Message Settings */

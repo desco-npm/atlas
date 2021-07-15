@@ -2,6 +2,7 @@
 import { MessageConfig, } from './Message/types'
 import { ExceptionConfig, } from './Exception/types'
 import { ServerConfig, } from './Server/types'
+import { ORMConfig, } from './ORM/types'
 
 /**
  * AtlasJS Settings Type
@@ -13,9 +14,12 @@ export type AtlasConfig = {
   Exception?: ExceptionConfig,
   /** AtlasJS Server Module Settings */
   Server?: ServerConfig
+  /** AtlasJS ORM Module Settings */
+  ORM?: ORMConfig
 }
 
 // Exporting types from other modules
-export { Dictionary, MessageColorType, MessageConfig } from './Message/types'
+export { MessageConfig, Dictionary, MessageColorType, } from './Message/types'
 export { ExceptionConfig, } from './Exception/types'
 export { ServerConfig, ServerRouterParams, ServerPreRouterParams, } from './Server/types'
+export { ORMConfig, } from './ORM/types'

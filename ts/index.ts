@@ -9,6 +9,7 @@ import { AtlasConfig } from './types'
 import Message from './Message'
 import Exception from './Exception'
 import Server from './Server'
+import ORM from './ORM'
 
 class Atlas {
   /** Directory of the project using AtlasJS */
@@ -29,6 +30,7 @@ class Atlas {
     Message.config(Config.Message)
     Exception.config(Config.Exception)
     Server.config(Config.Server)
+    ORM.config(Config.ORM)
 
     return this
   }

@@ -10,6 +10,7 @@ var path_1 = __importDefault(require("./lib/path"));
 var Message_1 = __importDefault(require("./Message"));
 var Exception_1 = __importDefault(require("./Exception"));
 var Server_1 = __importDefault(require("./Server"));
+var ORM_1 = __importDefault(require("./ORM"));
 var Atlas = /** @class */ (function () {
     function Atlas() {
         /** Directory of the project using AtlasJS */
@@ -28,6 +29,7 @@ var Atlas = /** @class */ (function () {
         Message_1.default.config(Config.Message);
         Exception_1.default.config(Config.Exception);
         Server_1.default.config(Config.Server);
+        ORM_1.default.config(Config.ORM);
         return this;
     };
     /** Prepare the AtlasJS */

@@ -40,6 +40,7 @@
     "object.map": "^1.0.1",
     "pdfmake": "^0.2.0",
     "platform-is": "^1.0.4",
+    "reflect-metadata": "^0.1.13",
     "stack-trace": "^1.0.0-pre1",
     "string-replace-all": "^1.0.3"
   },
