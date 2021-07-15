@@ -46,6 +46,7 @@ class Atlas {
 
     Message.header()
     Server.start()
+    ORM.start()
   }
 }
 

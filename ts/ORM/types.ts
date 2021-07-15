@@ -1,3 +1,9 @@
+import { ConnectionOptions, } from 'typeorm/connection/ConnectionOptions'
+
 /** AtlasJS ORM Module Settings */
-export type ORMConfig = { 
+export type ORMConfig = {
+  /** Database connection data (Same as TypeORM) */
+  connection: ConnectionOptions | ConnectionOptions[]
 }
+
+export { ConnectionOptions, } from 'typeorm/connection/ConnectionOptions'

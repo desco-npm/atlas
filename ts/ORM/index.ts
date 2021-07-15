@@ -1,3 +1,6 @@
+// Framework resources
+import { createConnection, } from '../lib/TypeORM'
+
 // Types
 import { ORMConfig, } from './types'
 
@@ -18,6 +21,17 @@ class ORM {
     this.Config.set(config)
 
     return this
+  }
+
+  /** Prepares the ORM */
+  private prepare (): void {
+    console.log(this.Config.get('connection'))
+  }
+
+  /** Starts the ORM */
+  start (): void {
+    // Prepares the ORM
+    this.prepare()
   }
 }
 
