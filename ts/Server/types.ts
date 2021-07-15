@@ -4,25 +4,25 @@ import * as ExpressCore from 'express-serve-static-core';
 /** Parameters of a preRoute */
 export type ServerPreRouterParams = { 
   /** Express application */
-  Express: ExpressCore.Express,
+  readonly Express: ExpressCore.Express,
 };
 
 /** Server Settings Type */
 export type ServerConfig = { 
   /** Door where to run the server */
-  port?: number,
+  readonly port?: number,
   /** Function to be performed when you start the server */
-  callback?: () => void,
+  readonly callback?: () => void,
   /** Request URL Encoded Options */
-  queryString?: OptionsUrlencoded,
+  readonly queryString?: OptionsUrlencoded,
   /** Requisition Body Data Encodes Options, */
-  body?: OptionsJson,
+  readonly body?: OptionsJson,
   /** Router function */
-  router: (params: ServerRouterParams) => void
+  readonly router: (params: ServerRouterParams) => void
 };
 
 /** Parameters of a route */
 export type ServerRouterParams = { 
   /** Express application */
-  Express: ExpressCore.Express,
+  readonly Express: ExpressCore.Express,
 };

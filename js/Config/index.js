@@ -45,7 +45,6 @@ var Config = /** @class */ (function () {
     };
     /**
      * Returns a Configuration
-     
      * @param path Address of the configuration you want to access.Use points to access levels deeper
      */
     Config.prototype.get = function (path) {
