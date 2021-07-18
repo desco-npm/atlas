@@ -2,11 +2,10 @@
   "name": "@desco/atlas",
   "version": "3.0.0-alpha.1",
   "description": "NodeJS Framework",
-  "main": "src/index.js",
+  "main": "index.ts",
   "scripts": {
     "compile": "tsc",
-    "tsc": "tsc --watch",
-    "demo": "cd js/demo && nodemon index.js"
+    "demo": "cd demo && ts-node-dev index"
   },
   "repository": {
     "type": "git",
@@ -49,8 +48,9 @@
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
-    "@types/node": "^16.3.2",
+    "@types/node": "^16.3.3",
     "@types/object-path": "^0.11.1",
+    "eslint": "^7.30.0",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.3.5"
   }
