@@ -1,6 +1,8 @@
 const { Sequelize, DataTypes, Op, } = require('sequelize')
 const pathJoin = require('../../../lib/pathJoin')
 const objectMap = require('../../../lib/objectMap')
+const mkdirIfNotExists = require('../../../lib/mkdirIfNotExists')
+const readDir = require('../../../lib/readDir')
 
 let sequelize
 
@@ -176,7 +178,7 @@ class ORM {
   async importModels () {
     let promises = []
 
-    const models = (await readdir(this.modelsDir))
+    const models = (await readDir(this.modelsDir))
       .map(i => i.slice(0, -3))
       .filter(i => i !== 'index')
 
