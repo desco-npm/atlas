@@ -249,15 +249,14 @@ class Permission {
       }
 
       const user = await this.User.selectOne({ where, })
-
-      if (!user) return {}
+      if (!user) return Promise.reject()
 
       const token = generateToken(
         {
           [Atlas.Config.get('Orm.pkName')]: user[Atlas.Config.get('Orm.pkName')],
           time: new Date(),
         },
-        Atlas.ConfigAtlas.Config.get('hash.key'),
+        Atlas.Config.get('hash.key'),
         { algorithm: Atlas.Config.get('hash.algorithm'), expiresIn: '1h', }
       )
 
@@ -269,12 +268,12 @@ class Permission {
         [this.validateTokenProp]: decoded.payload.iat,
       })
 
-      return {
+      return Promise.resolve({
         [Atlas.Config.get('Orm.pkName')]: loggedUser[Atlas.Config.get('Orm.pkName')],
         [this.loginProp]: loggedUser[this.loginProp],
         [this.tokenProp]: loggedUser[this.tokenProp],
         [this.validateTokenProp]: loggedUser[this.validateTokenProp],
-      }
+      })
     }
 
     this.User.decodeToken = token => {
@@ -404,7 +403,6 @@ class Permission {
         [Atlas.Config.get('Orm.pkName')]: req.body[Atlas.Config.get('Orm.pkName')],
         [this.activationCodeProp]: (req.body[this.activationCodeProp] || '').toUpperCase(),
       }
-
       this.User.activeCode(data)
         .then((response) => res.json(response))
         .catch(e => res.status(500).json(e))
