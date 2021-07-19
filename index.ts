@@ -8,6 +8,7 @@ import { AtlasConfig } from './types'
 // Framework Modules
 import Message from './Message'
 import Exception from './Exception'
+import Mail from './Mail'
 import Server from './Server'
 import ORM from './ORM'
 
@@ -30,6 +31,10 @@ class Atlas {
     Message.config(Config.Message)
     Exception.config(Config.Exception)
 
+    if (Config.Mail) {
+      Mail.config(Config.Mail)
+    }
+
     if (Config.ORM) {
       ORM.config(Config.ORM)
     }
@@ -51,6 +56,10 @@ class Atlas {
     this.prepare()
 
     Message.header()
+
+    if (Mail.Config.configured) {
+      await Mail.start()
+    }
 
     if (ORM.Config.configured) {
       await ORM.start()

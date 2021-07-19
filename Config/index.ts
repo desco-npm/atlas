@@ -43,8 +43,13 @@ class Config {
    * Returns a Configuration
    * @param path Address of the configuration you want to access.Use points to access levels deeper
    */
-  get (path: string): any {
-    return objectPath.get(this.configs, path)
+  get (path?: string): any {
+    if (path) {
+      return objectPath.get(this.configs, path)
+    }
+    else {
+      return this.configs
+    }
   }
 }
 

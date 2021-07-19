@@ -5,7 +5,7 @@ import * as ExpressCore from 'express-serve-static-core';
 export type ServerPreRouterParams = { 
   /** Express application */
   readonly Express: ExpressCore.Express,
-};
+}
 
 /** Server Settings Type */
 export type ServerConfig = { 
@@ -19,10 +19,10 @@ export type ServerConfig = {
   readonly body?: OptionsJson,
   /** Router function */
   readonly router: (params: ServerRouterParams) => void
-};
+}
 
 /** Parameters of a route */
 export type ServerRouterParams = { 
   /** Express application */
   readonly Express: ExpressCore.Express,
-};
+}

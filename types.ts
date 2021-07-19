@@ -1,6 +1,7 @@
 // Necessary parts
 import { MessageConfig, } from './Message/types'
 import { ExceptionConfig, } from './Exception/types'
+import { MailConfig, } from './Mail/types'
 import { ServerConfig, } from './Server/types'
 import { ORMConfig, } from './ORM/types'
 
@@ -12,6 +13,8 @@ export type AtlasConfig = {
   Message?: MessageConfig,
   /** AtlasJS Exception Module Settings */
   Exception?: ExceptionConfig,
+  /** AtlasJS Mail Module Settings */
+  Mail?: MailConfig,
   /** AtlasJS Server Module Settings */
   Server?: ServerConfig
   /** AtlasJS ORM Module Settings */

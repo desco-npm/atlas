@@ -16,7 +16,17 @@ Atlas
         database: 'diasrafael',
         entities: [ './entities/*.ts', ],
         synchronize: true,
-      }
+      },
+    },
+    Mail: {
+      service: 'gmail',
+      auth: {
+        user: 'eu@diasrafael.com.br',
+        pass: 'r1478953DGG',
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
     }
   })
   .start()
