@@ -41,7 +41,7 @@ class Permission {
     Atlas.Config.setDefault('Permission.mail.recoverPasswordText', 'Your recover code is {{code}}')
 
     Atlas.Config.setDefault(
-      'Permission.mail.recoverPasswordHtml', 'Permission.mail.recoverPasswordText'
+      'Permission.mail.recoverPasswordHtml', 'Permission.mail.recoverPasswordHtml'
     )
 
     Atlas.Config.setDefault('Permission.route.login', '/Login')
@@ -98,7 +98,7 @@ class Permission {
 
     this.recoverPasswordMailSubject = Atlas.Config.get('Permission.mail.recoverPasswordSubject')
 
-    this.recoverPasswordMailText = Atlas.Config.get('')
+    this.recoverPasswordText = Atlas.Config.get('Permission.mail.recoverPasswordText')
 
     this.recoverPasswordMailHtml = Atlas.Config.get('Permission.mail.recoverPasswordHtml')
 
@@ -184,10 +184,7 @@ class Permission {
     this.User.generatePasswordRecoveryCode = async data => {
       const options = { where: {}, }
 
-      if (data[Atlas.Config.get('Orm.pkName')]) {
-        options.where[Atlas.Config.get('Orm.pkName')] = data[Atlas.Config.get('Orm.pkName')]
-      }
-      else if (data[this.loginProp]) {
+      if (data[this.loginProp]) {
         options.where[this.loginProp] = data[this.loginProp]
       }
       else {
@@ -226,20 +223,25 @@ class Permission {
     }
 
     this.User.sendRecoverPasswordMail = data => {
-      const fromName = this.recoverPasswordMailFrom
-      const fromMail = Atlas.Config.get('Mail.auth.user')
+      try {
+        const fromName = this.recoverPasswordMailFrom
+        const fromMail = Atlas.Config.get('Mail.auth.user')
 
-      const params = {
-        from: `${fromName} <${fromMail}>`,
-        to: data[this.loginProp],
-        subject: this.recoverPasswordMailSubject,
-        text: this.recoverPasswordMailText
-          .replace('{{code}}', data[this.recoverCodeProp]),
-        html: this.recoverPasswordMailHtml
-          .replace('{{code}}', data[this.recoverCodeProp]),
+        const params = {
+          from: `${fromName} <${fromMail}>`,
+          to: data[this.loginProp],
+          subject: this.recoverPasswordMailSubject,
+          text: this.recoverPasswordText
+            .replace('{{code}}', data[this.recoverCodeProp]),
+          html: this.recoverPasswordMailHtml
+            .replace('{{code}}', data[this.recoverCodeProp]),
+        }
+
+        return Atlas.Mail.send(params)
       }
-
-      return Atlas.Mail.send(params)
+      catch (e) {
+        console.log(e)
+      }
     }
 
     this.User.login = async (login, password) => {
@@ -409,12 +411,7 @@ class Permission {
     })
 
     Atlas.Server.express.post(this.sendPasswordRecoverCodeRoute, async (req, res) => {
-      const data = {
-        [Atlas.Config.get('Orm.pkName')]: req.body[Atlas.Config.get('Orm.pkName')],
-        [this.loginProp]: req.body[this.loginProp],
-      }
-
-      this.User.generatePasswordRecoveryCode(data)
+      this.User.generatePasswordRecoveryCode(req.body)
         .then(async user => {
           await this.User.sendRecoverPasswordMail(user)
 
