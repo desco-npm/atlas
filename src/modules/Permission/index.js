@@ -270,6 +270,7 @@ class Permission {
         [this.loginProp]: loggedUser[this.loginProp],
         [this.tokenProp]: loggedUser[this.tokenProp],
         [this.validateTokenProp]: loggedUser[this.validateTokenProp],
+        [this.activeProp]: loggedUser[this.activeProp],
       })
     }
 
