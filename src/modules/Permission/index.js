@@ -223,25 +223,20 @@ class Permission {
     }
 
     this.User.sendRecoverPasswordMail = data => {
-      try {
-        const fromName = this.recoverPasswordMailFrom
-        const fromMail = Atlas.Config.get('Mail.auth.user')
+      const fromName = this.recoverPasswordMailFrom
+      const fromMail = Atlas.Config.get('Mail.auth.user')
 
-        const params = {
-          from: `${fromName} <${fromMail}>`,
-          to: data[this.loginProp],
-          subject: this.recoverPasswordMailSubject,
-          text: this.recoverPasswordText
-            .replace('{{code}}', data[this.recoverCodeProp]),
-          html: this.recoverPasswordMailHtml
-            .replace('{{code}}', data[this.recoverCodeProp]),
-        }
+      const params = {
+        from: `${fromName} <${fromMail}>`,
+        to: data[this.loginProp],
+        subject: this.recoverPasswordMailSubject,
+        text: this.recoverPasswordText
+          .replace('{{code}}', data[this.recoverCodeProp]),
+        html: this.recoverPasswordMailHtml
+          .replace('{{code}}', data[this.recoverCodeProp]),
+      }
 
-        return Atlas.Mail.send(params)
-      }
-      catch (e) {
-        console.log(e)
-      }
+      return Atlas.Mail.send(params)
     }
 
     this.User.login = async (login, password) => {
