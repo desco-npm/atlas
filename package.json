@@ -44,6 +44,7 @@
     "object-merge-advanced": "^12.1.0",
     "object-path": "^0.11.5",
     "object.map": "^1.0.1",
+    "path": "^0.12.7",
     "pdfmake": "^0.2.0",
     "platform-is": "^1.0.4",
     "reflect-metadata": "^0.1.13",
