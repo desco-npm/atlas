@@ -6,6 +6,4 @@
 
   NPM: https://www.npmjs.com/package/object-merge-advanced
 */
-import objectMerge from 'object-merge-advanced'
-
-export default objectMerge
+export { mergeAdvanced as objectMerge } from 'object-merge-advanced'

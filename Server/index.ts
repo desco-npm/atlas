@@ -30,7 +30,7 @@ class Server {
   }
 
   /** Prepares the server */
-  private async prepare (): Promise<void> {
+  async prepare (): Promise<void> {
     // configure the core
     this.Core.use(cors()) // Treat the CORS
     this.Core.use(bodyParser.urlencoded(this.Config.get('queryString'))) // Recognize QueryString
@@ -41,9 +41,6 @@ class Server {
 
   /** Starts the server */
   async start (): Promise<void> {
-    // Prepares the server
-    await this.prepare()
-
     // Listening to the door
     this.Core.listen(this.Config.get('port'), this.Config.get('callback'))
   }

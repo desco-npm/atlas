@@ -6,5 +6,7 @@ export type ORMConfig = {
   connection: ConnectionOptions | ConnectionOptions[]
 }
 
-export *  from 'typeorm'
-export * from 'typeorm/connection/ConnectionOptions'
+export { Connection, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, } from 'typeorm'
+export { UpdateDateColumn, OneToMany, ManyToOne, } from 'typeorm'
+export { ConnectionOptions, } from 'typeorm/connection/ConnectionOptions'
+

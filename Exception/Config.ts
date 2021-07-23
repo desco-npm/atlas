@@ -9,6 +9,7 @@ class ExceptionConfig extends Config {
 
     // Set the default settings
     this.setDefaults({
+      details: false,
     } as ExceptionConfigType)
   }
 }

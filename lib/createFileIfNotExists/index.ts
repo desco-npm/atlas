@@ -7,7 +7,7 @@
 import fs from '../fs'
 
 export default (file: string): any => {
-  if (!fs.existsSync(file)) {
+  if(!fs.existsSync(file)) {
     const stream = fs.createWriteStream(file)
 
     return Promise.resolve(stream)

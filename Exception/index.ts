@@ -3,7 +3,7 @@ import Message from '../Message'
 
 // Types
 import { ExceptionConfig, } from './types'
-import { Dictionary, } from '../Message/types'
+import { Dictionary, } from '../Dictionary/types'
 
 // Necessary parts
 import ModuleConfig from './Config'
@@ -36,6 +36,10 @@ class Exception {
       Message.error(id + 'Title', dictionary, { format: [ 'bold', ]})
       Message.error(id + 'Message', dictionary)
       Message.breakLine()
+
+      if(this.Config.get('details')) {
+        console.log(e)
+      }
 
       process.exit()
     }

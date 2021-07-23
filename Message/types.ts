@@ -1,16 +1,5 @@
-/** Messages in Languages */
-export type Dictionary = {
-  readonly ptbr: {},
-  readonly en: {},
-}
-
-/** Languages supported by AtlasJS */
-type lang  =  'ptbr' |  'en'
-
 /** AtlasJS Message Module Settings */
 export type MessageConfig = { 
-  /** Language in use */
-  readonly lang?: lang,
   /** How many retreat spaces to each message level */
   readonly tab?: number,
 };

@@ -1,5 +1,6 @@
 // Framework resources
 import objectPath from '../lib/objectPath'
+import { objectMerge, } from '../lib/objectMerge'
 
 /** AtlasJS Settings Module */
 class Config {
@@ -27,11 +28,11 @@ class Config {
 
   /**
    * Set the settings
-   * 
+   *
    * @param configs Settings to be added to the module
    **/
   set (configs: {} | undefined): this {
-    this.configs = { ...this.defaults, ...configs, } // Merge user settings with defaults
+    this.configs = objectMerge(this.defaults, configs, {}) // Merge user settings with defaults
 
     // Mark as configured
     this.configured = true
@@ -44,7 +45,7 @@ class Config {
    * @param path Address of the configuration you want to access.Use points to access levels deeper
    */
   get (path?: string): any {
-    if (path) {
+    if(path) {
       return objectPath.get(this.configs, path)
     }
     else {

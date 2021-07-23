@@ -1,5 +1,5 @@
-// Necessary parts
-import { Dictionary, } from '../Message/types' // Types of Dictionary
+// Types
+import { Dictionary, } from '../Dictionary/types' // Types of Dictionary
 
 /** Dictionary of the AtlasJS ORM Module */
 export default {

@@ -1,11 +1,13 @@
+// Framework Modules
+import Dictionary from '../Dictionary'
+
 // Framework resources
 import '../lib/colors'
 import cliHeader from "../lib/cliHeader" 
-import objectMap from '../lib/objectMap'
-import replaceAll from '../lib/replaceAll'
 
 // Types
-import { MessageConfig, Dictionary, MessagePutOptions, MessageColorType, } from './types'
+import { MessageConfig, MessagePutOptions, MessageColorType, } from './types'
+import { Dictionary as DictionaryType, DictionaryGetOptions } from '../Dictionary/types'
 
 // Necessary parts
 import ModuleConfig from './Config'
@@ -43,7 +45,7 @@ class Message {
    * @param dictionary Module Message Dictionary
    * @param options Extra options
    **/
-  put (id: string, dictionary: Dictionary, options?: MessagePutOptions): void {
+  put (id: string, dictionary: DictionaryType, options?: MessagePutOptions): void {
     // Generates message level tab according to configuration
     const tab = ''.padStart((options?.level || 1)  * this.Config.get('tab'), ' ')
 
@@ -51,15 +53,12 @@ class Message {
     const symbol = options?.symbol ? `${options?.symbol} ` : ''
 
     // Retrieves message from the dictionary, according to the language defined in the settings
-    let text = tab + symbol + dictionary[this.Config.get('lang')][id]
-
-    // Exchange variables by informed values
-    objectMap(options?.bind || {}, (replaceThis, withThis) => {
-      text = replaceAll(text, `[[${withThis}]]`, replaceThis)
-    })
+    let text = tab + symbol + Dictionary.get(
+      id, dictionary, { bind: options?.bind, } as DictionaryGetOptions
+    )
 
     // A type was informed, format accordingly
-    if (options?.type) {
+    if(options?.type) {
       text = text[options?.type]
     }
 
@@ -79,7 +78,7 @@ class Message {
    * @param dictionary Module Message Dictionary
    * @param options Extra options
    **/
-  success (id: string, dictionary: Dictionary, options?: MessagePutOptions): void {
+  success (id: string, dictionary: DictionaryType, options?: MessagePutOptions): void {
     this.put(id, dictionary, { ...options, type: MessageColorType.success, symbol: '[SUC]' })
   }
 
@@ -90,7 +89,7 @@ class Message {
    * @param dictionary Module Message Dictionary
    * @param options Extra options
    **/
-  error (id: string, dictionary: Dictionary, options?: MessagePutOptions): void {
+  error (id: string, dictionary: DictionaryType, options?: MessagePutOptions): void {
     this.put(id, dictionary, { ...options, type: MessageColorType.error, symbol: '[ERR]' })
   }
 
@@ -101,7 +100,7 @@ class Message {
    * @param dictionary Module Message Dictionary
    * @param options Extra options
    **/
-  warning (id: string, dictionary: Dictionary, options?: MessagePutOptions): void {
+  warning (id: string, dictionary: DictionaryType, options?: MessagePutOptions): void {
     this.put(id, dictionary, { ...options, type: MessageColorType.warning, symbol: '[WAR]' })
   }
 
@@ -112,7 +111,7 @@ class Message {
    * @param dictionary Module Message Dictionary
    * @param options Extra options
    **/
-  info (id: string, dictionary: Dictionary, options?: MessagePutOptions): void {
+  info (id: string, dictionary: DictionaryType, options?: MessagePutOptions): void {
     options = options || {} as MessagePutOptions
 
     this.put(id, dictionary, { ...options, type: MessageColorType.success, symbol: '[INF]', })

@@ -1,41 +1,76 @@
 {
-  "env": {
-      "browser": true,
-      "commonjs": true,
-      "es2021": true
-  },
-  "extends": "eslint:recommended",
-  "parserOptions": {
-      "ecmaVersion": 12
-  },
-  "globals": {
-    // "var1": "writable",
-    // "var2": "readonly",
-  },
-  "rules": {
-      "indent": [
-          "error",
-          2
-      ],
-      "linebreak-style": [
-          "error",
-          "windows"
-      ],
-      "quotes": [
-          "error",
-          "single"
-      ],
-      "semi": [
-          "error",
-          "never"
-      ],
-      "no-trailing-spaces": 1,
-      "comma-dangle": ["error", {
-        "arrays": "always",
-        "objects": "always",
-        "imports": "always",
-        "exports": "always",
-        "functions": "never"
-    }]
-  }
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "globals": {
+      // "var1": "writable",
+      "objectPath": "readonly",
+      "inflection": "readonly",
+      "randomstring": "readonly",
+      "isWindows": "readonly",
+      "isMac": "readonly",
+      "isLinux": "readonly",
+      "mkdirIfNotExists": "readonly",
+      "mkdir": "readonly",
+      "objectMerge": "readonly",
+      "frontToSequelize": "readonly",
+      "fs": "readonly",
+      "path": "readonly",
+      "jsonwebtoken": "readonly",
+      "Atlas": "readonly",
+      "clone": "readonly",
+      "fileExists": "readonly",
+      "readFileSync": "readonly",
+      "pathJoin": "readonly",
+      "objectFilter": "readonly",
+      "objectMap": "readonly",
+      "readdir": "readonly",
+      "isArray": "readonly",
+      "stackTrace": "readonly",
+      "htmlPdf": "readonly",
+      "pdfMake": "readonly",
+      "generateToken": "readonly",
+      "verifyToken": "readonly",
+      "decodeToken": "readonly",
+      "formatDateTime": "readonly",
+      "moment": "readonly",
+      "arrayUnique": "readonly",
+      "projectDir": "readonly",
+      "atlasDir": "readonly",
+      "pathSep": "readonly",
+      "__dirname": "readonly",
+      "process": "readonly"
+    },
+    "rules": {
+        "indent": [
+            "error",
+            2
+        ],
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "never"
+        ],
+        "no-trailing-spaces": 1,
+        "comma-dangle": ["error", {
+          "arrays": "always",
+          "objects": "always",
+          "imports": "always",
+          "exports": "always",
+          "functions": "never"
+      }]
+    }
 }

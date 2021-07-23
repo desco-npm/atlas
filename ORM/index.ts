@@ -16,6 +16,9 @@ class ORM {
   /** Message settings */
   public Config = ModuleConfig
 
+  /** Default connection name */
+  public defaultConnectionName = 'default'
+
   /**
    * Configures the AtlasJS Message Module
    * 
@@ -29,10 +32,10 @@ class ORM {
   }
 
   /** Prepares the ORM */
-  private async prepare (): Promise<void> {
-    const connection: ConnectionOptions = this.Config.get('connection')
+  async prepare (): Promise<void> {
+    const connectionConfig: ConnectionOptions = this.Config.get('connection')
 
-    await createConnection(connection).catch(e => {
+    await createConnection(connectionConfig).catch(e => {
       Exception.discharge('InvalidConnection', dictionary, e)
     })
 
@@ -41,8 +44,6 @@ class ORM {
 
   /** Starts the ORM */
   async start (): Promise<void> {
-    // Prepares the ORM
-    await this.prepare()
   }
 
   /**
@@ -53,7 +54,7 @@ class ORM {
     try {
       return getConnection(connectionName)
     }
-    catch (e) {
+     catch(e) {
       Exception.discharge('InvalidConnectionName', dictionary, e)
     }
   }

@@ -1,5 +1,5 @@
 // Necessary parts
-import { Dictionary, } from '../Message/types' // Types of Dictionary
+import { Dictionary, } from '../Dictionary' // Types of Dictionary
 
 /** Dictionary of the AtlasJS Mail Module */
 export default {

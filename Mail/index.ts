@@ -14,7 +14,7 @@ class Mail {
   public Config = ModuleConfig
 
   // Transporters created
-  public transporters = {}
+  private transporters = {}
 
   /**
    * Configures the Mail
@@ -28,8 +28,13 @@ class Mail {
     return this
   }
 
+  /** Retrieve a transporter */
+  transporter (name: string = 'default'): Transporter | null {
+    return this.transporters[name] || null
+  }
+
   /** Prepares the Mail */
-  private async prepare (): Promise<void> {
+  public async prepare (): Promise<void> {
     // If you have only one configuration, put it in an array
     const mails = isArray(this.Config.get())
       ? this.Config.get()
@@ -45,14 +50,8 @@ class Mail {
     })
   }
 
-  /** Retrieve a transporter */
-  transporter (name: string = 'default'): Transporter | null {
-    return this.transporters[name] || null
-  }
-
   /** Starts the Mail */
   async start (): Promise<void> {
-    await this.prepare()
   }
 }
 
