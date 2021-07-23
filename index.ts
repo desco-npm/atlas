@@ -16,13 +16,16 @@ import ORM from './ORM'
 
 class Atlas {
   /** Directory of the project using AtlasJS */
-  public projectDir = appRootDir.get()
+  public readonly projectDir = appRootDir.get()
 
   /** AtlasJS directory in use */
-  public atlasDir = __dirname
+  public readonly atlasDir = __dirname
 
   /** Default operating system directory separator in use */
-  public pathSep = path.sep
+  public readonly pathSep = path.sep
+
+  // Scope of Atlas Standard Routes
+  public readonly defaultScopeRouter = '/@atlas'
 
   /**
    * Configure the AtlasJS

@@ -18,7 +18,7 @@ export type ServerConfig = {
   /** Requisition Body Data Encodes Options, */
   readonly body?: OptionsJson,
   /** Router function */
-  readonly router: (params: ServerRouterParams) => void
+  readonly router: ((params: ServerRouterParams) => void)[]
 }
 
 /** Parameters of a route */

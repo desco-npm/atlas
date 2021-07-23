@@ -36,7 +36,10 @@ class Server {
     this.Core.use(bodyParser.urlencoded(this.Config.get('queryString'))) // Recognize QueryString
     this.Core.use(bodyParser.json(this.Config.get('body'))) // Recognize Body
 
-    this.Config.get('router')({ Express: this.Core, } as ServerRouterParams)
+    // Run all routers
+    this.Config.get('router').map(router => {
+      router(({ Express: this.Core, } as ServerRouterParams))
+    })
   }
 
   /** Starts the server */
