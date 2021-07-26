@@ -4,7 +4,7 @@ import SMTPTransport from 'nodemailer/lib/smtp-transport'
 export type Transport = SMTPTransport | SMTPTransport.Options
 
 /** Contact */
-export type Contact = { name?: String, mail: String, }
+export type Contact = { name?: string, mail: string, }
 
 /** Mail Settings Type */
 export type MailConfig = Transport | Transport[]

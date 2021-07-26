@@ -66,12 +66,12 @@ class Atlas {
       await ORM.prepare()
     }
     
-    if(Server.Config.configured) {
-      await Server.prepare()
-    }
-    
     if(Auth.Config.configured) {
       await Auth.prepare()
+    }
+    
+    if(Server.Config.configured) {
+      await Server.prepare()
     }
   }
 

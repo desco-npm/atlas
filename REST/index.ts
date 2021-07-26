@@ -37,7 +37,7 @@ class REST {
    */
   getError (
     id: string, dictionary: DictionaryType, options?: RESTGetErrorOptions
-  ): Promise<RESTError> {
+    ): Promise<RESTError> {
     // Retrieves message from the dictionary, according to the language defined in the settings
     const message = Dictionary.get(
       `REST_ERROR_${id}`, dictionary, { bind: options?.bind, } as DictionaryGetOptions

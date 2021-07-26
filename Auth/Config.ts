@@ -19,6 +19,7 @@ class AuthConfig extends Config {
       loginReturnTokenProps: [ 'id', ],
       activeReturnProps: [ 'id', ],
       refreshPasswordReturnProps: [ 'id', ],
+      publicGroup: 'public',
       code: {
         length: 6,
         type: 'uppernumeric',
@@ -32,18 +33,6 @@ class AuthConfig extends Config {
         sendRefreshPasswordCode: '/auth/send_refresh_password_code',
         refreshPassword: '/auth/refresh_password',
         logout: '/auth/logout',
-      },
-      entityName: 'User',
-      prop: {
-        login: 'email',
-        email: 'email',
-        password: 'password',
-        refreshPasswordCode: 'refreshPasswordCode',
-        active: 'active',
-        activeCode: 'activeCode',
-        token: 'token',
-        tokenType: 'tipoToken',
-        tokenValidate: 'tokenValidate',
       },
       mail: {
         transporter: 'default',
@@ -61,6 +50,39 @@ class AuthConfig extends Config {
       hash: {
         algorithm: 'HS256',
       } as Partial<AuthHashConfig>,
+      entityName: 'User',
+      prop: {
+        login: 'email',
+        email: 'email',
+        password: 'password',
+        refreshPasswordCode: 'refreshPasswordCode',
+        active: 'active',
+        activeCode: 'activeCode',
+        token: 'token',
+        tokenType: 'tipoToken',
+        tokenValidate: 'tokenValidate',
+      },
+      ACL: {
+        group: {
+          entityName: 'UserGroup',
+          prop: {
+            name: 'name'
+          }
+        },
+        permission: {
+          entityName: 'Permission',
+          prop: {
+            allow: 'allow',
+          },
+        },
+        resource: {
+          entityName: 'Resource',
+          prop: {
+            method: 'method',
+            name: 'name',
+          }
+        }
+      },
     } as Partial<AuthConfigType>)
   }
 }

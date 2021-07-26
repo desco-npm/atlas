@@ -26,16 +26,16 @@ class Server {
     // Set settings
     this.Config.set(config)
 
+    // Configure the core
+    this.Core.use(cors()) // Treat the CORS
+    this.Core.use(bodyParser.urlencoded(this.Config.get('queryString'))) // Recognize QueryString
+    this.Core.use(bodyParser.json(this.Config.get('body'))) // Recognize Body
+
     return this
   }
 
   /** Prepares the server */
   async prepare (): Promise<void> {
-    // configure the core
-    this.Core.use(cors()) // Treat the CORS
-    this.Core.use(bodyParser.urlencoded(this.Config.get('queryString'))) // Recognize QueryString
-    this.Core.use(bodyParser.json(this.Config.get('body'))) // Recognize Body
-
     // Run all routers
     this.Config.get('router').map(router => {
       router(({ Express: this.Core, } as ServerRouterParams))

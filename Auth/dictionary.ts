@@ -20,6 +20,9 @@ export default {
     REST_ERROR_LOGOUT_USER_NOT_FOUND: 'User not found',
     REST_ERROR_LOGOUT_SAVE_ERROR: 'Error logging out',
     REST_ERROR_LOGOUT_WITHOUT_TOKEN: 'No token entered',
+    REST_ERROR_ACCESS_WITHOUT_TOKEN: 'No token entered',
+    REST_ERROR_ACCESS_INVALID_TOKEN: 'The token entered is not valid',
+    REST_ERROR_ACCESS_RESTRICT: 'User does not have permission to access requested resource',
   },
   ptbr: {
     REST_ERROR_USER_ALREADY_EXISTS: 'Usuário já existe',
@@ -37,5 +40,8 @@ export default {
     REST_ERROR_LOGOUT_USER_NOT_FOUND: 'Usuário não encontrado',
     REST_ERROR_LOGOUT_SAVE_ERROR: 'Erro ao deslogar',
     REST_ERROR_LOGOUT_WITHOUT_TOKEN: 'Não foi informado um token',
+    REST_ERROR_ACCESS_WITHOUT_TOKEN: 'Não foi informado um token',
+    REST_ERROR_ACCESS_INVALID_TOKEN: 'O token informado não é valido',
+    REST_ERROR_ACCESS_RESTRICT: 'Usuário não possui permissão para acessar o recurso solicitado',
   },
 } as Dictionary

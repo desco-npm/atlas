@@ -4,89 +4,130 @@ import { Contact, } from '../Mail/types'
 /** Format of activation codes and password recovery */
 export type AuthCodeConfig = {
   /** Code size */
-  length?: Number,
+  length?: number,
   /** Code type */
   type?: (
-    'alphanumeric' | 'numeric' | 'upper' | 'lower' | 'uppernumeric' | 'lowernumeric' | String
+    'alphanumeric' | 'numeric' | 'upper' | 'lower' | 'uppernumeric' | 'lowernumeric' | string
   ),
 }
 
 /** Names of the properties of the entity responsible for the users */
 export type AuthPropConfig = {
-  login?: String,
-  email?: String,
-  password?: String,
-  token?: String,
-  tokenValidate?: String,
-  tokenType?: String,
-  active?: String,
-  activeCode?: String,
-  refreshPasswordCode?: String,
+  login?: string,
+  email?: string,
+  password?: string,
+  token?: string,
+  tokenValidate?: string,
+  tokenType?: string,
+  active?: string,
+  activeCode?: string,
+  refreshPasswordCode?: string,
 }
 
 /** Names of routes responsible for authentication */
 export type AuthRoutesConfig = {
-  register?: String,
-  login?: String,
-  sendActiveCode?: String,
-  active?: String,
-  sendRefreshPasswordCode?: String,
-  refreshPassword?: String,
-  logout?: String,
+  register?: string,
+  login?: string,
+  sendActiveCode?: string,
+  active?: string,
+  sendRefreshPasswordCode?: string,
+  refreshPassword?: string,
+  logout?: string,
 }
 
 /** Data from emails to be sent by Auth */
 export type AuthMailConfig = {
   /** Which carrier to use */
-  transporter?: String,
+  transporter?: string,
   /* Sender */
   from: Contact,
   /** Account Activation Email */
   activeCode?: {
     /** Subject  */
-    subject?: String,
+    subject?: string,
     /** Content without HTML */
-    text?: String,
+    text?: string,
     /** Content HTML */
-    html?: String,
+    html?: string,
   }
   /** Account Activation Email */
   refreshPasswordCode?: {
     /** Subject  */
-    subject?: String,
+    subject?: string,
     /** Content without HTML */
-    text?: String,
+    text?: string,
     /** Content HTML */
-    html?: String,
+    html?: string,
   },
 }
 
 /** Auth Encryption Hash Settings */
 export type AuthHashConfig = {
   /** Hash Key/Secret */
-  key: String,
+  key: string,
   /** Algorism to be used in the Hash */
-  algorithm?: String,
+  algorithm?: string,
+}
+
+/** Auth ACL Group Props Settings */
+export type AuthACLGroupPropConfig = {
+  name?: string,
+}
+
+/** Auth ACL Group Settings */
+export type AuthACLGroupConfig = {
+  entityName?: string,
+  prop?: AuthACLGroupPropConfig,
+}
+
+/** Auth ACL User Props Settings */
+export type AuthACLPermissionPropConfig = {
+  allow: string,
+}
+
+/** Auth ACL User Settings */
+export type AuthACLPermissionConfig = {
+  entityName?: string,
+  prop?: AuthACLPermissionPropConfig,
+}
+
+/** Auth ACL Resource Props Settings */
+export type AuthACLResourcePropConfig = {
+  name: string,
+  method: string,
+}
+
+/** Auth ACL Resource Settings */
+export type AuthACLResourceConfig = {
+  entityName?: string,
+  prop?: AuthACLResourcePropConfig,
+}
+
+/** Auth ACL Settings */
+export type AuthACLConfig = {
+  group?: AuthACLGroupConfig,
+  permission?: AuthACLPermissionConfig,
+  resource?: AuthACLResourceConfig,
 }
 
 /** Auth Settings Type */
 export type AuthConfig = {
   /** Properties to be returned on register */
-  registerReturnTokenProps?: String[],
+  registerReturnTokenProps?: string[],
   /** Properties to be returned on login */
-  loginReturnProps?: String[],
+  loginReturnProps?: string[],
   /** Properties to be returned on token login */
-  loginReturnTokenProps?: String[],
+  loginReturnTokenProps?: string[],
   /** Properties to be returned on active */
-  activeReturnProps?: String[],
+  activeReturnProps?: string[],
   /** Properties to be returned on active */
-  refreshPasswordReturnProps?: String[],
+  refreshPasswordReturnProps?: string[],
   /** Format of activation codes and password recovery */
   code?: AuthCodeConfig,
   /** Name of connection responsible for users */
-  connectionName?: String,
+  connectionName?: string,
   /** Name of the entity responsible for the users */
-  entityName: String,
+  entityName: string,
   /** Names of the properties of the entity responsible for the users */
   prop?: AuthPropConfig,
   /** Names of routes responsible for authentication */
@@ -95,4 +136,8 @@ export type AuthConfig = {
   mail: AuthMailConfig,
   /** Auth Encryption Hash Settings */
   hash: AuthHashConfig,
+  /** ACL Settings */
+  ACL?: AuthACLConfig,
+  /** Default group for unauthenticated users */
+  publicGroup?: string,
 }

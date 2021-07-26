@@ -1,8 +1,14 @@
+/** TODO: Colocar Pattern de URL em método próprio pois esta repetido em dois métodos */
+
 // Framework resources
 import randomString from '../lib/randomString'
 import replaceAll from '../lib/replaceAll'
 import objectFilter from '../lib/objectFilter'
 import jsonWebToken from '../lib/jsonWebToken'
+import urlPattern from '../lib/urlPattern'
+import inflection from '../lib/inflection'
+import isArray from '../lib/isArray'
+import moment from '../lib/moment'
 
 // Framework Modules
 import Server from '../Server'
@@ -13,6 +19,7 @@ import REST from '../REST'
 // Types
 import { AuthConfig as AuthConfig, } from './types'
 import { ServerRouterParams, } from '../Server/types'
+import { Connection, } from '../ORM/types'
 
 // Necessary parts
 import ModuleConfig from './Config'
@@ -24,14 +31,20 @@ class Auth {
   /** Auth Settings */
   public Config = ModuleConfig
 
-  /** Name of the entity responsible for the users */
-  public connectionName: string
+  /** Connection responsible for the Auth */
+  public Connection: Connection | undefined
 
-  /** Name of connection responsible for users */
+  /** Name of entity responsible for users */
   public entityName: string
+
+  /** Name of entity responsible for resources */
+  public resourceEntity: string
 
   /* Users Repository */
   public UserRepository: any
+
+  /* Resource Repository */
+  public ResourceRepository: any
 
   /**
    * Configures the Auth
@@ -47,9 +60,56 @@ class Auth {
 
   /** Prepares the Auth */
   async prepare (): Promise<void> {
-    this.connectionName = ModuleConfig.get('connectionName')
+    this.Connection = ORM.getConnection(ModuleConfig.get('connectionName'))
     this.entityName = ModuleConfig.get('entityName')
-    this.UserRepository = ORM.getConnection(this.connectionName)?.getRepository(this.entityName)
+    this.resourceEntity = ModuleConfig.get('ACL.resource.entityName')
+    this.UserRepository = this.Connection?.getRepository(this.entityName)
+    this.ResourceRepository = this.Connection?.getRepository(this.resourceEntity)
+
+    // Add middleware
+    Server.Core.use(async (req, res, next): Promise<void> => {
+      // If current resource is public
+      const publicResource = await this.isPublicResource(req.url, req.method)
+
+      // If the route is public, release
+      if (publicResource) {
+        next()
+
+        return
+      }
+
+      // No token, returns error
+      if (!req.headers.authorization) {
+        REST.getError('ACCESS_WITHOUT_TOKEN', dictionary).catch(e => {
+          res.status(401).json(e)
+        })
+        
+        return
+      }
+
+      // Retrieve user by Token
+      const user: any = await this.getUserByToken(req.headers.authorization)
+
+      // If not found user, token is invalid. Inform
+      if(!user) {
+        REST.getError('ACCESS_INVALID_TOKEN', dictionary).catch(e => {
+          res.status(403).json(e)
+        })
+
+        return
+      }
+
+      // If user does not have permission for the requested resource, inform
+      if (!await this.resourcePermissionByUser(user, req.url, req.method)) {
+        REST.getError('ACCESS_RESTRICT', dictionary).catch(e => {
+          res.status(403).json(e)
+        })
+
+        return
+      }
+
+      next()
+    })
 
     // Add routes
     routes({ Express: Server.Core, } as ServerRouterParams)
@@ -217,7 +277,7 @@ class Auth {
    * 
    * @param user User data to have password recovered
    */
-   async login (user: any): Promise<any> {
+  async login (user: any): Promise<any> {
      // Retrieve settings
      const loginReturnProps = this.Config.get('loginReturnProps')
      const loginReturnTokenProps = this.Config.get('loginReturnTokenProps')
@@ -240,7 +300,10 @@ class Auth {
 
     // Generate a token
     bdUser[token] = jsonWebToken.sign(
-      objectFilter(bdUser, (v, k) => loginReturnTokenProps.indexOf(k) !== -1),
+      {
+        ...objectFilter(bdUser, (v, k) => loginReturnTokenProps.indexOf(k) !== -1),
+        time: moment().format(),
+      },
       key,
       { algorithm, }
     )
@@ -261,7 +324,7 @@ class Auth {
    * 
    * @param user User data to be active
    */
-    async refreshPassword (user: any): Promise<any> {
+  async refreshPassword (user: any): Promise<any> {
     // Retrieve settings
     const refreshPasswordReturnProps = this.Config.get('refreshPasswordReturnProps')
     const { refreshPasswordCode, email, password, } = this.Config.get('prop')
@@ -297,34 +360,187 @@ class Auth {
    * 
    * @param userToken the user's token
    */
-    async logout (userToken: string | undefined): Promise<any> {
-      // If not passed token, returns with error
-      if (!userToken) {
-        return REST.getError('LOGOUT_WITHOUT_TOKEN', dictionary, {})
+  async logout (userToken: string | undefined): Promise<any> {
+    // If not passed token, returns with error
+    if (!userToken) {
+      return REST.getError('LOGOUT_WITHOUT_TOKEN', dictionary, {})
+    }
+
+    // Retrieve settings
+    const refreshPasswordReturnProps = this.Config.get('refreshPasswordReturnProps')
+    const { refreshPasswordCode, email, password, token, } = this.Config.get('prop')
+
+    // User search
+    let user = await this.getUserByToken(userToken)
+
+    // If there was an error, reject
+    if(!user) {
+      return REST.getError('LOGOUT_USER_NOT_FOUND', dictionary, {})
+    }
+
+    // Erase token
+    user[token] = null
+
+    // Save changes
+    try {
+      await this.UserRepository.save(user)
+    }
+    catch(e) {
+      return REST.getError('LOGOUT_SAVE_ERROR', dictionary, { error: e, })
+    }
+  }
+
+  /** Get user by Token */
+  private getUserByToken (userToken: string | undefined): Promise<object> {
+    /** Name of the property containing the token */
+    const { token, } = this.Config.get('prop')
+
+    /** Name of the userGroup entity in the relationship */
+    const userGroupEntity = inflection.pluralize(this.Config.get('ACL.group.entityName'))
+
+    // Search and return
+    return this.UserRepository.findOne({
+      where: { [token]: userToken?.split(' ')[1], },
+      relations: [ userGroupEntity, ]
+    })
+  }
+
+  /**
+   * Returns if a resource is public
+   * 
+   * @param resource The name of the resource
+   * @param method The method used in the resource
+   */
+   async isPublicResource (resource: string, method: string): Promise<boolean> {
+     const publicGroupId = this.Config.get('publicGroup')
+
+     return await this.resourcePermissionByUserGroup(resource, method, publicGroupId) === true
+   }
+
+  /**
+   * Returns if a resource is released for a group
+   * 
+   * @param resourceName The name of the resource
+   * @param method The method used in the resource
+   * @param userGroupId Group id
+   */
+   async resourcePermissionByUserGroup (
+    resourceName: string, method: string, userGroupId: string | string[]
+    ): Promise<boolean | null> {
+      // Name of the permission entity in the relationship
+      const permissionEntity = inflection.pluralize(this.Config.get('ACL.permission.entityName'))
+
+      // Name of the userGroup entity in the relationship
+      const userGroupEntity = this.Config.get('ACL.group.entityName')
+
+      // Release property name
+      const allowProp = this.Config.get('ACL.permission.prop.allow')
+
+      // turning id into array
+      userGroupId = isArray(userGroupId) ? userGroupId : [ userGroupId, ] as string[]
+
+      // Search for features and permissions
+      const resources = (await this.ResourceRepository.find({
+        where: {
+          [this.Config.get('ACL.resource.prop.method')]: method,
+        },
+        relations: [ permissionEntity, `${permissionEntity}.${userGroupEntity}`],
+      }))
+        /** TODO: Aprender a mover a verificação de grupo para o método find do TypeORM */
+        .filter(i => {
+          return i[permissionEntity].filter(p => {
+            return userGroupId.indexOf(p[userGroupEntity]?.id) !== -1
+          }).length > 0
+        })
+
+      // Capture the appropriate resource
+      const resource = resources.filter(i => {
+        const url = new urlPattern(i.name)
+
+        return url.match(resourceName) !== null
+      })[0]
+
+      // If you can't find permission, use the default
+      if (!resource) {
+        return null
       }
 
-      // Retrieve settings
-      const refreshPasswordReturnProps = this.Config.get('refreshPasswordReturnProps')
-      const { refreshPasswordCode, email, password, token, } = this.Config.get('prop')
+      // Capture release and restriction permissions
+      const allow = resource[permissionEntity].filter(i => i[allowProp] === true).length > 0
+      const deny = resource[permissionEntity].filter(i => i[allowProp] === false).length > 0
 
-      // User search
-      let user = await this.UserRepository.findOne({ [token]: userToken.split(' ')[1], })
+      // If denying, return true
+      // Otherwise, if releasing, returns false
+      // If nothing, return default null
+      if (deny) return false
+      else if (allow) return true
+      else return null
+   }
 
-      // If there was an error, reject
-      if(!user) {
-        return REST.getError('LOGOUT_USER_NOT_FOUND', dictionary, {})
+  /**
+   * Returns if a resource is released for a user
+   * 
+   * @param user The user id
+   * @param resourceName The name of the resource
+   * @param method The method used in the resource
+   */
+   async resourcePermissionByUser (
+    user: any, resourceName: string, method: string
+    ): Promise<boolean | null> {
+      /** Name of the user entity in the relationship */
+      const userEntity = this.Config.get('entityName')
+
+      /** Name of the userGroup entity in the relationship */
+      const userGroupEntity = inflection.pluralize(this.Config.get('ACL.group.entityName'))
+
+      // Name of the permission entity in the relationship
+      const permissionEntity = inflection.pluralize(this.Config.get('ACL.permission.entityName'))
+
+      // Release property name
+      const allowProp = this.Config.get('ACL.permission.prop.allow')
+      
+      // Search for features and permissions
+      const resources = (await this.ResourceRepository.find({
+        where: {
+          [this.Config.get('ACL.resource.prop.method')]: method,
+        },
+        relations: [ permissionEntity, `${permissionEntity}.${userEntity}`],
+      }))
+        /** TODO: Aprender a mover a verificação de grupo para o método find do TypeORM */
+        .filter(i => {
+          return i[permissionEntity].filter(p => {
+            return user.id === p[userEntity].id
+          }).length > 0
+        })
+
+      // Capture the appropriate resource
+      const resource = resources.filter(i => {
+        const url = new urlPattern(i.name)
+
+        return url.match(resourceName) !== null
+      })[0]
+
+      // If you can't find permission, use the default
+      if (!resource) {
+        return null
       }
 
-      // Erase token
-      user[token] = null
+      // Capture release and restriction permissions
+      const allow = resource[permissionEntity].filter(i => i[allowProp] === true).length > 0
+      const deny = resource[permissionEntity].filter(i => i[allowProp] === false).length > 0
 
-      // Save changes
-      try {
-        await this.UserRepository.save(user)
-      }
-      catch(e) {
-        return REST.getError('LOGOUT_SAVE_ERROR', dictionary, { error: e, })
-      }
+      // If denying, return true
+      // Otherwise, if releasing, returns false
+      // If nothing, return default null
+      if (deny) return false
+      else if (allow) return true
+
+      // Returns if you have permission in any of the groups
+      return this.resourcePermissionByUserGroup(
+        resourceName,
+        method,
+        user[userGroupEntity].map(i => i.id)
+      )
     }
 }
 

@@ -1,12 +1,12 @@
 /** AtlasJS ORM Module Settings */
 export type RESTConfig = {
-  details: Boolean,
+  details: boolean,
 }
 
 /** AtlasJS REST getError Options Method Options **/
 export type RESTGetErrorOptions = {
   // Requisition status number
-  readonly statusCode?: Number,
+  readonly statusCode?: number,
   /** What information adds to the dynamic parts of the message */
   readonly bind?: {},
   /** The original error */
@@ -16,11 +16,11 @@ export type RESTGetErrorOptions = {
 /** AtlasJS REST getError Options Method Options **/
 export type RESTError = {
   // Requisition status number
-  readonly statusCode: Number,
+  readonly statusCode: number,
   /** Error id */
-  readonly errorId: String,
+  readonly errorId: string,
   /** Error message */
-  readonly message: String,
+  readonly message: string,
   /** Error Details */
   readonly details?: {},
 }

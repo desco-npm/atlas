@@ -1,5 +1,5 @@
 // Framework resources
-import { createConnection, getConnection, } from '../lib/TypeORM'
+import { createConnection, getConnection, Repository, } from '../lib/TypeORM'
 import 'reflect-metadata'
 
 // Framework Modules
@@ -49,14 +49,26 @@ class ORM {
   /**
    * Gets connection from the connection manager.
    * If connection name wasn't specified, then "default" connection will be retrieved.
+   * 
+   * @param connectionName Connection name. If omitted it will be "default" by default
    */
-  getConnection(connectionName?: string): Connection | undefined {
+  getConnection(connectionName?: string | undefined): Connection | undefined {
     try {
       return getConnection(connectionName)
     }
      catch(e) {
       Exception.discharge('InvalidConnectionName', dictionary, e)
     }
+  }
+
+  /**
+   * Gets repository from the connection.
+   * 
+   * @param entity Entity Name
+   * @param connectionName Connection name. If omitted it will be "default" by default
+   */
+  getRepository(entity: string, connectionName?: string): Repository<any> | undefined {
+    return this.getConnection(connectionName)?.getRepository(entity)
   }
 }
 

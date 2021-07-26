@@ -7,6 +7,6 @@ export type ORMConfig = {
 }
 
 export { Connection, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, } from 'typeorm'
-export { UpdateDateColumn, OneToMany, ManyToOne, } from 'typeorm'
+export { UpdateDateColumn, OneToMany, ManyToOne, ManyToMany, JoinTable, } from 'typeorm'
 export { ConnectionOptions, } from 'typeorm/connection/ConnectionOptions'
 

@@ -5,12 +5,12 @@ import Atlas from '../../'
 import ORM from '../../ORM/'
 
 // Types
-import { ServerRouterParams, } from '../types'
+import { ServerRouterParams, ServerRouterMiximParams, } from '../types'
 
 const defaultScopeRouter = Atlas.defaultScopeRouter
 
 export default (
-  { Express, }: ServerRouterParams, { entity, connection = 'default' }
+  { Express, }: ServerRouterParams, { entity, connection = 'default' }: ServerRouterMiximParams
 ): void => {
   // Prefix of routes
   const prefix = `${defaultScopeRouter}/${entity}`

@@ -33,7 +33,7 @@ class Dictionary {
    * @param dictionary Module Message Dictionary
    * @param options Extra options
    **/
-  get (id: string, dictionary: DictionaryType, options?: DictionaryGetOptions): String {
+  get (id: string, dictionary: DictionaryType, options?: DictionaryGetOptions): string {
     let text = dictionary[this.Config.get('lang')][id]
 
     // Exchange variables by informed values

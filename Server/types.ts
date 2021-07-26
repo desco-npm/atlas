@@ -26,3 +26,12 @@ export type ServerRouterParams = {
   /** Express application */
   readonly Express: ExpressCore.Express,
 }
+
+
+
+/** Parameters of a Mixin route */
+export type ServerRouterMiximParams = { 
+  /** Entity */
+  readonly entity: string,
+  readonly connection?: string
+}
