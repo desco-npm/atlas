@@ -14,11 +14,11 @@ class AuthConfig extends Config {
 
     // Set the default settings
     this.setDefaults({
-      registerReturnTokenProps: [ 'email', ],
-      loginReturnProps: [ 'id', 'token', 'tokenType', ],
-      loginReturnTokenProps: [ 'id', ],
-      activeReturnProps: [ 'id', ],
-      refreshPasswordReturnProps: [ 'id', ],
+      registerReturnProps: [ 'email', ],
+      loginReturnProps: [ 'email', 'token', 'active', ],
+      loginReturnTokenProps: [ 'email', ],
+      sendRefreshPasswordCodeReturnProps: [ 'email', ],
+      refreshPasswordReturnProps: [ 'email', ],
       publicGroup: 'public',
       code: {
         length: 6,

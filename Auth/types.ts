@@ -113,13 +113,13 @@ export type AuthACLConfig = {
 /** Auth Settings Type */
 export type AuthConfig = {
   /** Properties to be returned on register */
-  registerReturnTokenProps?: string[],
+  registerReturnProps?: string[],
   /** Properties to be returned on login */
   loginReturnProps?: string[],
   /** Properties to be returned on token login */
   loginReturnTokenProps?: string[],
-  /** Properties to be returned on active */
-  activeReturnProps?: string[],
+  /** Properties to be returned on send refresh password code */
+  sendRefreshPasswordCodeReturnProps?: string[],
   /** Properties to be returned on active */
   refreshPasswordReturnProps?: string[],
   /** Format of activation codes and password recovery */

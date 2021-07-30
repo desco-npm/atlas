@@ -1,4 +1,8 @@
-/** TODO: Colocar Pattern de URL em método próprio pois esta repetido em dois métodos */
+/**
+ * TODO: Colocar Pattern de URL em método próprio pois esta repetido em dois métodos
+ * TODO: Registro validar confirmação de senha
+ * TODO: Atualização de senha validar confirmação de senha
+ */
 
 // Framework resources
 import randomString from '../lib/randomString'
@@ -25,6 +29,7 @@ import { Connection, } from '../ORM/types'
 import ModuleConfig from './Config'
 import routes from './routes'
 import dictionary from './dictionary'
+import { Console } from 'console'
 
 /** Atlasjs Auth Module */
 class Auth {
@@ -108,6 +113,8 @@ class Auth {
         return
       }
 
+      req.headers.userData = user
+
       next()
     })
 
@@ -127,8 +134,8 @@ class Auth {
   async register (data: Object): Promise<Object> {
     // Retrieve settings
     const { activeCode, } = this.Config.get('prop')
-    const registerReturnTokenProps = ModuleConfig.get('registerReturnTokenProps')
-    
+    const registerReturnProps = ModuleConfig.get('registerReturnProps')
+
     /** Generate activation code */
     const code = randomString(ModuleConfig.get('code.length'), ModuleConfig.get('code.type'))
     
@@ -147,8 +154,8 @@ class Auth {
     await this.sendActiveCodeMail(user)
 
     // Filtering object to return only the desired data
-    user = objectFilter(user, (v, k) => registerReturnTokenProps.indexOf(k) !== -1)
-    
+    user = objectFilter(user, (v, k) => registerReturnProps.indexOf(k) !== -1)
+
     return user
   }
 
@@ -195,7 +202,6 @@ class Auth {
    */
   async active (user: any): Promise<any> {
     // Retrieve settings
-    const activeReturnProps = this.Config.get('activeReturnProps')
     const { active, activeCode, email, } = this.Config.get('prop')
 
     // User search
@@ -221,10 +227,8 @@ class Auth {
       return REST.getError('ACTIVE_USER_ERROR', dictionary, { error: e, })
     }
 
-    // Filtering object to return only the desired data
-    user = objectFilter(user, (v, k) => activeReturnProps.indexOf(k) !== -1)
-
-    return Promise.resolve(user)
+    // Log in and return
+    return this.login(user)
   }
 
   /**
@@ -235,6 +239,7 @@ class Auth {
   async sendRefreshPasswordCode (user: any): Promise<any> {
     // Retrieve settings
     const { email, refreshPasswordCode, } = this.Config.get('prop')
+    const sendRefreshPasswordCodeReturnProps = this.Config.get('sendRefreshPasswordCodeReturnProps')
 
     // user search
     user = await this.UserRepository.findOne({ [email]: user[email], })
@@ -270,6 +275,8 @@ class Auth {
       text: replaceAll(text, '[[CODE]]', user[refreshPasswordCode]),
       html: replaceAll(html, '[[CODE]]', user[refreshPasswordCode]),
     })
+
+    return objectFilter(user, (v, k) => sendRefreshPasswordCodeReturnProps.indexOf(k) !== -1)
   }
 
   /**
@@ -464,11 +471,10 @@ class Auth {
       if (!resource) {
         return null
       }
-
       // Capture release and restriction permissions
       const allow = resource[permissionEntity].filter(i => i[allowProp] === true).length > 0
       const deny = resource[permissionEntity].filter(i => i[allowProp] === false).length > 0
-
+      
       // If denying, return true
       // Otherwise, if releasing, returns false
       // If nothing, return default null
@@ -506,34 +512,32 @@ class Auth {
         },
         relations: [ permissionEntity, `${permissionEntity}.${userEntity}`],
       }))
-        /** TODO: Aprender a mover a verificação de grupo para o método find do TypeORM */
-        .filter(i => {
-          return i[permissionEntity].filter(p => {
-            return user.id === p[userEntity].id
-          }).length > 0
-        })
-
+      
+      /** TODO: Aprender a mover a verificação de usuario para o método find do TypeORM */
+      const userResources = resources.filter(i => {
+        return i[permissionEntity].filter(p => {
+          return user.id === p[userEntity]?.id
+        }).length > 0
+      })
+        
       // Capture the appropriate resource
-      const resource = resources.filter(i => {
+      const userResource = userResources.filter(i => {
         const url = new urlPattern(i.name)
 
         return url.match(resourceName) !== null
       })[0]
 
-      // If you can't find permission, use the default
-      if (!resource) {
-        return null
+      if (userResource) {
+        // Capture release and restriction permissions
+        const allow = userResource[permissionEntity].filter(i => i[allowProp] === true).length > 0
+        const deny = userResource[permissionEntity].filter(i => i[allowProp] === false).length > 0
+  
+        // If denying, return true
+        // Otherwise, if releasing, returns false
+        // If nothing, return default null
+        if (deny) return false
+        else if (allow) return true
       }
-
-      // Capture release and restriction permissions
-      const allow = resource[permissionEntity].filter(i => i[allowProp] === true).length > 0
-      const deny = resource[permissionEntity].filter(i => i[allowProp] === false).length > 0
-
-      // If denying, return true
-      // Otherwise, if releasing, returns false
-      // If nothing, return default null
-      if (deny) return false
-      else if (allow) return true
 
       // Returns if you have permission in any of the groups
       return this.resourcePermissionByUserGroup(
