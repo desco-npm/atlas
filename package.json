@@ -2,10 +2,10 @@
   "name": "@desco/atlas",
   "version": "3.0.0-alpha.1",
   "description": "NodeJS Framework",
-  "main": "index.ts",
+  "main": "js",
   "scripts": {
-    "compile": "tsc",
-    "demo": "cd demo && ts-node-dev index"
+    "build": "tsc",
+    "build:watch": "tsc --watch"
   },
   "repository": {
     "type": "git",

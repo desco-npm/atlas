@@ -32,7 +32,7 @@ class Message {
   /** Write the header */
   header (): void {
     cliHeader({
-      title: 'AtlasJS v' + require('../package.json').version,
+      title: 'AtlasJS v' + require('../../package.json').version,
       size: 29,
       align: 'center',
     })
