@@ -29,7 +29,6 @@ import { Connection, } from '../ORM/types'
 import ModuleConfig from './Config'
 import routes from './routes'
 import dictionary from './dictionary'
-import { Console } from 'console'
 
 /** Atlasjs Auth Module */
 class Auth {
@@ -133,14 +132,7 @@ class Auth {
    */
   async register (data: Object): Promise<Object> {
     // Retrieve settings
-    const { activeCode, } = this.Config.get('prop')
     const registerReturnProps = ModuleConfig.get('registerReturnProps')
-
-    /** Generate activation code */
-    const code = randomString(ModuleConfig.get('code.length'), ModuleConfig.get('code.type'))
-    
-    // Add the code to the request body
-    data[activeCode] = code
 
     try {
       // User register
@@ -184,7 +176,13 @@ class Auth {
     if(user[active]) {
       return REST.getError('SEND_ACTIVE_ALREADY_ACTIVE_USER', dictionary, {})
     }
-    
+
+    // Generate code
+    user[activeCode] = this.generateCode()
+
+    // Save code
+    user = await this.UserRepository.save(user)
+
     // Send mail
     await Mail.transporter(transporter)?.sendMail({
       from: from.name ? `${from.name} <${from.mail}>` : from.mail,
@@ -250,9 +248,7 @@ class Auth {
     }
 
     /** Generate recover password code */
-    user[refreshPasswordCode] = (
-      randomString(ModuleConfig.get('code.length'), ModuleConfig.get('code.type'))
-    )
+    user[refreshPasswordCode] = this.generateCode()
 
     // Save password recovery code
     try {
@@ -545,6 +541,11 @@ class Auth {
         method,
         user[userGroupEntity].map(i => i.id)
       )
+    }
+
+    /** Create and return a code */
+    private generateCode (): string {
+      return randomString(ModuleConfig.get('code.length'), ModuleConfig.get('code.type'))
     }
 }
 
