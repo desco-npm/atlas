@@ -5,6 +5,4 @@
 
   NPM: https://www.npmjs.com/package/platform-is
 */
-export { isLinux, isMac, isWindows } from 'platform-is'
-
-export default { isLinux, isMac, isLinux, }
+export * from 'platform-is'
