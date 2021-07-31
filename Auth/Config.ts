@@ -18,7 +18,7 @@ class AuthConfig extends Config {
       loginReturnProps: [ 'email', 'token', 'active', ],
       loginReturnTokenProps: [ 'email', ],
       sendRefreshPasswordCodeReturnProps: [ 'email', ],
-      refreshPasswordReturnProps: [ 'email', ],
+      refreshPasswordReturnProps: [ 'email', 'token', ],
       publicGroup: 'public',
       code: {
         length: 6,

@@ -330,7 +330,7 @@ class Auth {
   async refreshPassword (user: any): Promise<any> {
     // Retrieve settings
     const refreshPasswordReturnProps = this.Config.get('refreshPasswordReturnProps')
-    const { refreshPasswordCode, email, password, } = this.Config.get('prop')
+    const { refreshPasswordCode, email, password, token, } = this.Config.get('prop')
 
     // User search
     let bdUser = await this.UserRepository.findOne({ [email]: user[email], })
@@ -351,6 +351,12 @@ class Auth {
     catch(e) {
       return REST.getError('REFRESH_PASSWORD_SAVE_ERROR', dictionary, { error: e, })
     }
+
+    // Login
+    const loginUser = await this.login(bdUser)
+
+    // Get token
+    bdUser[token] = loginUser[token] 
 
     // Filtering object to return only the desired data
     bdUser = objectFilter(bdUser, (v, k) => refreshPasswordReturnProps.indexOf(k) !== -1)
