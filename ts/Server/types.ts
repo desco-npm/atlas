@@ -19,6 +19,8 @@ export type ServerConfig = {
   readonly body?: OptionsJson,
   /** Router function */
   readonly router: ((params: ServerRouterParams) => void)[]
+  /** Directory or directory list with static content */
+  readonly staticDir: string | string[],
 }
 
 /** Parameters of a route */

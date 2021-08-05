@@ -43,6 +43,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var cors_1 = __importDefault(require("cors"));
 var body_parser_1 = __importDefault(require("body-parser"));
+var isArray_1 = __importDefault(require("../lib/isArray"));
 // Necessary parts
 var Config_1 = __importDefault(require("./Config"));
 /** Atlasjs Server Module */
@@ -59,12 +60,20 @@ var Server = /** @class */ (function () {
      * @param config Configures the AtlasJS Server Module
      */
     Server.prototype.config = function (config) {
+        var _this = this;
         // Set settings
         this.Config.set(config);
         // Configure the core
         this.Core.use(cors_1.default()); // Treat the CORS
         this.Core.use(body_parser_1.default.urlencoded(this.Config.get('queryString'))); // Recognize QueryString
         this.Core.use(body_parser_1.default.json(this.Config.get('body'))); // Recognize Body
+        /** Directory or directory list with static content */
+        var staticDir = this.Config.get('staticDir');
+        // If you have static directories, define them
+        if (staticDir) {
+            staticDir = !isArray_1.default(staticDir) ? [staticDir,] : staticDir;
+            staticDir.map(function (d) { return _this.Core.use(express_1.default.static(d)); });
+        }
         return this;
     };
     /** Prepares the server */
