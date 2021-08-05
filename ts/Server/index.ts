@@ -2,6 +2,7 @@
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import isArray from '../lib/isArray'
 
 // Types
 import { ServerConfig, ServerRouterParams, } from './types'
@@ -30,6 +31,15 @@ class Server {
     this.Core.use(cors()) // Treat the CORS
     this.Core.use(bodyParser.urlencoded(this.Config.get('queryString'))) // Recognize QueryString
     this.Core.use(bodyParser.json(this.Config.get('body'))) // Recognize Body
+
+    /** Directory or directory list with static content */
+    let staticDir = this.Config.get('staticDir')
+
+    // If you have static directories, define them
+    if (staticDir) {
+      staticDir = !isArray(staticDir) ? [ staticDir, ] : staticDir
+      staticDir.map(d => this.Core.use(express.static(d)))
+    }
 
     return this
   }
