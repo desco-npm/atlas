@@ -503,13 +503,17 @@ var Auth = /** @class */ (function () {
     };
     /** Get user by Token */
     Auth.prototype.getUserByToken = function (userToken) {
-        var _a;
-        /** Name of the property containing the token */
-        var token = this.Config.get('user.prop').token;
-        // Search and return
-        return this.UserRepository.findOne({
-            where: (_a = {}, _a[token] = userToken === null || userToken === void 0 ? void 0 : userToken.split(' ')[1], _a),
-            relations: [this.groupEntityName,]
+        return __awaiter(this, void 0, void 0, function () {
+            var token;
+            var _a;
+            return __generator(this, function (_b) {
+                token = this.Config.get('user.prop').token;
+                // Search and return
+                return [2 /*return*/, this.UserRepository.findOne({
+                        where: (_a = {}, _a[token] = userToken === null || userToken === void 0 ? void 0 : userToken.split(' ')[1], _a),
+                        relations: [inflection_1.default.pluralize(this.groupEntityName),]
+                    })];
+            });
         });
     };
     /**

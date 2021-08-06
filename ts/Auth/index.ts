@@ -82,14 +82,14 @@ class Auth {
     Server.Core.use(async (req, res, next): Promise<void> => {
       // If current resource is public
       const publicResource = await this.isPublicResource(req.url, req.method)
-
+      
       // If the route is public, release
       if (publicResource) {
         next()
-
+        
         return
       }
-
+      
       // No token, returns error
       if (!req.headers.authorization) {
         REST.getError('ACCESS_WITHOUT_TOKEN', dictionary).catch(e => {
@@ -408,14 +408,14 @@ class Auth {
   }
 
   /** Get user by Token */
-  private getUserByToken (userToken: string | undefined): Promise<object> {
+  private async getUserByToken (userToken: string | undefined): Promise<object> {
     /** Name of the property containing the token */
     const { token, } = this.Config.get('user.prop')
 
     // Search and return
     return this.UserRepository.findOne({
       where: { [token]: userToken?.split(' ')[1], },
-      relations: [ this.groupEntityName, ]
+      relations: [ inflection.pluralize(this.groupEntityName), ]
     })
   }
 
