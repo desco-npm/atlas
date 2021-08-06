@@ -97,9 +97,9 @@ var Auth = /** @class */ (function () {
             return __generator(this, function (_c) {
                 this.Connection = ORM_1.default.getConnection(Config_1.default.get('connectionName'));
                 this.userEntityName = Config_1.default.get('user.entityName');
-                this.groupEntityName = Config_1.default.get('ACL.group.entityName');
-                this.resourceEntityName = Config_1.default.get('ACL.resource.entityName');
-                this.permissionEntityName = Config_1.default.get('ACL.permission.entityName');
+                this.groupEntityName = Config_1.default.get('group.entityName');
+                this.resourceEntityName = Config_1.default.get('resource.entityName');
+                this.permissionEntityName = Config_1.default.get('permission.entityName');
                 this.UserRepository = (_a = this.Connection) === null || _a === void 0 ? void 0 : _a.getRepository(this.userEntityName);
                 this.ResourceRepository = (_b = this.Connection) === null || _b === void 0 ? void 0 : _b.getRepository(this.resourceEntityName);
                 // Add middleware
@@ -524,7 +524,7 @@ var Auth = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        publicGroupId = this.Config.get('publicGroup');
+                        publicGroupId = this.Config.get('group.publicId');
                         return [4 /*yield*/, this.resourcePermissionByUserGroup(resource, method, publicGroupId)];
                     case 1: return [2 /*return*/, (_a.sent()) === true];
                 }
@@ -547,12 +547,12 @@ var Auth = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         permissionEntity = inflection_1.default.pluralize(this.permissionEntityName);
-                        allowProp = this.Config.get('ACL.permission.prop.allow');
+                        allowProp = this.Config.get('permission.prop.allow');
                         // turning id into array
                         userGroupId = isArray_1.default(userGroupId) ? userGroupId : [userGroupId,];
                         return [4 /*yield*/, this.ResourceRepository.find({
                                 where: (_a = {},
-                                    _a[this.Config.get('ACL.resource.prop.method')] = method,
+                                    _a[this.Config.get('resource.prop.method')] = method,
                                     _a),
                                 relations: [permissionEntity, permissionEntity + "." + this.groupEntityName],
                             })];
@@ -606,10 +606,10 @@ var Auth = /** @class */ (function () {
                     case 0:
                         userGroupEntity = inflection_1.default.pluralize(this.groupEntityName);
                         permissionEntity = inflection_1.default.pluralize(this.permissionEntityName);
-                        allowProp = this.Config.get('ACL.permission.prop.allow');
+                        allowProp = this.Config.get('permission.prop.allow');
                         return [4 /*yield*/, this.ResourceRepository.find({
                                 where: (_a = {},
-                                    _a[this.Config.get('ACL.resource.prop.method')] = method,
+                                    _a[this.Config.get('resource.prop.method')] = method,
                                     _a),
                                 relations: [permissionEntity, permissionEntity + "." + this.userEntityName],
                             })];

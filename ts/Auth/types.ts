@@ -23,6 +23,8 @@ export type AuthUserConfig = {
 export type AuthGroupConfig = {
   /** Name of the entity responsible for the groups */
   entityName: string,
+  /** Default group for unauthenticated users */
+  publicId: string,
   /** Names of the properties of the entity responsible for the groups */
   prop: {
     name?: string,
@@ -39,7 +41,7 @@ export type AuthPermissionConfig = {
   }
 }
 
-/** Auth Permission Settings */
+/** Auth Resource Settings */
 export type AuthResourceConfig = {
   /** Name of the entity responsible for the resources */
   entityName: string,
@@ -105,13 +107,6 @@ export type AuthHashConfig = {
   algorithm?: string,
 }
 
-/** Auth ACL Settings */
-export type AuthACLConfig = {
-  group?: AuthGroupConfig,
-  permission?: AuthPermissionConfig,
-  resource?: AuthResourceConfig,
-}
-
 /** Auth Settings Type */
 export type AuthConfig = {
   /** Properties to be returned on register */
@@ -128,17 +123,18 @@ export type AuthConfig = {
   code?: AuthCodeConfig,
   /** Name of connection responsible for users */
   connectionName?: string,
+  /** Auth User Settings */
   user: AuthUserConfig,
-  /** Names of the properties of the entity responsible for the users */
-  prop?: AuthUserConfig,
+  /** Auth Group Settings */
+  group?: AuthGroupConfig,
+  /** Auth Permission Settings */
+  permission?: AuthPermissionConfig,
+  /** Auth Resource Settings */
+  resource?: AuthResourceConfig,
   /** Names of routes responsible for authentication */
   routes?: AuthRoutesConfig,
   /** Data from emails to be sent by Auth */
   mail: AuthMailConfig,
   /** Auth Encryption Hash Settings */
   hash: AuthHashConfig,
-  /** ACL Settings */
-  ACL?: AuthACLConfig,
-  /** Default group for unauthenticated users */
-  publicGroup?: string,
 }

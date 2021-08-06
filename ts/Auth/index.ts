@@ -72,9 +72,9 @@ class Auth {
   async prepare (): Promise<void> {
     this.Connection = ORM.getConnection(ModuleConfig.get('connectionName'))
     this.userEntityName = ModuleConfig.get('user.entityName')
-    this.groupEntityName = ModuleConfig.get('ACL.group.entityName')
-    this.resourceEntityName = ModuleConfig.get('ACL.resource.entityName')
-    this.permissionEntityName = ModuleConfig.get('ACL.permission.entityName')
+    this.groupEntityName = ModuleConfig.get('group.entityName')
+    this.resourceEntityName = ModuleConfig.get('resource.entityName')
+    this.permissionEntityName = ModuleConfig.get('permission.entityName')
     this.UserRepository = this.Connection?.getRepository(this.userEntityName)
     this.ResourceRepository = this.Connection?.getRepository(this.resourceEntityName)
 
@@ -426,7 +426,7 @@ class Auth {
    * @param method The method used in the resource
    */
    async isPublicResource (resource: string, method: string): Promise<boolean> {
-     const publicGroupId = this.Config.get('publicGroup')
+     const publicGroupId = this.Config.get('group.publicId')
 
      return await this.resourcePermissionByUserGroup(resource, method, publicGroupId) === true
    }
@@ -445,7 +445,7 @@ class Auth {
       const permissionEntity = inflection.pluralize(this.permissionEntityName)
 
       // Release property name
-      const allowProp = this.Config.get('ACL.permission.prop.allow')
+      const allowProp = this.Config.get('permission.prop.allow')
 
       // turning id into array
       userGroupId = isArray(userGroupId) ? userGroupId : [ userGroupId, ] as string[]
@@ -453,7 +453,7 @@ class Auth {
       // Search for features and permissions
       const resources = (await this.ResourceRepository.find({
         where: {
-          [this.Config.get('ACL.resource.prop.method')]: method,
+          [this.Config.get('resource.prop.method')]: method,
         },
         relations: [ permissionEntity, `${permissionEntity}.${this.groupEntityName}`],
       }))
@@ -504,12 +504,12 @@ class Auth {
       const permissionEntity = inflection.pluralize(this.permissionEntityName)
 
       // Release property name
-      const allowProp = this.Config.get('ACL.permission.prop.allow')
+      const allowProp = this.Config.get('permission.prop.allow')
       
       // Search for features and permissions
       const resources = (await this.ResourceRepository.find({
         where: {
-          [this.Config.get('ACL.resource.prop.method')]: method,
+          [this.Config.get('resource.prop.method')]: method,
         },
         relations: [ permissionEntity, `${permissionEntity}.${this.userEntityName}`],
       }))

@@ -19,7 +19,6 @@ class AuthConfig extends Config {
       loginReturnTokenProps: [ 'email', ],
       sendRefreshPasswordCodeReturnProps: [ 'email', ],
       refreshPasswordReturnProps: [ 'email', 'token', ],
-      publicGroup: 'public',
       code: {
         length: 6,
         type: 'uppernumeric',
@@ -64,25 +63,23 @@ class AuthConfig extends Config {
           tokenValidate: 'tokenValidate',
         },
       },
-      ACL: {
-        group: {
-          entityName: 'UserGroup',
-          prop: {
-            name: 'name'
-          }
+      group: {
+        entityName: 'UserGroup',
+        prop: {
+          name: 'name'
+        }
+      },
+      permission: {
+        entityName: 'Permission',
+        prop: {
+          allow: 'allow',
         },
-        permission: {
-          entityName: 'Permission',
-          prop: {
-            allow: 'allow',
-          },
-        },
-        resource: {
-          entityName: 'Resource',
-          prop: {
-            method: 'method',
-            name: 'name',
-          }
+      },
+      resource: {
+        entityName: 'Resource',
+        prop: {
+          method: 'method',
+          name: 'name',
         }
       },
     } as Partial<AuthConfigType>)
