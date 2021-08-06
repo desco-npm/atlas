@@ -50,17 +50,19 @@ class AuthConfig extends Config {
       hash: {
         algorithm: 'HS256',
       } as Partial<AuthHashConfig>,
-      entityName: 'User',
-      prop: {
-        login: 'email',
-        email: 'email',
-        password: 'password',
-        refreshPasswordCode: 'refreshPasswordCode',
-        active: 'active',
-        activeCode: 'activeCode',
-        token: 'token',
-        tokenType: 'tipoToken',
-        tokenValidate: 'tokenValidate',
+      user: {
+        entityName: 'User',
+        prop: {
+          login: 'email',
+          email: 'email',
+          password: 'password',
+          refreshPasswordCode: 'refreshPasswordCode',
+          active: 'active',
+          activeCode: 'activeCode',
+          token: 'token',
+          tokenType: 'tipoToken',
+          tokenValidate: 'tokenValidate',
+        },
       },
       ACL: {
         group: {

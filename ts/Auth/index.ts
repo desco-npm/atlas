@@ -39,10 +39,16 @@ class Auth {
   public Connection: Connection | undefined
 
   /** Name of entity responsible for users */
-  public entityName: string
+  public userEntityName: string
+
+  /** Name of entity responsible for groups */
+  public groupEntityName: string
 
   /** Name of entity responsible for resources */
-  public resourceEntity: string
+  public resourceEntityName: string
+
+  /** Name of entity responsible for permissions */
+  public permissionEntityName: string
 
   /* Users Repository */
   public UserRepository: any
@@ -65,10 +71,12 @@ class Auth {
   /** Prepares the Auth */
   async prepare (): Promise<void> {
     this.Connection = ORM.getConnection(ModuleConfig.get('connectionName'))
-    this.entityName = ModuleConfig.get('entityName')
-    this.resourceEntity = ModuleConfig.get('ACL.resource.entityName')
-    this.UserRepository = this.Connection?.getRepository(this.entityName)
-    this.ResourceRepository = this.Connection?.getRepository(this.resourceEntity)
+    this.userEntityName = ModuleConfig.get('user.entityName')
+    this.groupEntityName = ModuleConfig.get('ACL.group.entityName')
+    this.resourceEntityName = ModuleConfig.get('ACL.resource.entityName')
+    this.permissionEntityName = ModuleConfig.get('ACL.permission.entityName')
+    this.UserRepository = this.Connection?.getRepository(this.userEntityName)
+    this.ResourceRepository = this.Connection?.getRepository(this.resourceEntityName)
 
     // Add middleware
     Server.Core.use(async (req, res, next): Promise<void> => {
@@ -158,7 +166,7 @@ class Auth {
    */
   async sendActiveCodeMail (user: any): Promise<any> {
     // Retrieve settings
-    const { login, activeCode, email, active, } = this.Config.get('prop')
+    const { login, activeCode, email, active, } = this.Config.get('user.prop')
     const { transporter, from, } = ModuleConfig.get('mail')
     const { subject, text, html, } = ModuleConfig.get('mail.activeCode')
 
@@ -200,7 +208,7 @@ class Auth {
    */
   async active (user: any): Promise<any> {
     // Retrieve settings
-    const { active, activeCode, email, } = this.Config.get('prop')
+    const { active, activeCode, email, } = this.Config.get('user.prop')
 
     // User search
     user = await this.UserRepository.findOne({
@@ -236,7 +244,7 @@ class Auth {
    */
   async sendRefreshPasswordCode (user: any): Promise<any> {
     // Retrieve settings
-    const { email, refreshPasswordCode, } = this.Config.get('prop')
+    const { email, refreshPasswordCode, } = this.Config.get('user.prop')
     const sendRefreshPasswordCodeReturnProps = this.Config.get('sendRefreshPasswordCodeReturnProps')
 
     // user search
@@ -284,7 +292,7 @@ class Auth {
      // Retrieve settings
      const loginReturnProps = this.Config.get('loginReturnProps')
      const loginReturnTokenProps = this.Config.get('loginReturnTokenProps')
-     const { login, password, token, active, } = this.Config.get('prop')
+     const { login, password, token, active, } = this.Config.get('user.prop')
      const { key, algorithm, } = this.Config.get('hash')
      
      // Search the user
@@ -330,7 +338,7 @@ class Auth {
   async refreshPassword (user: any): Promise<any> {
     // Retrieve settings
     const refreshPasswordReturnProps = this.Config.get('refreshPasswordReturnProps')
-    const { refreshPasswordCode, email, password, token, } = this.Config.get('prop')
+    const { refreshPasswordCode, email, password, token, } = this.Config.get('user.prop')
 
     // User search
     let bdUser = await this.UserRepository.findOne({ [email]: user[email], })
@@ -377,7 +385,7 @@ class Auth {
 
     // Retrieve settings
     const refreshPasswordReturnProps = this.Config.get('refreshPasswordReturnProps')
-    const { refreshPasswordCode, email, password, token, } = this.Config.get('prop')
+    const { refreshPasswordCode, email, password, token, } = this.Config.get('user.prop')
 
     // User search
     let user = await this.getUserByToken(userToken)
@@ -402,15 +410,12 @@ class Auth {
   /** Get user by Token */
   private getUserByToken (userToken: string | undefined): Promise<object> {
     /** Name of the property containing the token */
-    const { token, } = this.Config.get('prop')
-
-    /** Name of the userGroup entity in the relationship */
-    const userGroupEntity = inflection.pluralize(this.Config.get('ACL.group.entityName'))
+    const { token, } = this.Config.get('user.prop')
 
     // Search and return
     return this.UserRepository.findOne({
       where: { [token]: userToken?.split(' ')[1], },
-      relations: [ userGroupEntity, ]
+      relations: [ this.groupEntityName, ]
     })
   }
 
@@ -437,10 +442,7 @@ class Auth {
     resourceName: string, method: string, userGroupId: string | string[]
     ): Promise<boolean | null> {
       // Name of the permission entity in the relationship
-      const permissionEntity = inflection.pluralize(this.Config.get('ACL.permission.entityName'))
-
-      // Name of the userGroup entity in the relationship
-      const userGroupEntity = this.Config.get('ACL.group.entityName')
+      const permissionEntity = inflection.pluralize(this.permissionEntityName)
 
       // Release property name
       const allowProp = this.Config.get('ACL.permission.prop.allow')
@@ -453,12 +455,12 @@ class Auth {
         where: {
           [this.Config.get('ACL.resource.prop.method')]: method,
         },
-        relations: [ permissionEntity, `${permissionEntity}.${userGroupEntity}`],
+        relations: [ permissionEntity, `${permissionEntity}.${this.groupEntityName}`],
       }))
         /** TODO: Aprender a mover a verificação de grupo para o método find do TypeORM */
         .filter(i => {
           return i[permissionEntity].filter(p => {
-            return userGroupId.indexOf(p[userGroupEntity]?.id) !== -1
+            return userGroupId.indexOf(p[this.groupEntityName]?.id) !== -1
           }).length > 0
         })
 
@@ -495,14 +497,11 @@ class Auth {
    async resourcePermissionByUser (
     user: any, resourceName: string, method: string
     ): Promise<boolean | null> {
-      /** Name of the user entity in the relationship */
-      const userEntity = this.Config.get('entityName')
-
       /** Name of the userGroup entity in the relationship */
-      const userGroupEntity = inflection.pluralize(this.Config.get('ACL.group.entityName'))
+      const userGroupEntity = inflection.pluralize(this.groupEntityName)
 
       // Name of the permission entity in the relationship
-      const permissionEntity = inflection.pluralize(this.Config.get('ACL.permission.entityName'))
+      const permissionEntity = inflection.pluralize(this.permissionEntityName)
 
       // Release property name
       const allowProp = this.Config.get('ACL.permission.prop.allow')
@@ -512,13 +511,13 @@ class Auth {
         where: {
           [this.Config.get('ACL.resource.prop.method')]: method,
         },
-        relations: [ permissionEntity, `${permissionEntity}.${userEntity}`],
+        relations: [ permissionEntity, `${permissionEntity}.${this.userEntityName}`],
       }))
       
       /** TODO: Aprender a mover a verificação de usuario para o método find do TypeORM */
       const userResources = resources.filter(i => {
         return i[permissionEntity].filter(p => {
-          return user.id === p[userEntity]?.id
+          return user.id === p[this.userEntityName]?.id
         }).length > 0
       })
         

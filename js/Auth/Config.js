@@ -65,17 +65,19 @@ var AuthConfig = /** @class */ (function (_super) {
             hash: {
                 algorithm: 'HS256',
             },
-            entityName: 'User',
-            prop: {
-                login: 'email',
-                email: 'email',
-                password: 'password',
-                refreshPasswordCode: 'refreshPasswordCode',
-                active: 'active',
-                activeCode: 'activeCode',
-                token: 'token',
-                tokenType: 'tipoToken',
-                tokenValidate: 'tokenValidate',
+            user: {
+                entityName: 'User',
+                prop: {
+                    login: 'email',
+                    email: 'email',
+                    password: 'password',
+                    refreshPasswordCode: 'refreshPasswordCode',
+                    active: 'active',
+                    activeCode: 'activeCode',
+                    token: 'token',
+                    tokenType: 'tipoToken',
+                    tokenValidate: 'tokenValidate',
+                },
             },
             ACL: {
                 group: {
