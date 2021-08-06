@@ -96,10 +96,12 @@ var Auth = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_c) {
                 this.Connection = ORM_1.default.getConnection(Config_1.default.get('connectionName'));
-                this.entityName = Config_1.default.get('entityName');
-                this.resourceEntity = Config_1.default.get('ACL.resource.entityName');
-                this.UserRepository = (_a = this.Connection) === null || _a === void 0 ? void 0 : _a.getRepository(this.entityName);
-                this.ResourceRepository = (_b = this.Connection) === null || _b === void 0 ? void 0 : _b.getRepository(this.resourceEntity);
+                this.userEntityName = Config_1.default.get('user.entityName');
+                this.groupEntityName = Config_1.default.get('group.entityName');
+                this.resourceEntityName = Config_1.default.get('resource.entityName');
+                this.permissionEntityName = Config_1.default.get('permission.entityName');
+                this.UserRepository = (_a = this.Connection) === null || _a === void 0 ? void 0 : _a.getRepository(this.userEntityName);
+                this.ResourceRepository = (_b = this.Connection) === null || _b === void 0 ? void 0 : _b.getRepository(this.resourceEntityName);
                 // Add middleware
                 Server_1.default.Core.use(function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
                     var publicResource, user;
@@ -213,7 +215,7 @@ var Auth = /** @class */ (function () {
             return __generator(this, function (_f) {
                 switch (_f.label) {
                     case 0:
-                        _b = this.Config.get('prop'), login = _b.login, activeCode = _b.activeCode, email = _b.email, active = _b.active;
+                        _b = this.Config.get('user.prop'), login = _b.login, activeCode = _b.activeCode, email = _b.email, active = _b.active;
                         _c = Config_1.default.get('mail'), transporter = _c.transporter, from = _c.from;
                         _d = Config_1.default.get('mail.activeCode'), subject = _d.subject, text = _d.text, html = _d.html;
                         if (!(Object.keys(user).length === 1)) return [3 /*break*/, 2];
@@ -266,7 +268,7 @@ var Auth = /** @class */ (function () {
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
-                        _a = this.Config.get('prop'), active = _a.active, activeCode = _a.activeCode, email = _a.email;
+                        _a = this.Config.get('user.prop'), active = _a.active, activeCode = _a.activeCode, email = _a.email;
                         return [4 /*yield*/, this.UserRepository.findOne((_b = {},
                                 _b[email] = user[email],
                                 _b[activeCode] = user[activeCode],
@@ -314,7 +316,7 @@ var Auth = /** @class */ (function () {
             return __generator(this, function (_e) {
                 switch (_e.label) {
                     case 0:
-                        _b = this.Config.get('prop'), email = _b.email, refreshPasswordCode = _b.refreshPasswordCode;
+                        _b = this.Config.get('user.prop'), email = _b.email, refreshPasswordCode = _b.refreshPasswordCode;
                         sendRefreshPasswordCodeReturnProps = this.Config.get('sendRefreshPasswordCodeReturnProps');
                         return [4 /*yield*/, this.UserRepository.findOne((_d = {}, _d[email] = user[email], _d))
                             // If you don't find the user, it returns an error
@@ -372,7 +374,7 @@ var Auth = /** @class */ (function () {
                     case 0:
                         loginReturnProps = this.Config.get('loginReturnProps');
                         loginReturnTokenProps = this.Config.get('loginReturnTokenProps');
-                        _a = this.Config.get('prop'), login = _a.login, password = _a.password, token = _a.token, active = _a.active;
+                        _a = this.Config.get('user.prop'), login = _a.login, password = _a.password, token = _a.token, active = _a.active;
                         _b = this.Config.get('hash'), key = _b.key, algorithm = _b.algorithm;
                         return [4 /*yield*/, this.UserRepository.findOne((_c = {}, _c[login] = user[login], _c))
                             // If you don't find the user, it returns an error
@@ -419,7 +421,7 @@ var Auth = /** @class */ (function () {
                 switch (_c.label) {
                     case 0:
                         refreshPasswordReturnProps = this.Config.get('refreshPasswordReturnProps');
-                        _a = this.Config.get('prop'), refreshPasswordCode = _a.refreshPasswordCode, email = _a.email, password = _a.password, token = _a.token;
+                        _a = this.Config.get('user.prop'), refreshPasswordCode = _a.refreshPasswordCode, email = _a.email, password = _a.password, token = _a.token;
                         return [4 /*yield*/, this.UserRepository.findOne((_b = {}, _b[email] = user[email], _b))
                             // If there was an error, reject
                         ];
@@ -472,7 +474,7 @@ var Auth = /** @class */ (function () {
                             return [2 /*return*/, REST_1.default.getError('LOGOUT_WITHOUT_TOKEN', dictionary_1.default, {})];
                         }
                         refreshPasswordReturnProps = this.Config.get('refreshPasswordReturnProps');
-                        _a = this.Config.get('prop'), refreshPasswordCode = _a.refreshPasswordCode, email = _a.email, password = _a.password, token = _a.token;
+                        _a = this.Config.get('user.prop'), refreshPasswordCode = _a.refreshPasswordCode, email = _a.email, password = _a.password, token = _a.token;
                         return [4 /*yield*/, this.getUserByToken(userToken)
                             // If there was an error, reject
                         ];
@@ -503,13 +505,11 @@ var Auth = /** @class */ (function () {
     Auth.prototype.getUserByToken = function (userToken) {
         var _a;
         /** Name of the property containing the token */
-        var token = this.Config.get('prop').token;
-        /** Name of the userGroup entity in the relationship */
-        var userGroupEntity = inflection_1.default.pluralize(this.Config.get('ACL.group.entityName'));
+        var token = this.Config.get('user.prop').token;
         // Search and return
         return this.UserRepository.findOne({
             where: (_a = {}, _a[token] = userToken === null || userToken === void 0 ? void 0 : userToken.split(' ')[1], _a),
-            relations: [userGroupEntity,]
+            relations: [this.groupEntityName,]
         });
     };
     /**
@@ -524,7 +524,7 @@ var Auth = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        publicGroupId = this.Config.get('publicGroup');
+                        publicGroupId = this.Config.get('group.publicId');
                         return [4 /*yield*/, this.resourcePermissionByUserGroup(resource, method, publicGroupId)];
                     case 1: return [2 /*return*/, (_a.sent()) === true];
                 }
@@ -540,21 +540,21 @@ var Auth = /** @class */ (function () {
      */
     Auth.prototype.resourcePermissionByUserGroup = function (resourceName, method, userGroupId) {
         return __awaiter(this, void 0, void 0, function () {
-            var permissionEntity, userGroupEntity, allowProp, resources, resource, allow, deny;
+            var permissionEntity, allowProp, resources, resource, allow, deny;
             var _a;
+            var _this = this;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        permissionEntity = inflection_1.default.pluralize(this.Config.get('ACL.permission.entityName'));
-                        userGroupEntity = this.Config.get('ACL.group.entityName');
-                        allowProp = this.Config.get('ACL.permission.prop.allow');
+                        permissionEntity = inflection_1.default.pluralize(this.permissionEntityName);
+                        allowProp = this.Config.get('permission.prop.allow');
                         // turning id into array
                         userGroupId = isArray_1.default(userGroupId) ? userGroupId : [userGroupId,];
                         return [4 /*yield*/, this.ResourceRepository.find({
                                 where: (_a = {},
-                                    _a[this.Config.get('ACL.resource.prop.method')] = method,
+                                    _a[this.Config.get('resource.prop.method')] = method,
                                     _a),
-                                relations: [permissionEntity, permissionEntity + "." + userGroupEntity],
+                                relations: [permissionEntity, permissionEntity + "." + this.groupEntityName],
                             })];
                     case 1:
                         resources = (_b.sent())
@@ -562,7 +562,7 @@ var Auth = /** @class */ (function () {
                             .filter(function (i) {
                             return i[permissionEntity].filter(function (p) {
                                 var _a;
-                                return userGroupId.indexOf((_a = p[userGroupEntity]) === null || _a === void 0 ? void 0 : _a.id) !== -1;
+                                return userGroupId.indexOf((_a = p[_this.groupEntityName]) === null || _a === void 0 ? void 0 : _a.id) !== -1;
                             }).length > 0;
                         });
                         resource = resources.filter(function (i) {
@@ -598,27 +598,27 @@ var Auth = /** @class */ (function () {
      */
     Auth.prototype.resourcePermissionByUser = function (user, resourceName, method) {
         return __awaiter(this, void 0, void 0, function () {
-            var userEntity, userGroupEntity, permissionEntity, allowProp, resources, userResources, userResource, allow, deny;
+            var userGroupEntity, permissionEntity, allowProp, resources, userResources, userResource, allow, deny;
             var _a;
+            var _this = this;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        userEntity = this.Config.get('entityName');
-                        userGroupEntity = inflection_1.default.pluralize(this.Config.get('ACL.group.entityName'));
-                        permissionEntity = inflection_1.default.pluralize(this.Config.get('ACL.permission.entityName'));
-                        allowProp = this.Config.get('ACL.permission.prop.allow');
+                        userGroupEntity = inflection_1.default.pluralize(this.groupEntityName);
+                        permissionEntity = inflection_1.default.pluralize(this.permissionEntityName);
+                        allowProp = this.Config.get('permission.prop.allow');
                         return [4 /*yield*/, this.ResourceRepository.find({
                                 where: (_a = {},
-                                    _a[this.Config.get('ACL.resource.prop.method')] = method,
+                                    _a[this.Config.get('resource.prop.method')] = method,
                                     _a),
-                                relations: [permissionEntity, permissionEntity + "." + userEntity],
+                                relations: [permissionEntity, permissionEntity + "." + this.userEntityName],
                             })];
                     case 1:
                         resources = (_b.sent());
                         userResources = resources.filter(function (i) {
                             return i[permissionEntity].filter(function (p) {
                                 var _a;
-                                return user.id === ((_a = p[userEntity]) === null || _a === void 0 ? void 0 : _a.id);
+                                return user.id === ((_a = p[_this.userEntityName]) === null || _a === void 0 ? void 0 : _a.id);
                             }).length > 0;
                         });
                         userResource = userResources.filter(function (i) {

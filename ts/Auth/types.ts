@@ -1,6 +1,57 @@
 // Other types
 import { Contact, } from '../Mail/types'
 
+/** Auth User Settings */
+export type AuthUserConfig = {
+  /** Name of the entity responsible for the users */
+  entityName: string,
+  /** Names of the properties of the entity responsible for the users */
+  prop: {
+    login?: string,
+    email?: string,
+    password?: string,
+    token?: string,
+    tokenValidate?: string,
+    tokenType?: string,
+    active?: string,
+    activeCode?: string,
+    refreshPasswordCode?: string,
+  }
+}
+
+/** Auth Group Settings */
+export type AuthGroupConfig = {
+  /** Name of the entity responsible for the groups */
+  entityName: string,
+  /** Default group for unauthenticated users */
+  publicId: string,
+  /** Names of the properties of the entity responsible for the groups */
+  prop: {
+    name?: string,
+  }
+}
+
+/** Auth Permission Settings */
+export type AuthPermissionConfig = {
+  /** Name of the entity responsible for the permissions */
+  entityName: string,
+  /** Names of the properties of the entity responsible for the permissions */
+  prop: {
+    allow: string,
+  }
+}
+
+/** Auth Resource Settings */
+export type AuthResourceConfig = {
+  /** Name of the entity responsible for the resources */
+  entityName: string,
+  /** Names of the properties of the entity responsible for the resources */
+  prop: {
+    name: string,
+    method: string,
+  }
+}
+
 /** Format of activation codes and password recovery */
 export type AuthCodeConfig = {
   /** Code size */
@@ -9,19 +60,6 @@ export type AuthCodeConfig = {
   type?: (
     'alphanumeric' | 'numeric' | 'upper' | 'lower' | 'uppernumeric' | 'lowernumeric' | string
   ),
-}
-
-/** Names of the properties of the entity responsible for the users */
-export type AuthPropConfig = {
-  login?: string,
-  email?: string,
-  password?: string,
-  token?: string,
-  tokenValidate?: string,
-  tokenType?: string,
-  active?: string,
-  activeCode?: string,
-  refreshPasswordCode?: string,
 }
 
 /** Names of routes responsible for authentication */
@@ -69,47 +107,6 @@ export type AuthHashConfig = {
   algorithm?: string,
 }
 
-/** Auth ACL Group Props Settings */
-export type AuthACLGroupPropConfig = {
-  name?: string,
-}
-
-/** Auth ACL Group Settings */
-export type AuthACLGroupConfig = {
-  entityName?: string,
-  prop?: AuthACLGroupPropConfig,
-}
-
-/** Auth ACL User Props Settings */
-export type AuthACLPermissionPropConfig = {
-  allow: string,
-}
-
-/** Auth ACL User Settings */
-export type AuthACLPermissionConfig = {
-  entityName?: string,
-  prop?: AuthACLPermissionPropConfig,
-}
-
-/** Auth ACL Resource Props Settings */
-export type AuthACLResourcePropConfig = {
-  name: string,
-  method: string,
-}
-
-/** Auth ACL Resource Settings */
-export type AuthACLResourceConfig = {
-  entityName?: string,
-  prop?: AuthACLResourcePropConfig,
-}
-
-/** Auth ACL Settings */
-export type AuthACLConfig = {
-  group?: AuthACLGroupConfig,
-  permission?: AuthACLPermissionConfig,
-  resource?: AuthACLResourceConfig,
-}
-
 /** Auth Settings Type */
 export type AuthConfig = {
   /** Properties to be returned on register */
@@ -126,18 +123,18 @@ export type AuthConfig = {
   code?: AuthCodeConfig,
   /** Name of connection responsible for users */
   connectionName?: string,
-  /** Name of the entity responsible for the users */
-  entityName: string,
-  /** Names of the properties of the entity responsible for the users */
-  prop?: AuthPropConfig,
+  /** Auth User Settings */
+  user: AuthUserConfig,
+  /** Auth Group Settings */
+  group?: AuthGroupConfig,
+  /** Auth Permission Settings */
+  permission?: AuthPermissionConfig,
+  /** Auth Resource Settings */
+  resource?: AuthResourceConfig,
   /** Names of routes responsible for authentication */
   routes?: AuthRoutesConfig,
   /** Data from emails to be sent by Auth */
   mail: AuthMailConfig,
   /** Auth Encryption Hash Settings */
   hash: AuthHashConfig,
-  /** ACL Settings */
-  ACL?: AuthACLConfig,
-  /** Default group for unauthenticated users */
-  publicGroup?: string,
 }

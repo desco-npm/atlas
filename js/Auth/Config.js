@@ -34,7 +34,6 @@ var AuthConfig = /** @class */ (function (_super) {
             loginReturnTokenProps: ['email',],
             sendRefreshPasswordCodeReturnProps: ['email',],
             refreshPasswordReturnProps: ['email', 'token',],
-            publicGroup: 'public',
             code: {
                 length: 6,
                 type: 'uppernumeric',
@@ -65,37 +64,37 @@ var AuthConfig = /** @class */ (function (_super) {
             hash: {
                 algorithm: 'HS256',
             },
-            entityName: 'User',
-            prop: {
-                login: 'email',
-                email: 'email',
-                password: 'password',
-                refreshPasswordCode: 'refreshPasswordCode',
-                active: 'active',
-                activeCode: 'activeCode',
-                token: 'token',
-                tokenType: 'tipoToken',
-                tokenValidate: 'tokenValidate',
+            user: {
+                entityName: 'User',
+                prop: {
+                    login: 'email',
+                    email: 'email',
+                    password: 'password',
+                    refreshPasswordCode: 'refreshPasswordCode',
+                    active: 'active',
+                    activeCode: 'activeCode',
+                    token: 'token',
+                    tokenType: 'tipoToken',
+                    tokenValidate: 'tokenValidate',
+                },
             },
-            ACL: {
-                group: {
-                    entityName: 'UserGroup',
-                    prop: {
-                        name: 'name'
-                    }
+            group: {
+                entityName: 'UserGroup',
+                prop: {
+                    name: 'name'
+                }
+            },
+            permission: {
+                entityName: 'Permission',
+                prop: {
+                    allow: 'allow',
                 },
-                permission: {
-                    entityName: 'Permission',
-                    prop: {
-                        allow: 'allow',
-                    },
-                },
-                resource: {
-                    entityName: 'Resource',
-                    prop: {
-                        method: 'method',
-                        name: 'name',
-                    }
+            },
+            resource: {
+                entityName: 'Resource',
+                prop: {
+                    method: 'method',
+                    name: 'name',
                 }
             },
         });
