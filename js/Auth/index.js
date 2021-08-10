@@ -571,7 +571,7 @@ var Auth = /** @class */ (function () {
                         });
                         resource = resources.filter(function (i) {
                             var url = new urlPattern_1.default(i.name);
-                            return url.match(resourceName) !== null;
+                            return url.match(resourceName.split('?')[0]) !== null;
                         })[0];
                         // If you can't find permission, use the default
                         if (!resource) {
@@ -627,7 +627,7 @@ var Auth = /** @class */ (function () {
                         });
                         userResource = userResources.filter(function (i) {
                             var url = new urlPattern_1.default(i.name);
-                            return url.match(resourceName) !== null;
+                            return url.match(resourceName.split('?')[0]) !== null;
                         })[0];
                         if (userResource) {
                             allow = userResource[permissionEntity].filter(function (i) { return i[allowProp] === true; }).length > 0;

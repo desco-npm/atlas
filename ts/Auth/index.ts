@@ -467,18 +467,18 @@ class Auth {
       // Capture the appropriate resource
       const resource = resources.filter(i => {
         const url = new urlPattern(i.name)
-
-        return url.match(resourceName) !== null
+        return url.match(resourceName.split('?')[0]) !== null
       })[0]
 
       // If you can't find permission, use the default
       if (!resource) {
         return null
       }
+
       // Capture release and restriction permissions
       const allow = resource[permissionEntity].filter(i => i[allowProp] === true).length > 0
       const deny = resource[permissionEntity].filter(i => i[allowProp] === false).length > 0
-      
+
       // If denying, return true
       // Otherwise, if releasing, returns false
       // If nothing, return default null
@@ -525,7 +525,7 @@ class Auth {
       const userResource = userResources.filter(i => {
         const url = new urlPattern(i.name)
 
-        return url.match(resourceName) !== null
+        return url.match(resourceName.split('?')[0]) !== null
       })[0]
 
       if (userResource) {
