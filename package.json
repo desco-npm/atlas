@@ -54,7 +54,8 @@
     "string-replace-all": "^1.0.3",
     "typeorm": "^0.2.34",
     "typescript": "^4.3.5",
-    "url-pattern": "^1.0.3"
+    "url-pattern": "^1.0.3",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/app-root-dir": "^0.1.0",

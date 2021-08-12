@@ -51,6 +51,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -64,6 +69,7 @@ var urlPattern_1 = __importDefault(require("../lib/urlPattern"));
 var inflection_1 = __importDefault(require("../lib/inflection"));
 var isArray_1 = __importDefault(require("../lib/isArray"));
 var moment_1 = __importDefault(require("../lib/moment"));
+var clone_1 = __importDefault(require("../lib/clone"));
 // Framework Modules
 var Server_1 = __importDefault(require("../Server"));
 var ORM_1 = __importDefault(require("../ORM"));
@@ -544,7 +550,7 @@ var Auth = /** @class */ (function () {
      */
     Auth.prototype.resourcePermissionByUserGroup = function (resourceName, method, userGroupId) {
         return __awaiter(this, void 0, void 0, function () {
-            var permissionEntity, allowProp, resources, resource, allow, deny;
+            var permissionEntity, allowProp, resources, sortResources, resource, allow, deny;
             var _a;
             var _this = this;
             return __generator(this, function (_b) {
@@ -568,11 +574,37 @@ var Auth = /** @class */ (function () {
                                 var _a;
                                 return userGroupId.indexOf((_a = p[_this.groupEntityName]) === null || _a === void 0 ? void 0 : _a.id) !== -1;
                             }).length > 0;
-                        });
-                        resource = resources.filter(function (i) {
+                        })
+                            // Generate resource name pattern
+                            .map(function (i) {
                             var url = new urlPattern_1.default(i.name);
-                            return url.match(resourceName.split('?')[0]) !== null;
-                        })[0];
+                            i.pattern = url.match(resourceName.split('?')[0]);
+                            return i;
+                        })
+                            // Filter resources by URL
+                            .filter(function (i) {
+                            return i.pattern !== null;
+                        });
+                        sortResources = function (resources, index) {
+                            var resourcesOrdered = [];
+                            // Find resources with desired number of parameters, remove from resource array and add in
+                            // the ordered resources
+                            var restResources = clone_1.default(resources).filter(function (r) {
+                                if (Object.keys(r.pattern).length === (index || 0)) {
+                                    resourcesOrdered.push(r);
+                                    return false;
+                                }
+                                return true;
+                            });
+                            // If no resources left, return array of ordered resources
+                            if (restResources.length === 0) {
+                                return resourcesOrdered;
+                            }
+                            // If there are still resources left, return the ordered resources plus the remaining
+                            // resources ordered at runtime
+                            return __spreadArray(__spreadArray([], resourcesOrdered), sortResources(restResources, (index || 0) + 1));
+                        };
+                        resource = sortResources(resources)[0];
                         // If you can't find permission, use the default
                         if (!resource) {
                             return [2 /*return*/, null];

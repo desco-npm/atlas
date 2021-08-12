@@ -13,6 +13,7 @@ import urlPattern from '../lib/urlPattern'
 import inflection from '../lib/inflection'
 import isArray from '../lib/isArray'
 import moment from '../lib/moment'
+import clone from '../lib/clone'
 
 // Framework Modules
 import Server from '../Server'
@@ -463,12 +464,47 @@ class Auth {
             return userGroupId.indexOf(p[this.groupEntityName]?.id) !== -1
           }).length > 0
         })
+        // Generate resource name pattern
+        .map(i => {
+          const url = new urlPattern(i.name)
+
+          i.pattern = url.match(resourceName.split('?')[0])
+
+          return i
+        })
+        // Filter resources by URL
+        .filter(i => {
+        return i.pattern !== null
+      })
+
+      // Function to sort resources
+      const sortResources = (resources: any[], index?: number) => {
+        const resourcesOrdered: any[] = []
+
+        // Find resources with desired number of parameters, remove from resource array and add in
+        // the ordered resources
+        const restResources = clone(resources).filter(r => {
+          if (Object.keys(r.pattern).length === (index || 0)) {
+            resourcesOrdered.push(r)
+
+            return false
+          }
+
+          return true
+        })
+
+        // If no resources left, return array of ordered resources
+        if(restResources.length === 0) {
+          return resourcesOrdered
+        }
+
+        // If there are still resources left, return the ordered resources plus the remaining
+        // resources ordered at runtime
+        return [ ...resourcesOrdered, ...sortResources(restResources, (index || 0) + 1)]
+      }
 
       // Capture the appropriate resource
-      const resource = resources.filter(i => {
-        const url = new urlPattern(i.name)
-        return url.match(resourceName.split('?')[0]) !== null
-      })[0]
+      const resource = sortResources(resources)[0]
 
       // If you can't find permission, use the default
       if (!resource) {
@@ -485,7 +521,7 @@ class Auth {
       if (deny) return false
       else if (allow) return true
       else return null
-   }
+  }
 
   /**
    * Returns if a resource is released for a user
@@ -494,7 +530,7 @@ class Auth {
    * @param resourceName The name of the resource
    * @param method The method used in the resource
    */
-   async resourcePermissionByUser (
+  async resourcePermissionByUser (
     user: any, resourceName: string, method: string
     ): Promise<boolean | null> {
       /** Name of the userGroup entity in the relationship */
