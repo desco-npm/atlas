@@ -29,8 +29,8 @@ class Server {
 
     // Configure the core
     this.Core.use(cors()) // Treat the CORS
-    this.Core.use(bodyParser.urlencoded(this.Config.get('queryString'))) // Recognize QueryString
-    this.Core.use(bodyParser.json(this.Config.get('body'))) // Recognize Body
+    this.Core.use(bodyParser.urlencoded(this.Config.get('urlencoded'))) // Recognize URL Encoded
+    this.Core.use(bodyParser.json(this.Config.get('json'))) // Recognize JSON
 
     /** Directory or directory list with static content */
     let staticDir = this.Config.get('staticDir')

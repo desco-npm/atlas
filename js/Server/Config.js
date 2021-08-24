@@ -31,7 +31,7 @@ var ServerConfig = /** @class */ (function (_super) {
         // Set the default settings
         _this.setDefaults({
             port: 3000,
-            queryString: { extended: false, },
+            urlencoded: { extended: false, },
             callback: function () {
                 return Message_1.default.success('listingOnPort', dictionary_1.default, {
                     bind: { PORT: _this.get('port') },

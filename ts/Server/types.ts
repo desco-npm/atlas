@@ -14,9 +14,9 @@ export type ServerConfig = {
   /** Function to be performed when you start the server */
   readonly callback?: () => void,
   /** Request URL Encoded Options */
-  readonly queryString?: OptionsUrlencoded,
-  /** Requisition Body Data Encodes Options, */
-  readonly body?: OptionsJson,
+  readonly urlencoded?: OptionsUrlencoded,
+  /** Requisition JSON Data Encodes Options, */
+  readonly json?: OptionsJson,
   /** Router function */
   readonly router: ((params: ServerRouterParams) => void)[]
   /** Directory or directory list with static content */

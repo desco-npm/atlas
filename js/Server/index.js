@@ -65,8 +65,8 @@ var Server = /** @class */ (function () {
         this.Config.set(config);
         // Configure the core
         this.Core.use(cors_1.default()); // Treat the CORS
-        this.Core.use(body_parser_1.default.urlencoded(this.Config.get('queryString'))); // Recognize QueryString
-        this.Core.use(body_parser_1.default.json(this.Config.get('body'))); // Recognize Body
+        this.Core.use(body_parser_1.default.urlencoded(this.Config.get('urlencoded'))); // Recognize URL Encoded
+        this.Core.use(body_parser_1.default.json(this.Config.get('json'))); // Recognize JSON
         /** Directory or directory list with static content */
         var staticDir = this.Config.get('staticDir');
         // If you have static directories, define them

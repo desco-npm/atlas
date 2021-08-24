@@ -16,7 +16,7 @@ class ServerConfig extends Config {
     // Set the default settings
     this.setDefaults({
       port: 3000,
-      queryString: { extended: false, },
+      urlencoded: { extended: false, },
       callback: () => {
         return Message.success('listingOnPort', dictionary, {
           bind: { PORT: this.get('port')},
