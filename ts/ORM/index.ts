@@ -1,5 +1,5 @@
 // Framework resources
-import { createConnection, getConnection, Repository, } from '../lib/TypeORM'
+import { createConnection, getConnection, Repository, QueryBuilder } from '../lib/TypeORM'
 import 'reflect-metadata'
 
 // Framework Modules
@@ -56,7 +56,7 @@ class ORM {
     try {
       return getConnection(connectionName)
     }
-     catch(e) {
+     catch(e: any) {
       Exception.discharge('InvalidConnectionName', dictionary, e)
     }
   }
@@ -69,6 +69,16 @@ class ORM {
    */
   getRepository(entity: string, connectionName?: string): Repository<any> | undefined {
     return this.getConnection(connectionName)?.getRepository(entity)
+  }
+
+  /**
+   * Gets QueryBuilder from the connection.
+   * 
+   * @param entity Entity Name
+   * @param connectionName Connection name. If omitted it will be "default" by default
+   */
+  getQueryBuilder(entity: string, connectionName?: string): QueryBuilder<any> | undefined {
+    return this.getRepository(entity, connectionName)?.createQueryBuilder(entity)
   }
 }
 

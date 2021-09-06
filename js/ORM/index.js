@@ -114,6 +114,16 @@ var ORM = /** @class */ (function () {
         var _a;
         return (_a = this.getConnection(connectionName)) === null || _a === void 0 ? void 0 : _a.getRepository(entity);
     };
+    /**
+     * Gets QueryBuilder from the connection.
+     *
+     * @param entity Entity Name
+     * @param connectionName Connection name. If omitted it will be "default" by default
+     */
+    ORM.prototype.getQueryBuilder = function (entity, connectionName) {
+        var _a;
+        return (_a = this.getRepository(entity, connectionName)) === null || _a === void 0 ? void 0 : _a.createQueryBuilder(entity);
+    };
     return ORM;
 }());
 exports.default = new ORM();
