@@ -10,7 +10,7 @@ export type RESTGetErrorOptions = {
   /** What information adds to the dynamic parts of the message */
   readonly bind?: {},
   /** The original error */
-  readonly error?: Error,
+  readonly error?: Error | unknown,
 }
 
 /** AtlasJS REST getError Options Method Options **/
