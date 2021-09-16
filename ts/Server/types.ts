@@ -7,6 +7,9 @@ export type ServerPreRouterParams = {
   readonly Express: ExpressCore.Express,
 }
 
+/** RouterFunction Type */
+export type RouterFunction = ((params: ServerRouterParams) => void)
+
 /** Server Settings Type */
 export type ServerConfig = { 
   /** Door where to run the server */
@@ -18,7 +21,7 @@ export type ServerConfig = {
   /** Requisition JSON Data Encodes Options, */
   readonly json?: OptionsJson,
   /** Router function */
-  readonly router: ((params: ServerRouterParams) => void)[]
+  readonly router: RouterFunction[]
   /** Directory or directory list with static content */
   readonly staticDir: string | string[],
 }
