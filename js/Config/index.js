@@ -23,18 +23,22 @@ var Config = /** @class */ (function () {
      **/
     Config.prototype.setDefaults = function (defaults) {
         this.defaults = defaults; // Sets the standards
-        this.set(this.configs); // Add defaults to settings
+        this.set(this.configs, true); // Add defaults to settings
         return this;
     };
     /**
      * Set the settings
      *
      * @param configs Settings to be added to the module
+     * @param ignoreConfigured Ignore the setting of the "configured" flag
      **/
-    Config.prototype.set = function (configs) {
+    Config.prototype.set = function (configs, ignoreConfigured) {
+        if (ignoreConfigured === void 0) { ignoreConfigured = false; }
         this.configs = objectMerge_1.objectMerge(this.defaults, configs, {}); // Merge user settings with defaults
         // Mark as configured
-        this.configured = true;
+        if (!ignoreConfigured) {
+            this.configured = true;
+        }
         return this;
     };
     /**

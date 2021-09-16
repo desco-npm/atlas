@@ -21,7 +21,7 @@ class Config {
   setDefaults (defaults: {}): this {
     this.defaults = defaults // Sets the standards
 
-    this.set(this.configs) // Add defaults to settings
+    this.set(this.configs, true) // Add defaults to settings
 
     return this
   }
@@ -30,12 +30,15 @@ class Config {
    * Set the settings
    *
    * @param configs Settings to be added to the module
+   * @param ignoreConfigured Ignore the setting of the "configured" flag
    **/
-  set (configs: {} | undefined): this {
+  set (configs: {} | undefined, ignoreConfigured: boolean = false): this {
     this.configs = objectMerge(this.defaults, configs, {}) // Merge user settings with defaults
 
     // Mark as configured
-    this.configured = true
+    if (!ignoreConfigured) {
+      this.configured = true
+    }
 
     return this
   }

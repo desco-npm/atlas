@@ -60,6 +60,7 @@
   "devDependencies": {
     "@types/app-root-dir": "^0.1.0",
     "eslint": "^7.30.0",
-    "ts-node-dev": "^1.1.8"
+    "ts-node-dev": "^1.1.8",
+    "nodemon": "^2.0.12"
   }
 }

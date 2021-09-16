@@ -44,24 +44,24 @@ class Atlas {
     if(Config.ORM) {
       ORM.config(Config.ORM)
     }
-
+    
     if(Config.Server) {
       Server.config(Config.Server)
     }
-
+    
     if(Config.Auth) {
       Auth.config(Config.Auth)
     }
-
+    
     return this
   }
-
+  
   /** Prepare the AtlasJS */
   async prepare (): Promise<void> {
     if(Mail.Config.configured) {
       await Mail.prepare()
     }
-    
+
     if(ORM.Config.configured) {
       await ORM.prepare()
     }
