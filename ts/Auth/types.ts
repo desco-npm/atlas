@@ -137,4 +137,6 @@ export type AuthConfig = {
   mail: AuthMailConfig,
   /** Auth Encryption Token Settings */
   token: AuthTokenConfig,
+  // The salt to be used to hash the password
+  passwordSalt: number,
 }

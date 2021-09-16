@@ -34,6 +34,7 @@ var AuthConfig = /** @class */ (function (_super) {
             loginReturnTokenProps: ['email',],
             sendRefreshPasswordCodeReturnProps: ['email',],
             refreshPasswordReturnProps: ['email', 'token',],
+            passwordSalt: 10,
             code: {
                 length: 6,
                 type: 'uppernumeric',
@@ -61,7 +62,7 @@ var AuthConfig = /** @class */ (function (_super) {
                     html: 'Your password recovery code is <b>[[CODE]]</b>',
                 },
             },
-            hash: {
+            token: {
                 algorithm: 'HS256',
             },
             user: {

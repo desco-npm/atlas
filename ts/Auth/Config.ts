@@ -19,6 +19,7 @@ class AuthConfig extends Config {
       loginReturnTokenProps: [ 'email', ],
       sendRefreshPasswordCodeReturnProps: [ 'email', ],
       refreshPasswordReturnProps: [ 'email', 'token', ],
+      passwordSalt: 10,
       code: {
         length: 6,
         type: 'uppernumeric',

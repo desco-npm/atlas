@@ -70,6 +70,7 @@ var inflection_1 = __importDefault(require("../lib/inflection"));
 var isArray_1 = __importDefault(require("../lib/isArray"));
 var moment_1 = __importDefault(require("../lib/moment"));
 var clone_1 = __importDefault(require("../lib/clone"));
+var bcrypt_1 = __importDefault(require("../lib/bcrypt"));
 // Framework Modules
 var Server_1 = __importDefault(require("../Server"));
 var ORM_1 = __importDefault(require("../ORM"));
@@ -178,29 +179,37 @@ var Auth = /** @class */ (function () {
      */
     Auth.prototype.register = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var registerReturnProps, user, e_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var password, registerReturnProps, _a, _b, user, e_1;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
+                        password = this.Config.get('user.prop').password;
                         registerReturnProps = Config_1.default.get('registerReturnProps');
-                        _a.label = 1;
+                        // Crypt password
+                        _a = data;
+                        _b = password;
+                        return [4 /*yield*/, this.cryptPassword(data[password])];
                     case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.UserRepository.save(data)];
+                        // Crypt password
+                        _a[_b] = _c.sent();
+                        _c.label = 2;
                     case 2:
-                        user = _a.sent();
-                        return [3 /*break*/, 4];
+                        _c.trys.push([2, 4, , 5]);
+                        return [4 /*yield*/, this.UserRepository.save(data)];
                     case 3:
-                        e_1 = _a.sent();
+                        user = _c.sent();
+                        return [3 /*break*/, 5];
+                    case 4:
+                        e_1 = _c.sent();
                         return [2 /*return*/, REST_1.default.getError('USER_ALREADY_EXISTS', dictionary_1.default, { error: e_1, })];
-                    case 4: 
+                    case 5: 
                     // Send the email
                     return [4 /*yield*/, this.sendActiveCodeMail(user)
                         // Filtering object to return only the desired data
                     ];
-                    case 5:
+                    case 6:
                         // Send the email
-                        _a.sent();
+                        _c.sent();
                         // Filtering object to return only the desired data
                         user = objectFilter_1.default(user, function (v, k) { return registerReturnProps.indexOf(k) !== -1; });
                         return [2 /*return*/, user];
@@ -373,24 +382,31 @@ var Auth = /** @class */ (function () {
      */
     Auth.prototype.login = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var loginReturnProps, loginReturnTokenProps, _a, login, password, token, active, _b, key, algorithm, bdUser, e_4;
-            var _c;
-            return __generator(this, function (_d) {
-                switch (_d.label) {
+            var loginReturnProps, loginReturnTokenProps, _a, login, password, token, active, _b, key, algorithm, bdUser, _c, e_4;
+            var _d;
+            return __generator(this, function (_e) {
+                switch (_e.label) {
                     case 0:
                         loginReturnProps = this.Config.get('loginReturnProps');
                         loginReturnTokenProps = this.Config.get('loginReturnTokenProps');
                         _a = this.Config.get('user.prop'), login = _a.login, password = _a.password, token = _a.token, active = _a.active;
-                        _b = this.Config.get('hash'), key = _b.key, algorithm = _b.algorithm;
-                        return [4 /*yield*/, this.UserRepository.findOne((_c = {}, _c[login] = user[login], _c))
+                        _b = this.Config.get('token'), key = _b.key, algorithm = _b.algorithm;
+                        return [4 /*yield*/, this.UserRepository.findOne((_d = {}, _d[login] = user[login], _d))
                             // If you don't find the user, it returns an error
                             // If password doesn't match, return error
                         ];
                     case 1:
-                        bdUser = _d.sent();
+                        bdUser = _e.sent();
+                        _c = !bdUser;
+                        if (_c) return [3 /*break*/, 3];
+                        return [4 /*yield*/, this.checkPassword(user[password], bdUser[password])];
+                    case 2:
+                        _c = (_e.sent());
+                        _e.label = 3;
+                    case 3:
                         // If you don't find the user, it returns an error
                         // If password doesn't match, return error
-                        if (!bdUser || bdUser[password] !== user[password]) {
+                        if (_c) {
                             return [2 /*return*/, REST_1.default.getError('LOGIN_INVALID_CREDENTIALS', dictionary_1.default, {})];
                         }
                         // If user is not active, returns error
@@ -399,17 +415,17 @@ var Auth = /** @class */ (function () {
                         }
                         // Generate a token
                         bdUser[token] = jsonWebToken_1.default.sign(__assign(__assign({}, objectFilter_1.default(bdUser, function (v, k) { return loginReturnTokenProps.indexOf(k) !== -1; })), { time: moment_1.default().format() }), key, { algorithm: algorithm, });
-                        _d.label = 2;
-                    case 2:
-                        _d.trys.push([2, 4, , 5]);
-                        return [4 /*yield*/, this.UserRepository.save(bdUser)];
-                    case 3:
-                        _d.sent();
-                        return [3 /*break*/, 5];
+                        _e.label = 4;
                     case 4:
-                        e_4 = _d.sent();
+                        _e.trys.push([4, 6, , 7]);
+                        return [4 /*yield*/, this.UserRepository.save(bdUser)];
+                    case 5:
+                        _e.sent();
+                        return [3 /*break*/, 7];
+                    case 6:
+                        e_4 = _e.sent();
                         return [2 /*return*/, REST_1.default.getError('LOGIN_SAVE_TOKEN_ERROR', dictionary_1.default, { error: e_4, })];
-                    case 5: return [2 /*return*/, objectFilter_1.default(bdUser, function (v, k) { return loginReturnProps.indexOf(k) !== -1; })];
+                    case 7: return [2 /*return*/, objectFilter_1.default(bdUser, function (v, k) { return loginReturnProps.indexOf(k) !== -1; })];
                 }
             });
         });
@@ -439,7 +455,7 @@ var Auth = /** @class */ (function () {
                         }
                         // Erase code and update password
                         bdUser[refreshPasswordCode] = null;
-                        bdUser[password] = user[password];
+                        bdUser[password] = this.cryptPassword(user[password]);
                         _c.label = 2;
                     case 2:
                         _c.trys.push([2, 4, , 5]);
@@ -681,6 +697,23 @@ var Auth = /** @class */ (function () {
     /** Create and return a code */
     Auth.prototype.generateCode = function () {
         return randomString_1.default(Config_1.default.get('code.length'), Config_1.default.get('code.type'));
+    };
+    /**
+     * Crypt password
+     *
+     * @param password The password
+     */
+    Auth.prototype.cryptPassword = function (password) {
+        return bcrypt_1.default.hashSync(password, this.Config.get('passwordSalt'));
+    };
+    /**
+     * Check password
+     *
+     * @param password The password hash
+     * @param passwordHash The password hash
+     */
+    Auth.prototype.checkPassword = function (password, passwordHash) {
+        return bcrypt_1.default.compareSync(password, passwordHash);
     };
     return Auth;
 }());
