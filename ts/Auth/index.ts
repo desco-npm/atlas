@@ -14,6 +14,7 @@ import inflection from '../lib/inflection'
 import isArray from '../lib/isArray'
 import moment from '../lib/moment'
 import clone from '../lib/clone'
+import bcrypt from '../lib/bcrypt'
 
 // Framework Modules
 import Server from '../Server'
@@ -141,7 +142,13 @@ class Auth {
    */
   async register (data: Object): Promise<Object> {
     // Retrieve settings
+    const { password, } = this.Config.get('user.prop')
+
+    // Retrieve settings
     const registerReturnProps = ModuleConfig.get('registerReturnProps')
+
+    // Crypt password
+    data[password] = await this.cryptPassword(data[password])
 
     try {
       // User register
@@ -294,14 +301,14 @@ class Auth {
      const loginReturnProps = this.Config.get('loginReturnProps')
      const loginReturnTokenProps = this.Config.get('loginReturnTokenProps')
      const { login, password, token, active, } = this.Config.get('user.prop')
-     const { key, algorithm, } = this.Config.get('hash')
+     const { key, algorithm, } = this.Config.get('token')
      
      // Search the user
      const bdUser = await this.UserRepository.findOne({ [login]: user[login], })
 
     // If you don't find the user, it returns an error
     // If password doesn't match, return error
-    if(!bdUser || bdUser[password] !== user[password]) {
+    if(!bdUser || await this.checkPassword(user[password], bdUser[password])) {
       return REST.getError('LOGIN_INVALID_CREDENTIALS', dictionary, {})
     }
 
@@ -351,7 +358,7 @@ class Auth {
 
     // Erase code and update password
     bdUser[refreshPasswordCode] = null
-    bdUser[password] = user[password]
+    bdUser[password] = this.cryptPassword(user[password])
 
     // Save changes
     try {
@@ -584,10 +591,29 @@ class Auth {
       )
     }
 
-    /** Create and return a code */
-    private generateCode (): string {
-      return randomString(ModuleConfig.get('code.length'), ModuleConfig.get('code.type'))
-    }
+  /** Create and return a code */
+  private generateCode (): string {
+    return randomString(ModuleConfig.get('code.length'), ModuleConfig.get('code.type'))
+  }
+
+  /**
+   * Crypt password
+   * 
+   * @param password The password
+   */
+  private cryptPassword (password: string): Promise<string> {
+    return bcrypt.hashSync(password, this.Config.get('passwordSalt'))
+  }
+
+  /**
+   * Check password
+   * 
+   * @param password The password hash
+   * @param passwordHash The password hash
+   */
+  private checkPassword (password: string, passwordHash: string ): Promise<boolean> {
+    return bcrypt.compareSync(password, passwordHash)
+  }
 }
 
 export default new Auth()

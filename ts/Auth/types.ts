@@ -99,8 +99,8 @@ export type AuthMailConfig = {
   },
 }
 
-/** Auth Encryption Hash Settings */
-export type AuthHashConfig = {
+/** Auth Encryption Token Settings */
+export type AuthTokenConfig = {
   /** Hash Key/Secret */
   key: string,
   /** Algorism to be used in the Hash */
@@ -135,6 +135,8 @@ export type AuthConfig = {
   routes?: AuthRoutesConfig,
   /** Data from emails to be sent by Auth */
   mail: AuthMailConfig,
-  /** Auth Encryption Hash Settings */
-  hash: AuthHashConfig,
+  /** Auth Encryption Token Settings */
+  token: AuthTokenConfig,
+  // The salt to be used to hash the password
+  passwordSalt: number,
 }
