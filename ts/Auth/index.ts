@@ -294,7 +294,7 @@ class Auth {
      const loginReturnProps = this.Config.get('loginReturnProps')
      const loginReturnTokenProps = this.Config.get('loginReturnTokenProps')
      const { login, password, token, active, } = this.Config.get('user.prop')
-     const { key, algorithm, } = this.Config.get('hash')
+     const { key, algorithm, } = this.Config.get('token')
      
      // Search the user
      const bdUser = await this.UserRepository.findOne({ [login]: user[login], })

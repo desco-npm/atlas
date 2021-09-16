@@ -5,7 +5,7 @@ import ORM from '../ORM'
 import Config from '../Config' // Generic class of configations
 
 // Auth Settings
-import { AuthConfig as AuthConfigType, AuthMailConfig, AuthHashConfig, } from './types'
+import { AuthConfig as AuthConfigType, AuthMailConfig, AuthTokenConfig, } from './types'
 
 /** Config AtlasJS Auth Module */
 class AuthConfig extends Config {
@@ -45,10 +45,10 @@ class AuthConfig extends Config {
           text: 'Your password recovery code is [[CODE]]',
           html: 'Your password recovery code is <b>[[CODE]]</b>',
         },
-      } as Partial<AuthMailConfig>,
-      hash: {
+      },
+      token: {
         algorithm: 'HS256',
-      } as Partial<AuthHashConfig>,
+      },
       user: {
         entityName: 'User',
         prop: {
@@ -82,7 +82,7 @@ class AuthConfig extends Config {
           name: 'name',
         }
       },
-    } as Partial<AuthConfigType>)
+    } as AuthConfigType)
   }
 }
 
