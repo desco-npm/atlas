@@ -401,7 +401,7 @@ var Auth = /** @class */ (function () {
                         if (_c) return [3 /*break*/, 3];
                         return [4 /*yield*/, this.checkPassword(user[password], bdUser[password])];
                     case 2:
-                        _c = (_e.sent());
+                        _c = !(_e.sent());
                         _e.label = 3;
                     case 3:
                         // If you don't find the user, it returns an error
@@ -713,6 +713,7 @@ var Auth = /** @class */ (function () {
      * @param passwordHash The password hash
      */
     Auth.prototype.checkPassword = function (password, passwordHash) {
+        console.log(password, passwordHash);
         return bcrypt_1.default.compareSync(password, passwordHash);
     };
     return Auth;

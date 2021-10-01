@@ -308,7 +308,7 @@ class Auth {
 
     // If you don't find the user, it returns an error
     // If password doesn't match, return error
-    if(!bdUser || await this.checkPassword(user[password], bdUser[password])) {
+    if(!bdUser || !(await this.checkPassword(user[password], bdUser[password]))) {
       return REST.getError('LOGIN_INVALID_CREDENTIALS', dictionary, {})
     }
 
@@ -612,6 +612,7 @@ class Auth {
    * @param passwordHash The password hash
    */
   private checkPassword (password: string, passwordHash: string ): Promise<boolean> {
+    console.log(password, passwordHash)
     return bcrypt.compareSync(password, passwordHash)
   }
 }
