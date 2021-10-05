@@ -241,8 +241,10 @@ class Auth {
       return REST.getError('ACTIVE_USER_ERROR', dictionary, { error: e, })
     }
 
+    console.log('ok')
+
     // Log in and return
-    return this.login(user)
+    return this.login(user, true)
   }
 
   /**
@@ -295,8 +297,9 @@ class Auth {
    * Authenticate a user
    * 
    * @param user User data to have password recovered
+   * @param ignorePassword Whether to skip password verification
    */
-  async login (user: any): Promise<any> {
+  async login (user: any, ignorePassword: boolean = false): Promise<any> {
      // Retrieve settings
      const loginReturnProps = this.Config.get('loginReturnProps')
      const loginReturnTokenProps = this.Config.get('loginReturnTokenProps')
@@ -306,9 +309,14 @@ class Auth {
      // Search the user
      const bdUser = await this.UserRepository.findOne({ [login]: user[login], })
 
+    // If the password entered is valid
+     const validPassword = (
+      ignorePassword || (await this.checkPassword(user[password], bdUser[password]))
+     )
+
     // If you don't find the user, it returns an error
     // If password doesn't match, return error
-    if(!bdUser || !(await this.checkPassword(user[password], bdUser[password]))) {
+    if(!bdUser || !validPassword) {
       return REST.getError('LOGIN_INVALID_CREDENTIALS', dictionary, {})
     }
 
@@ -612,7 +620,6 @@ class Auth {
    * @param passwordHash The password hash
    */
   private checkPassword (password: string, passwordHash: string ): Promise<boolean> {
-    console.log(password, passwordHash)
     return bcrypt.compareSync(password, passwordHash)
   }
 }

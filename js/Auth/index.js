@@ -311,9 +311,10 @@ var Auth = /** @class */ (function () {
                     case 4:
                         e_2 = _c.sent();
                         return [2 /*return*/, REST_1.default.getError('ACTIVE_USER_ERROR', dictionary_1.default, { error: e_2, })];
-                    case 5: 
-                    // Log in and return
-                    return [2 /*return*/, this.login(user)];
+                    case 5:
+                        console.log('ok');
+                        // Log in and return
+                        return [2 /*return*/, this.login(user, true)];
                 }
             });
         });
@@ -379,10 +380,12 @@ var Auth = /** @class */ (function () {
      * Authenticate a user
      *
      * @param user User data to have password recovered
+     * @param ignorePassword Whether to skip password verification
      */
-    Auth.prototype.login = function (user) {
+    Auth.prototype.login = function (user, ignorePassword) {
+        if (ignorePassword === void 0) { ignorePassword = false; }
         return __awaiter(this, void 0, void 0, function () {
-            var loginReturnProps, loginReturnTokenProps, _a, login, password, token, active, _b, key, algorithm, bdUser, _c, e_4;
+            var loginReturnProps, loginReturnTokenProps, _a, login, password, token, active, _b, key, algorithm, bdUser, validPassword, _c, e_4;
             var _d;
             return __generator(this, function (_e) {
                 switch (_e.label) {
@@ -392,21 +395,21 @@ var Auth = /** @class */ (function () {
                         _a = this.Config.get('user.prop'), login = _a.login, password = _a.password, token = _a.token, active = _a.active;
                         _b = this.Config.get('token'), key = _b.key, algorithm = _b.algorithm;
                         return [4 /*yield*/, this.UserRepository.findOne((_d = {}, _d[login] = user[login], _d))
-                            // If you don't find the user, it returns an error
-                            // If password doesn't match, return error
+                            // If the password entered is valid
                         ];
                     case 1:
                         bdUser = _e.sent();
-                        _c = !bdUser;
+                        _c = ignorePassword;
                         if (_c) return [3 /*break*/, 3];
                         return [4 /*yield*/, this.checkPassword(user[password], bdUser[password])];
                     case 2:
-                        _c = !(_e.sent());
+                        _c = (_e.sent());
                         _e.label = 3;
                     case 3:
+                        validPassword = (_c);
                         // If you don't find the user, it returns an error
                         // If password doesn't match, return error
-                        if (_c) {
+                        if (!bdUser || !validPassword) {
                             return [2 /*return*/, REST_1.default.getError('LOGIN_INVALID_CREDENTIALS', dictionary_1.default, {})];
                         }
                         // If user is not active, returns error
@@ -713,7 +716,6 @@ var Auth = /** @class */ (function () {
      * @param passwordHash The password hash
      */
     Auth.prototype.checkPassword = function (password, passwordHash) {
-        console.log(password, passwordHash);
         return bcrypt_1.default.compareSync(password, passwordHash);
     };
     return Auth;
