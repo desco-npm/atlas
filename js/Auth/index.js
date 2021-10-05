@@ -469,7 +469,7 @@ var Auth = /** @class */ (function () {
                     case 4:
                         e_5 = _c.sent();
                         return [2 /*return*/, REST_1.default.getError('REFRESH_PASSWORD_SAVE_ERROR', dictionary_1.default, { error: e_5, })];
-                    case 5: return [4 /*yield*/, this.login(bdUser)
+                    case 5: return [4 /*yield*/, this.login(bdUser, true)
                         // Get token
                     ];
                     case 6:
