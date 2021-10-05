@@ -377,7 +377,7 @@ class Auth {
     }
 
     // Login
-    const loginUser = await this.login(bdUser)
+    const loginUser = await this.login(bdUser, true)
 
     // Get token
     bdUser[token] = loginUser[token] 
