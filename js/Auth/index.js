@@ -311,10 +311,9 @@ var Auth = /** @class */ (function () {
                     case 4:
                         e_2 = _c.sent();
                         return [2 /*return*/, REST_1.default.getError('ACTIVE_USER_ERROR', dictionary_1.default, { error: e_2, })];
-                    case 5:
-                        console.log('ok');
-                        // Log in and return
-                        return [2 /*return*/, this.login(user, true)];
+                    case 5: 
+                    // Log in and return
+                    return [2 /*return*/, this.login(user, true)];
                 }
             });
         });

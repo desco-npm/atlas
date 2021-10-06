@@ -241,7 +241,6 @@ class Auth {
       return REST.getError('ACTIVE_USER_ERROR', dictionary, { error: e, })
     }
 
-    console.log('ok')
 
     // Log in and return
     return this.login(user, true)
@@ -355,10 +354,9 @@ class Auth {
     // Retrieve settings
     const refreshPasswordReturnProps = this.Config.get('refreshPasswordReturnProps')
     const { refreshPasswordCode, email, password, token, } = this.Config.get('user.prop')
-
     // User search
     let bdUser = await this.UserRepository.findOne({ [email]: user[email], })
-
+    
     // If there was an error, reject
     if(!bdUser || bdUser[refreshPasswordCode] !== user[refreshPasswordCode]) {
       return REST.getError('REFRESH_PASSWORD_INVALID_CODE', dictionary, {})
