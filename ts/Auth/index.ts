@@ -255,11 +255,11 @@ class Auth {
     // Retrieve settings
     const { email, refreshPasswordCode, } = this.Config.get('user.prop')
     const sendRefreshPasswordCodeReturnProps = this.Config.get('sendRefreshPasswordCodeReturnProps')
-
+    
     // user search
+    // If you don't find the user, it returns an error
     user = await this.UserRepository.findOne({ [email]: user[email], })
 
-    // If you don't find the user, it returns an error
     if(!user) {
       return REST.getError('SEND_PASSWORD_RECOVER_USER_NOT_FOUND', dictionary, {})
     }

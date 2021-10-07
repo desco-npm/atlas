@@ -333,13 +333,11 @@ var Auth = /** @class */ (function () {
                     case 0:
                         _b = this.Config.get('user.prop'), email = _b.email, refreshPasswordCode = _b.refreshPasswordCode;
                         sendRefreshPasswordCodeReturnProps = this.Config.get('sendRefreshPasswordCodeReturnProps');
-                        return [4 /*yield*/, this.UserRepository.findOne((_d = {}, _d[email] = user[email], _d))
-                            // If you don't find the user, it returns an error
-                        ];
+                        return [4 /*yield*/, this.UserRepository.findOne((_d = {}, _d[email] = user[email], _d))];
                     case 1:
                         // user search
-                        user = _e.sent();
                         // If you don't find the user, it returns an error
+                        user = _e.sent();
                         if (!user) {
                             return [2 /*return*/, REST_1.default.getError('SEND_PASSWORD_RECOVER_USER_NOT_FOUND', dictionary_1.default, {})];
                         }
