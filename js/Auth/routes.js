@@ -18,9 +18,7 @@ exports.default = (function (_a) {
     Express.put(Config_1.default.get('routes.login'), function (req, res) {
         _1.default.login(req.body)
             .then(function (response) { return res.json(response); })
-            .catch(function (e) {
-            res.status(e.statusCode).json(e);
-        });
+            .catch(function (e) { return res.status(e.statusCode).json(e); });
     });
     Express.put(Config_1.default.get('routes.sendActiveCode'), function (req, res) {
         _1.default.sendActiveCodeMail(req.body)
