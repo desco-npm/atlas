@@ -44,14 +44,12 @@ class REST {
     )
 
     // The error
-    const error: RESTError = {
+    return {
       statusCode : options?.statusCode || 500,
       errorId: id,
       message,
       details: this.Config.get('details') ? options?.error : undefined
     }
-
-    return [ undefined, true, ].indexOf(options?.promise) > -1 ? Promise.reject(error) : error
   }
 }
 

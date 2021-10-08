@@ -18,7 +18,9 @@ export default ({ Express, }: ServerRouterParams) => {
   Express.put(AuthConfig.get('routes.login'), (req, res) => {
     Auth.login(req.body)
       .then(response => res.json(response))
-      .catch(e => res.status(e.statusCode).json(e))
+      .catch(e => {
+        res.status(e.statusCode).json(e)
+      })
   })
 
   Express.put(AuthConfig.get('routes.sendActiveCode'), (req, res) => {

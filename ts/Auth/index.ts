@@ -2,7 +2,7 @@
  * TODO: Colocar Pattern de URL em método próprio pois esta repetido em dois métodos
  * TODO: Registro validar confirmação de senha
  * TODO: Atualização de senha validar confirmação de senha
- */ 
+ */
 
 // Framework resources
 import randomString from '../lib/randomString'
@@ -24,6 +24,7 @@ import REST from '../REST'
 
 // Types
 import { AuthConfig as AuthConfig, } from './types'
+import { RESTError, } from '../REST/types'
 import { ServerRouterParams, } from '../Server/types'
 import { Connection, } from '../ORM/types'
 
@@ -94,9 +95,7 @@ class Auth {
       
       // No token, returns error
       if (!req.headers.authorization) {
-        REST.getError('ACCESS_WITHOUT_TOKEN', dictionary).catch(e => {
-          res.status(401).json(e)
-        })
+        res.status(401).json(REST.getError('ACCESS_WITHOUT_TOKEN', dictionary))
         
         return
       }
@@ -106,18 +105,14 @@ class Auth {
 
       // If not found user, token is invalid. Inform
       if(!user) {
-        REST.getError('ACCESS_INVALID_TOKEN', dictionary).catch(e => {
-          res.status(403).json(e)
-        })
+        res.status(403).json(REST.getError('ACCESS_INVALID_TOKEN', dictionary))
 
         return
       }
 
       // If user does not have permission for the requested resource, inform
       if (!await this.resourcePermissionByUser(user, req.url, req.method)) {
-        REST.getError('ACCESS_RESTRICT', dictionary).catch(e => {
-          res.status(403).json(e)
-        })
+        res.status(403).json(REST.getError('ACCESS_RESTRICT', dictionary))
 
         return
       }
@@ -142,23 +137,21 @@ class Auth {
    */
   async register (data: Object): Promise<Object> {
     // Retrieve settings
-    const { password, login, } = this.Config.get('user.prop', )
+    const { password, } = this.Config.get('user.prop')
 
     // Retrieve settings
     const registerReturnProps = ModuleConfig.get('registerReturnProps')
 
-    // Search existing user
-    const existingUser = await this.UserRepository.findOne({ [login]: data[login], })
-    // Search existing user
-    if (existingUser) {
-      return REST.getError('USER_ALREADY_EXISTS', dictionary, { promise: false, },)
-    }
-    
     // Crypt password
     data[password] = await this.cryptPassword(data[password])
 
-    // User register
-    let user = await this.UserRepository.save(data)
+    try {
+      // User register
+      var user = await this.UserRepository.save(data)
+    }
+    catch(e) {
+      return REST.getError('USER_ALREADY_EXISTS', dictionary, { error: e, })
+    }
 
     // Send the email
     await this.sendActiveCodeMail(user)
@@ -306,18 +299,17 @@ class Auth {
      const loginReturnTokenProps = this.Config.get('loginReturnTokenProps')
      const { login, password, token, active, } = this.Config.get('user.prop')
      const { key, algorithm, } = this.Config.get('token')
-     
+
      // Search the user
      const bdUser = await this.UserRepository.findOne({ [login]: user[login], })
 
-    // If the password entered is valid
-     const validPassword = (
-      ignorePassword || (await this.checkPassword(user[password], bdUser[password]))
-     )
-
     // If you don't find the user, it returns an error
+    if (!bdUser) {
+      return REST.getError('LOGIN_INVALID_CREDENTIALS', dictionary, {})
+    }
+
     // If password doesn't match, return error
-    if(!bdUser || !validPassword) {
+    if(!ignorePassword && !(await this.checkPassword(user[password], bdUser[password]))) {
       return REST.getError('LOGIN_INVALID_CREDENTIALS', dictionary, {})
     }
 

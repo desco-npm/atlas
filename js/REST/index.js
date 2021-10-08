@@ -34,13 +34,12 @@ var REST = /** @class */ (function () {
         // Retrieves message from the dictionary, according to the language defined in the settings
         var message = Dictionary_1.default.get("REST_ERROR_" + id, dictionary, { bind: options === null || options === void 0 ? void 0 : options.bind, });
         // The error
-        var error = {
+        return {
             statusCode: (options === null || options === void 0 ? void 0 : options.statusCode) || 500,
             errorId: id,
             message: message,
             details: this.Config.get('details') ? options === null || options === void 0 ? void 0 : options.error : undefined
         };
-        return [undefined, true,].indexOf(options === null || options === void 0 ? void 0 : options.promise) > -1 ? Promise.reject(error) : error;
     };
     return REST;
 }());

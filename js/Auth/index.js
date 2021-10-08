@@ -126,9 +126,7 @@ var Auth = /** @class */ (function () {
                                 }
                                 // No token, returns error
                                 if (!req.headers.authorization) {
-                                    REST_1.default.getError('ACCESS_WITHOUT_TOKEN', dictionary_1.default).catch(function (e) {
-                                        res.status(401).json(e);
-                                    });
+                                    res.status(401).json(REST_1.default.getError('ACCESS_WITHOUT_TOKEN', dictionary_1.default));
                                     return [2 /*return*/];
                                 }
                                 return [4 /*yield*/, this.getUserByToken(req.headers.authorization)
@@ -138,18 +136,14 @@ var Auth = /** @class */ (function () {
                                 user = _a.sent();
                                 // If not found user, token is invalid. Inform
                                 if (!user) {
-                                    REST_1.default.getError('ACCESS_INVALID_TOKEN', dictionary_1.default).catch(function (e) {
-                                        res.status(403).json(e);
-                                    });
+                                    res.status(403).json(REST_1.default.getError('ACCESS_INVALID_TOKEN', dictionary_1.default));
                                     return [2 /*return*/];
                                 }
                                 return [4 /*yield*/, this.resourcePermissionByUser(user, req.url, req.method)];
                             case 3:
                                 // If user does not have permission for the requested resource, inform
                                 if (!(_a.sent())) {
-                                    REST_1.default.getError('ACCESS_RESTRICT', dictionary_1.default).catch(function (e) {
-                                        res.status(403).json(e);
-                                    });
+                                    res.status(403).json(REST_1.default.getError('ACCESS_RESTRICT', dictionary_1.default));
                                     return [2 /*return*/];
                                 }
                                 req.headers.userData = user;
@@ -179,43 +173,37 @@ var Auth = /** @class */ (function () {
      */
     Auth.prototype.register = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, password, login, registerReturnProps, existingUser, _b, _c, user;
-            var _d;
-            return __generator(this, function (_e) {
-                switch (_e.label) {
+            var password, registerReturnProps, _a, _b, user, e_1;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
-                        _a = this.Config.get('user.prop'), password = _a.password, login = _a.login;
+                        password = this.Config.get('user.prop').password;
                         registerReturnProps = Config_1.default.get('registerReturnProps');
-                        return [4 /*yield*/, this.UserRepository.findOne((_d = {}, _d[login] = data[login], _d))
-                            // Search existing user
-                        ];
+                        // Crypt password
+                        _a = data;
+                        _b = password;
+                        return [4 /*yield*/, this.cryptPassword(data[password])];
                     case 1:
-                        existingUser = _e.sent();
-                        // Search existing user
-                        if (existingUser) {
-                            return [2 /*return*/, REST_1.default.getError('USER_ALREADY_EXISTS', dictionary_1.default, { promise: false, })];
-                        }
                         // Crypt password
-                        _b = data;
-                        _c = password;
-                        return [4 /*yield*/, this.cryptPassword(data[password])
-                            // User register
-                        ];
+                        _a[_b] = _c.sent();
+                        _c.label = 2;
                     case 2:
-                        // Crypt password
-                        _b[_c] = _e.sent();
-                        return [4 /*yield*/, this.UserRepository.save(data)
-                            // Send the email
-                        ];
+                        _c.trys.push([2, 4, , 5]);
+                        return [4 /*yield*/, this.UserRepository.save(data)];
                     case 3:
-                        user = _e.sent();
-                        // Send the email
-                        return [4 /*yield*/, this.sendActiveCodeMail(user)
-                            // Filtering object to return only the desired data
-                        ];
+                        user = _c.sent();
+                        return [3 /*break*/, 5];
                     case 4:
+                        e_1 = _c.sent();
+                        return [2 /*return*/, REST_1.default.getError('USER_ALREADY_EXISTS', dictionary_1.default, { error: e_1, })];
+                    case 5: 
+                    // Send the email
+                    return [4 /*yield*/, this.sendActiveCodeMail(user)
+                        // Filtering object to return only the desired data
+                    ];
+                    case 6:
                         // Send the email
-                        _e.sent();
+                        _c.sent();
                         // Filtering object to return only the desired data
                         user = objectFilter_1.default(user, function (v, k) { return registerReturnProps.indexOf(k) !== -1; });
                         return [2 /*return*/, user];
@@ -284,7 +272,7 @@ var Auth = /** @class */ (function () {
      */
     Auth.prototype.active = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, active, activeCode, email, e_1;
+            var _a, active, activeCode, email, e_2;
             var _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
@@ -315,8 +303,8 @@ var Auth = /** @class */ (function () {
                         user = _c.sent();
                         return [3 /*break*/, 5];
                     case 4:
-                        e_1 = _c.sent();
-                        return [2 /*return*/, REST_1.default.getError('ACTIVE_USER_ERROR', dictionary_1.default, { error: e_1, })];
+                        e_2 = _c.sent();
+                        return [2 /*return*/, REST_1.default.getError('ACTIVE_USER_ERROR', dictionary_1.default, { error: e_2, })];
                     case 5: 
                     // Log in and return
                     return [2 /*return*/, this.login(user, true)];
@@ -332,7 +320,7 @@ var Auth = /** @class */ (function () {
     Auth.prototype.sendRefreshPasswordCode = function (user) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var _b, email, refreshPasswordCode, sendRefreshPasswordCodeReturnProps, e_2, _c, transporter, from, refreshPasswordCodeMail, subject, text, html;
+            var _b, email, refreshPasswordCode, sendRefreshPasswordCodeReturnProps, e_3, _c, transporter, from, refreshPasswordCodeMail, subject, text, html;
             var _d;
             return __generator(this, function (_e) {
                 switch (_e.label) {
@@ -357,8 +345,8 @@ var Auth = /** @class */ (function () {
                         _e.sent();
                         return [3 /*break*/, 5];
                     case 4:
-                        e_2 = _e.sent();
-                        return [2 /*return*/, REST_1.default.getError('SEND_PASSWORD_RECOVER_SAVE_ERROR', dictionary_1.default, { error: e_2, })];
+                        e_3 = _e.sent();
+                        return [2 /*return*/, REST_1.default.getError('SEND_PASSWORD_RECOVER_SAVE_ERROR', dictionary_1.default, { error: e_3, })];
                     case 5:
                         _c = Config_1.default.get('mail'), transporter = _c.transporter, from = _c.from;
                         refreshPasswordCodeMail = Config_1.default.get('mail.refreshPasswordCode');
@@ -388,7 +376,7 @@ var Auth = /** @class */ (function () {
     Auth.prototype.login = function (user, ignorePassword) {
         if (ignorePassword === void 0) { ignorePassword = false; }
         return __awaiter(this, void 0, void 0, function () {
-            var loginReturnProps, loginReturnTokenProps, _a, login, password, token, active, _b, key, algorithm, bdUser, validPassword, _c, e_3;
+            var loginReturnProps, loginReturnTokenProps, _a, login, password, token, active, _b, key, algorithm, bdUser, _c, e_4;
             var _d;
             return __generator(this, function (_e) {
                 switch (_e.label) {
@@ -398,21 +386,23 @@ var Auth = /** @class */ (function () {
                         _a = this.Config.get('user.prop'), login = _a.login, password = _a.password, token = _a.token, active = _a.active;
                         _b = this.Config.get('token'), key = _b.key, algorithm = _b.algorithm;
                         return [4 /*yield*/, this.UserRepository.findOne((_d = {}, _d[login] = user[login], _d))
-                            // If the password entered is valid
+                            // If you don't find the user, it returns an error
                         ];
                     case 1:
                         bdUser = _e.sent();
-                        _c = ignorePassword;
-                        if (_c) return [3 /*break*/, 3];
+                        // If you don't find the user, it returns an error
+                        if (!bdUser) {
+                            return [2 /*return*/, REST_1.default.getError('LOGIN_INVALID_CREDENTIALS', dictionary_1.default, {})];
+                        }
+                        _c = !ignorePassword;
+                        if (!_c) return [3 /*break*/, 3];
                         return [4 /*yield*/, this.checkPassword(user[password], bdUser[password])];
                     case 2:
-                        _c = (_e.sent());
+                        _c = !(_e.sent());
                         _e.label = 3;
                     case 3:
-                        validPassword = (_c);
-                        // If you don't find the user, it returns an error
                         // If password doesn't match, return error
-                        if (!bdUser || !validPassword) {
+                        if (_c) {
                             return [2 /*return*/, REST_1.default.getError('LOGIN_INVALID_CREDENTIALS', dictionary_1.default, {})];
                         }
                         // If user is not active, returns error
@@ -429,8 +419,8 @@ var Auth = /** @class */ (function () {
                         _e.sent();
                         return [3 /*break*/, 7];
                     case 6:
-                        e_3 = _e.sent();
-                        return [2 /*return*/, REST_1.default.getError('LOGIN_SAVE_TOKEN_ERROR', dictionary_1.default, { error: e_3, })];
+                        e_4 = _e.sent();
+                        return [2 /*return*/, REST_1.default.getError('LOGIN_SAVE_TOKEN_ERROR', dictionary_1.default, { error: e_4, })];
                     case 7: return [2 /*return*/, objectFilter_1.default(bdUser, function (v, k) { return loginReturnProps.indexOf(k) !== -1; })];
                 }
             });
@@ -443,7 +433,7 @@ var Auth = /** @class */ (function () {
      */
     Auth.prototype.refreshPassword = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var refreshPasswordReturnProps, _a, refreshPasswordCode, email, password, token, bdUser, e_4, loginUser;
+            var refreshPasswordReturnProps, _a, refreshPasswordCode, email, password, token, bdUser, e_5, loginUser;
             var _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
@@ -470,8 +460,8 @@ var Auth = /** @class */ (function () {
                         bdUser = _c.sent();
                         return [3 /*break*/, 5];
                     case 4:
-                        e_4 = _c.sent();
-                        return [2 /*return*/, REST_1.default.getError('REFRESH_PASSWORD_SAVE_ERROR', dictionary_1.default, { error: e_4, })];
+                        e_5 = _c.sent();
+                        return [2 /*return*/, REST_1.default.getError('REFRESH_PASSWORD_SAVE_ERROR', dictionary_1.default, { error: e_5, })];
                     case 5: return [4 /*yield*/, this.login(bdUser, true)
                         // Get token
                     ];
@@ -493,7 +483,7 @@ var Auth = /** @class */ (function () {
      */
     Auth.prototype.logout = function (userToken) {
         return __awaiter(this, void 0, void 0, function () {
-            var refreshPasswordReturnProps, _a, refreshPasswordCode, email, password, token, user, e_5;
+            var refreshPasswordReturnProps, _a, refreshPasswordCode, email, password, token, user, e_6;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -522,8 +512,8 @@ var Auth = /** @class */ (function () {
                         _b.sent();
                         return [3 /*break*/, 5];
                     case 4:
-                        e_5 = _b.sent();
-                        return [2 /*return*/, REST_1.default.getError('LOGOUT_SAVE_ERROR', dictionary_1.default, { error: e_5, })];
+                        e_6 = _b.sent();
+                        return [2 /*return*/, REST_1.default.getError('LOGOUT_SAVE_ERROR', dictionary_1.default, { error: e_6, })];
                     case 5: return [2 /*return*/];
                 }
             });
