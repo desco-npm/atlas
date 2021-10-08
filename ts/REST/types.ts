@@ -11,6 +11,8 @@ export type RESTGetErrorOptions = {
   readonly bind?: {},
   /** The original error */
   readonly error?: Error | unknown,
+  /** If returns in promise */
+  readonly promise?: boolean,
 }
 
 /** AtlasJS REST getError Options Method Options **/
@@ -22,5 +24,5 @@ export type RESTError = {
   /** Error message */
   readonly message: string,
   /** Error Details */
-  readonly details?: {},
+  readonly details?: Error | unknown | undefined,
 }

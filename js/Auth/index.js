@@ -179,37 +179,43 @@ var Auth = /** @class */ (function () {
      */
     Auth.prototype.register = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var password, registerReturnProps, _a, _b, user, e_1;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
+            var _a, password, login, registerReturnProps, existingUser, _b, _c, user;
+            var _d;
+            return __generator(this, function (_e) {
+                switch (_e.label) {
                     case 0:
-                        password = this.Config.get('user.prop').password;
+                        _a = this.Config.get('user.prop'), password = _a.password, login = _a.login;
                         registerReturnProps = Config_1.default.get('registerReturnProps');
-                        // Crypt password
-                        _a = data;
-                        _b = password;
-                        return [4 /*yield*/, this.cryptPassword(data[password])];
+                        return [4 /*yield*/, this.UserRepository.findOne((_d = {}, _d[login] = data[login], _d))
+                            // Search existing user
+                        ];
                     case 1:
+                        existingUser = _e.sent();
+                        // Search existing user
+                        if (existingUser) {
+                            return [2 /*return*/, REST_1.default.getError('USER_ALREADY_EXISTS', dictionary_1.default, { promise: false, })];
+                        }
                         // Crypt password
-                        _a[_b] = _c.sent();
-                        _c.label = 2;
+                        _b = data;
+                        _c = password;
+                        return [4 /*yield*/, this.cryptPassword(data[password])
+                            // User register
+                        ];
                     case 2:
-                        _c.trys.push([2, 4, , 5]);
-                        return [4 /*yield*/, this.UserRepository.save(data)];
+                        // Crypt password
+                        _b[_c] = _e.sent();
+                        return [4 /*yield*/, this.UserRepository.save(data)
+                            // Send the email
+                        ];
                     case 3:
-                        user = _c.sent();
-                        return [3 /*break*/, 5];
-                    case 4:
-                        e_1 = _c.sent();
-                        return [2 /*return*/, REST_1.default.getError('USER_ALREADY_EXISTS', dictionary_1.default, { error: e_1, })];
-                    case 5: 
-                    // Send the email
-                    return [4 /*yield*/, this.sendActiveCodeMail(user)
-                        // Filtering object to return only the desired data
-                    ];
-                    case 6:
+                        user = _e.sent();
                         // Send the email
-                        _c.sent();
+                        return [4 /*yield*/, this.sendActiveCodeMail(user)
+                            // Filtering object to return only the desired data
+                        ];
+                    case 4:
+                        // Send the email
+                        _e.sent();
                         // Filtering object to return only the desired data
                         user = objectFilter_1.default(user, function (v, k) { return registerReturnProps.indexOf(k) !== -1; });
                         return [2 /*return*/, user];
@@ -278,7 +284,7 @@ var Auth = /** @class */ (function () {
      */
     Auth.prototype.active = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, active, activeCode, email, e_2;
+            var _a, active, activeCode, email, e_1;
             var _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
@@ -309,8 +315,8 @@ var Auth = /** @class */ (function () {
                         user = _c.sent();
                         return [3 /*break*/, 5];
                     case 4:
-                        e_2 = _c.sent();
-                        return [2 /*return*/, REST_1.default.getError('ACTIVE_USER_ERROR', dictionary_1.default, { error: e_2, })];
+                        e_1 = _c.sent();
+                        return [2 /*return*/, REST_1.default.getError('ACTIVE_USER_ERROR', dictionary_1.default, { error: e_1, })];
                     case 5: 
                     // Log in and return
                     return [2 /*return*/, this.login(user, true)];
@@ -326,7 +332,7 @@ var Auth = /** @class */ (function () {
     Auth.prototype.sendRefreshPasswordCode = function (user) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var _b, email, refreshPasswordCode, sendRefreshPasswordCodeReturnProps, e_3, _c, transporter, from, refreshPasswordCodeMail, subject, text, html;
+            var _b, email, refreshPasswordCode, sendRefreshPasswordCodeReturnProps, e_2, _c, transporter, from, refreshPasswordCodeMail, subject, text, html;
             var _d;
             return __generator(this, function (_e) {
                 switch (_e.label) {
@@ -351,8 +357,8 @@ var Auth = /** @class */ (function () {
                         _e.sent();
                         return [3 /*break*/, 5];
                     case 4:
-                        e_3 = _e.sent();
-                        return [2 /*return*/, REST_1.default.getError('SEND_PASSWORD_RECOVER_SAVE_ERROR', dictionary_1.default, { error: e_3, })];
+                        e_2 = _e.sent();
+                        return [2 /*return*/, REST_1.default.getError('SEND_PASSWORD_RECOVER_SAVE_ERROR', dictionary_1.default, { error: e_2, })];
                     case 5:
                         _c = Config_1.default.get('mail'), transporter = _c.transporter, from = _c.from;
                         refreshPasswordCodeMail = Config_1.default.get('mail.refreshPasswordCode');
@@ -382,7 +388,7 @@ var Auth = /** @class */ (function () {
     Auth.prototype.login = function (user, ignorePassword) {
         if (ignorePassword === void 0) { ignorePassword = false; }
         return __awaiter(this, void 0, void 0, function () {
-            var loginReturnProps, loginReturnTokenProps, _a, login, password, token, active, _b, key, algorithm, bdUser, validPassword, _c, e_4;
+            var loginReturnProps, loginReturnTokenProps, _a, login, password, token, active, _b, key, algorithm, bdUser, validPassword, _c, e_3;
             var _d;
             return __generator(this, function (_e) {
                 switch (_e.label) {
@@ -423,8 +429,8 @@ var Auth = /** @class */ (function () {
                         _e.sent();
                         return [3 /*break*/, 7];
                     case 6:
-                        e_4 = _e.sent();
-                        return [2 /*return*/, REST_1.default.getError('LOGIN_SAVE_TOKEN_ERROR', dictionary_1.default, { error: e_4, })];
+                        e_3 = _e.sent();
+                        return [2 /*return*/, REST_1.default.getError('LOGIN_SAVE_TOKEN_ERROR', dictionary_1.default, { error: e_3, })];
                     case 7: return [2 /*return*/, objectFilter_1.default(bdUser, function (v, k) { return loginReturnProps.indexOf(k) !== -1; })];
                 }
             });
@@ -437,7 +443,7 @@ var Auth = /** @class */ (function () {
      */
     Auth.prototype.refreshPassword = function (user) {
         return __awaiter(this, void 0, void 0, function () {
-            var refreshPasswordReturnProps, _a, refreshPasswordCode, email, password, token, bdUser, e_5, loginUser;
+            var refreshPasswordReturnProps, _a, refreshPasswordCode, email, password, token, bdUser, e_4, loginUser;
             var _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
@@ -464,8 +470,8 @@ var Auth = /** @class */ (function () {
                         bdUser = _c.sent();
                         return [3 /*break*/, 5];
                     case 4:
-                        e_5 = _c.sent();
-                        return [2 /*return*/, REST_1.default.getError('REFRESH_PASSWORD_SAVE_ERROR', dictionary_1.default, { error: e_5, })];
+                        e_4 = _c.sent();
+                        return [2 /*return*/, REST_1.default.getError('REFRESH_PASSWORD_SAVE_ERROR', dictionary_1.default, { error: e_4, })];
                     case 5: return [4 /*yield*/, this.login(bdUser, true)
                         // Get token
                     ];
@@ -487,7 +493,7 @@ var Auth = /** @class */ (function () {
      */
     Auth.prototype.logout = function (userToken) {
         return __awaiter(this, void 0, void 0, function () {
-            var refreshPasswordReturnProps, _a, refreshPasswordCode, email, password, token, user, e_6;
+            var refreshPasswordReturnProps, _a, refreshPasswordCode, email, password, token, user, e_5;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -516,8 +522,8 @@ var Auth = /** @class */ (function () {
                         _b.sent();
                         return [3 /*break*/, 5];
                     case 4:
-                        e_6 = _b.sent();
-                        return [2 /*return*/, REST_1.default.getError('LOGOUT_SAVE_ERROR', dictionary_1.default, { error: e_6, })];
+                        e_5 = _b.sent();
+                        return [2 /*return*/, REST_1.default.getError('LOGOUT_SAVE_ERROR', dictionary_1.default, { error: e_5, })];
                     case 5: return [2 /*return*/];
                 }
             });

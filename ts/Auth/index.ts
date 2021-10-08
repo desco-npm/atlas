@@ -2,7 +2,7 @@
  * TODO: Colocar Pattern de URL em método próprio pois esta repetido em dois métodos
  * TODO: Registro validar confirmação de senha
  * TODO: Atualização de senha validar confirmação de senha
- */
+ */ 
 
 // Framework resources
 import randomString from '../lib/randomString'
@@ -142,21 +142,23 @@ class Auth {
    */
   async register (data: Object): Promise<Object> {
     // Retrieve settings
-    const { password, } = this.Config.get('user.prop')
+    const { password, login, } = this.Config.get('user.prop', )
 
     // Retrieve settings
     const registerReturnProps = ModuleConfig.get('registerReturnProps')
 
+    // Search existing user
+    const existingUser = await this.UserRepository.findOne({ [login]: data[login], })
+    // Search existing user
+    if (existingUser) {
+      return REST.getError('USER_ALREADY_EXISTS', dictionary, { promise: false, },)
+    }
+    
     // Crypt password
     data[password] = await this.cryptPassword(data[password])
 
-    try {
-      // User register
-      var user = await this.UserRepository.save(data)
-    }
-    catch(e) {
-      return REST.getError('USER_ALREADY_EXISTS', dictionary, { error: e, })
-    }
+    // User register
+    let user = await this.UserRepository.save(data)
 
     // Send the email
     await this.sendActiveCodeMail(user)

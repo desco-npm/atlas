@@ -12,9 +12,7 @@ export default ({ Express, }: ServerRouterParams) => {
   Express.post(AuthConfig.get('routes.register'), (req, res) => {
     Auth.register(req.body)
       .then(response => res.json(response))
-      .catch(e => {
-        res.status(e.statusCode).json(e)
-      })
+      .catch(e => res.status(e.statusCode).json(e))
   })
 
   Express.put(AuthConfig.get('routes.login'), (req, res) => {
