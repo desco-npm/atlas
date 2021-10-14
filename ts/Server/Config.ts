@@ -23,6 +23,7 @@ class ServerConfig extends Config {
           format: [ 'bold', ]
         })
       },
+      middleware: [],
     } as ServerConfigType)
   }
 }

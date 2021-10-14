@@ -41,6 +41,8 @@ class Server {
       staticDir.map(d => this.Core.use(express.static(d)))
     }
 
+    this.Config.get('middleware', { forceArray: true, }).map((m: any) => this.Core.use(m))
+
     return this
   }
 

@@ -50,7 +50,7 @@ var Config_1 = __importDefault(require("./Config"));
 var Server = /** @class */ (function () {
     function Server() {
         /** The Heart of the Server (Express) */
-        this.Core = express_1.default();
+        this.Core = (0, express_1.default)();
         /** Server Settings */
         this.Config = Config_1.default;
     }
@@ -64,16 +64,17 @@ var Server = /** @class */ (function () {
         // Set settings
         this.Config.set(config);
         // Configure the core
-        this.Core.use(cors_1.default()); // Treat the CORS
+        this.Core.use((0, cors_1.default)()); // Treat the CORS
         this.Core.use(body_parser_1.default.urlencoded(this.Config.get('urlencoded'))); // Recognize URL Encoded
         this.Core.use(body_parser_1.default.json(this.Config.get('json'))); // Recognize JSON
         /** Directory or directory list with static content */
         var staticDir = this.Config.get('staticDir');
         // If you have static directories, define them
         if (staticDir) {
-            staticDir = !isArray_1.default(staticDir) ? [staticDir,] : staticDir;
+            staticDir = !(0, isArray_1.default)(staticDir) ? [staticDir,] : staticDir;
             staticDir.map(function (d) { return _this.Core.use(express_1.default.static(d)); });
         }
+        this.Config.get('middleware', { forceArray: true, }).map(function (m) { return _this.Core.use(m); });
         return this;
     };
     /** Prepares the server */

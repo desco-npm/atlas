@@ -46,10 +46,13 @@ class Config {
   /**
    * Returns a Configuration
    * @param path Address of the configuration you want to access.Use points to access levels deeper
+   * @param params Extra parameters
    */
-  get (path?: string): any {
+  get (path?: string, params?: { forceArray?: boolean, }): any {
     if(path) {
-      return objectPath.get(this.configs, path)
+      const config = objectPath.get(this.configs, path)
+
+      return params?.forceArray ? [ config, ] : config
     }
     else {
       return this.configs

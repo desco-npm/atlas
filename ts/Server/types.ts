@@ -24,6 +24,8 @@ export type ServerConfig = {
   readonly router: RouterFunction[]
   /** Directory or directory list with static content */
   readonly staticDir: string | string[],
+  /** the middlewares */
+  readonly middleware: Function | Function[] | []
 }
 
 /** Parameters of a route */
