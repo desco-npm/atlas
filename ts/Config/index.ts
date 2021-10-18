@@ -1,4 +1,5 @@
 // Framework resources
+import isArray from '../lib/isArray'
 import objectPath from '../lib/objectPath'
 import { objectMerge, } from '../lib/objectMerge'
 
@@ -52,7 +53,7 @@ class Config {
     if(path) {
       const config = objectPath.get(this.configs, path)
 
-      return params?.forceArray ? [ config, ] : config
+      return params?.forceArray && !isArray(config) ? [ config, ] : config
     }
     else {
       return this.configs

@@ -34,8 +34,8 @@ var Dictionary = /** @class */ (function () {
     Dictionary.prototype.get = function (id, dictionary, options) {
         var text = dictionary[this.Config.get('lang')][id];
         // Exchange variables by informed values
-        objectMap_1.default((options === null || options === void 0 ? void 0 : options.bind) || {}, function (replaceThis, withThis) {
-            text = replaceAll_1.default(text, "[[" + withThis + "]]", replaceThis);
+        (0, objectMap_1.default)((options === null || options === void 0 ? void 0 : options.bind) || {}, function (replaceThis, withThis) {
+            text = (0, replaceAll_1.default)(text, "[[" + withThis + "]]", replaceThis);
         });
         return text;
     };

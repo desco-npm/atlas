@@ -51,10 +51,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -153,7 +157,7 @@ var Auth = /** @class */ (function () {
                     });
                 }); });
                 // Add routes
-                routes_1.default({ Express: Server_1.default.Core, });
+                (0, routes_1.default)({ Express: Server_1.default.Core, });
                 return [2 /*return*/];
             });
         });
@@ -205,7 +209,7 @@ var Auth = /** @class */ (function () {
                         // Send the email
                         _c.sent();
                         // Filtering object to return only the desired data
-                        user = objectFilter_1.default(user, function (v, k) { return registerReturnProps.indexOf(k) !== -1; });
+                        user = (0, objectFilter_1.default)(user, function (v, k) { return registerReturnProps.indexOf(k) !== -1; });
                         return [2 /*return*/, user];
                 }
             });
@@ -254,8 +258,8 @@ var Auth = /** @class */ (function () {
                                 from: from.name ? from.name + " <" + from.mail + ">" : from.mail,
                                 to: user[email],
                                 subject: subject,
-                                text: replaceAll_1.default(text, '[[CODE]]', user[activeCode]),
-                                html: replaceAll_1.default(html, '[[CODE]]', user[activeCode]),
+                                text: (0, replaceAll_1.default)(text, '[[CODE]]', user[activeCode]),
+                                html: (0, replaceAll_1.default)(html, '[[CODE]]', user[activeCode]),
                             }))];
                     case 4:
                         // Send mail
@@ -356,13 +360,13 @@ var Auth = /** @class */ (function () {
                                 from: from.name ? from.name + " <" + from.mail + ">" : from.mail,
                                 to: user[email],
                                 subject: subject,
-                                text: replaceAll_1.default(text, '[[CODE]]', user[refreshPasswordCode]),
-                                html: replaceAll_1.default(html, '[[CODE]]', user[refreshPasswordCode]),
+                                text: (0, replaceAll_1.default)(text, '[[CODE]]', user[refreshPasswordCode]),
+                                html: (0, replaceAll_1.default)(html, '[[CODE]]', user[refreshPasswordCode]),
                             }))];
                     case 6:
                         // Send mail
                         _e.sent();
-                        return [2 /*return*/, objectFilter_1.default(user, function (v, k) { return sendRefreshPasswordCodeReturnProps.indexOf(k) !== -1; })];
+                        return [2 /*return*/, (0, objectFilter_1.default)(user, function (v, k) { return sendRefreshPasswordCodeReturnProps.indexOf(k) !== -1; })];
                 }
             });
         });
@@ -410,7 +414,7 @@ var Auth = /** @class */ (function () {
                             return [2 /*return*/, REST_1.default.getError('LOGIN_INACTIVE_USER', dictionary_1.default, {})];
                         }
                         // Generate a token
-                        bdUser[token] = jsonWebToken_1.default.sign(__assign(__assign({}, objectFilter_1.default(bdUser, function (v, k) { return loginReturnTokenProps.indexOf(k) !== -1; })), { time: moment_1.default().format() }), key, { algorithm: algorithm, });
+                        bdUser[token] = jsonWebToken_1.default.sign(__assign(__assign({}, (0, objectFilter_1.default)(bdUser, function (v, k) { return loginReturnTokenProps.indexOf(k) !== -1; })), { time: (0, moment_1.default)().format() }), key, { algorithm: algorithm, });
                         _e.label = 4;
                     case 4:
                         _e.trys.push([4, 6, , 7]);
@@ -421,7 +425,7 @@ var Auth = /** @class */ (function () {
                     case 6:
                         e_4 = _e.sent();
                         return [2 /*return*/, REST_1.default.getError('LOGIN_SAVE_TOKEN_ERROR', dictionary_1.default, { error: e_4, })];
-                    case 7: return [2 /*return*/, objectFilter_1.default(bdUser, function (v, k) { return loginReturnProps.indexOf(k) !== -1; })];
+                    case 7: return [2 /*return*/, (0, objectFilter_1.default)(bdUser, function (v, k) { return loginReturnProps.indexOf(k) !== -1; })];
                 }
             });
         });
@@ -470,7 +474,7 @@ var Auth = /** @class */ (function () {
                         // Get token
                         bdUser[token] = loginUser[token];
                         // Filtering object to return only the desired data
-                        bdUser = objectFilter_1.default(bdUser, function (v, k) { return refreshPasswordReturnProps.indexOf(k) !== -1; });
+                        bdUser = (0, objectFilter_1.default)(bdUser, function (v, k) { return refreshPasswordReturnProps.indexOf(k) !== -1; });
                         return [2 /*return*/, Promise.resolve(bdUser)];
                 }
             });
@@ -571,7 +575,7 @@ var Auth = /** @class */ (function () {
                         permissionEntity = inflection_1.default.pluralize(this.permissionEntityName);
                         allowProp = this.Config.get('permission.prop.allow');
                         // turning id into array
-                        userGroupId = isArray_1.default(userGroupId) ? userGroupId : [userGroupId,];
+                        userGroupId = (0, isArray_1.default)(userGroupId) ? userGroupId : [userGroupId,];
                         return [4 /*yield*/, this.ResourceRepository.find({
                                 where: (_a = {},
                                     _a[this.Config.get('resource.prop.method')] = method,
@@ -601,7 +605,7 @@ var Auth = /** @class */ (function () {
                             var resourcesOrdered = [];
                             // Find resources with desired number of parameters, remove from resource array and add in
                             // the ordered resources
-                            var restResources = clone_1.default(resources).filter(function (r) {
+                            var restResources = (0, clone_1.default)(resources).filter(function (r) {
                                 if (Object.keys(r.pattern).length === (index || 0)) {
                                     resourcesOrdered.push(r);
                                     return false;
@@ -614,7 +618,7 @@ var Auth = /** @class */ (function () {
                             }
                             // If there are still resources left, return the ordered resources plus the remaining
                             // resources ordered at runtime
-                            return __spreadArray(__spreadArray([], resourcesOrdered), sortResources(restResources, (index || 0) + 1));
+                            return __spreadArray(__spreadArray([], resourcesOrdered, true), sortResources(restResources, (index || 0) + 1), true);
                         };
                         resource = sortResources(resources)[0];
                         // If you can't find permission, use the default
@@ -692,7 +696,7 @@ var Auth = /** @class */ (function () {
     };
     /** Create and return a code */
     Auth.prototype.generateCode = function () {
-        return randomString_1.default(Config_1.default.get('code.length'), Config_1.default.get('code.type'));
+        return (0, randomString_1.default)(Config_1.default.get('code.length'), Config_1.default.get('code.type'));
     };
     /**
      * Crypt password

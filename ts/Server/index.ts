@@ -5,7 +5,7 @@ import bodyParser from 'body-parser'
 import isArray from '../lib/isArray'
 
 // Types
-import { ServerConfig, ServerRouterParams, } from './types'
+import { ServerConfig, ServerRouterParams, MiddlewareFunction, } from './types'
 
 // Necessary parts
 import ModuleConfig from './Config'
@@ -41,7 +41,9 @@ class Server {
       staticDir.map(d => this.Core.use(express.static(d)))
     }
 
-    this.Config.get('middleware', { forceArray: true, }).map((m: any) => this.Core.use(m))
+    this.Config.get('middleware', { forceArray: true, }).map((m: MiddlewareFunction) => {
+      this.Core.use(m)
+    })
 
     return this
   }

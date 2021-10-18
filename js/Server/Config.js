@@ -38,6 +38,7 @@ var ServerConfig = /** @class */ (function (_super) {
                     format: ['bold',]
                 });
             },
+            middleware: function (req, res, next) { return next(); },
         });
         return _this;
     }

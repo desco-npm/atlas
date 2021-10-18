@@ -23,7 +23,7 @@ class ServerConfig extends Config {
           format: [ 'bold', ]
         })
       },
-      middleware: [],
+      middleware: (req, res, next) => next(),
     } as ServerConfigType)
   }
 }

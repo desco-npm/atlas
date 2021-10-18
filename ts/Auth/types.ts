@@ -6,7 +6,7 @@ export type AuthUserConfig = {
   /** Name of the entity responsible for the users */
   entityName: string,
   /** Names of the properties of the entity responsible for the users */
-  prop: {
+  prop?: {
     login?: string,
     email?: string,
     password?: string,
@@ -22,11 +22,11 @@ export type AuthUserConfig = {
 /** Auth Group Settings */
 export type AuthGroupConfig = {
   /** Name of the entity responsible for the groups */
-  entityName: string,
+  entityName?: string,
   /** Default group for unauthenticated users */
   publicId: string,
   /** Names of the properties of the entity responsible for the groups */
-  prop: {
+  prop?: {
     name?: string,
   }
 }
@@ -138,5 +138,5 @@ export type AuthConfig = {
   /** Auth Encryption Token Settings */
   token: AuthTokenConfig,
   // The salt to be used to hash the password
-  passwordSalt: number,
+  passwordSalt?: number,
 }

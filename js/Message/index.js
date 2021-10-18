@@ -41,7 +41,7 @@ var Message = /** @class */ (function () {
     };
     /** Write the header */
     Message.prototype.header = function () {
-        cliHeader_1.default({
+        (0, cliHeader_1.default)({
             title: 'AtlasJS v' + require('../../package.json').version,
             size: 29,
             align: 'center',

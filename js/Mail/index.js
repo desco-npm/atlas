@@ -84,7 +84,7 @@ var Mail = /** @class */ (function () {
             var mails;
             var _this = this;
             return __generator(this, function (_a) {
-                mails = isArray_1.default(this.Config.get())
+                mails = (0, isArray_1.default)(this.Config.get())
                     ? this.Config.get()
                     : [__assign(__assign({}, this.Config.get()), { name: 'default' })];
                 // Scroll through email list and create carrier

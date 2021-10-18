@@ -74,7 +74,9 @@ var Server = /** @class */ (function () {
             staticDir = !(0, isArray_1.default)(staticDir) ? [staticDir,] : staticDir;
             staticDir.map(function (d) { return _this.Core.use(express_1.default.static(d)); });
         }
-        this.Config.get('middleware', { forceArray: true, }).map(function (m) { return _this.Core.use(m); });
+        this.Config.get('middleware', { forceArray: true, }).map(function (m) {
+            _this.Core.use(m);
+        });
         return this;
     };
     /** Prepares the server */

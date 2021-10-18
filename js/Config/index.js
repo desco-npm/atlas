@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // Framework resources
+var isArray_1 = __importDefault(require("../lib/isArray"));
 var objectPath_1 = __importDefault(require("../lib/objectPath"));
 var objectMerge_1 = require("../lib/objectMerge");
 /** AtlasJS Settings Module */
@@ -34,7 +35,7 @@ var Config = /** @class */ (function () {
      **/
     Config.prototype.set = function (configs, ignoreConfigured) {
         if (ignoreConfigured === void 0) { ignoreConfigured = false; }
-        this.configs = objectMerge_1.objectMerge(this.defaults, configs, {}); // Merge user settings with defaults
+        this.configs = (0, objectMerge_1.objectMerge)(this.defaults, configs, {}); // Merge user settings with defaults
         // Mark as configured
         if (!ignoreConfigured) {
             this.configured = true;
@@ -44,10 +45,12 @@ var Config = /** @class */ (function () {
     /**
      * Returns a Configuration
      * @param path Address of the configuration you want to access.Use points to access levels deeper
+     * @param params Extra parameters
      */
-    Config.prototype.get = function (path) {
+    Config.prototype.get = function (path, params) {
         if (path) {
-            return objectPath_1.default.get(this.configs, path);
+            var config = objectPath_1.default.get(this.configs, path);
+            return (params === null || params === void 0 ? void 0 : params.forceArray) && !(0, isArray_1.default)(config) ? [config,] : config;
         }
         else {
             return this.configs;

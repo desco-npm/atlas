@@ -72,7 +72,7 @@ var ORM = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         connectionConfig = this.Config.get('connection');
-                        return [4 /*yield*/, TypeORM_1.createConnection(connectionConfig).catch(function (e) {
+                        return [4 /*yield*/, (0, TypeORM_1.createConnection)(connectionConfig).catch(function (e) {
                                 Exception_1.default.discharge('InvalidConnection', dictionary_1.default, e);
                             })];
                     case 1:
@@ -98,7 +98,7 @@ var ORM = /** @class */ (function () {
      */
     ORM.prototype.getConnection = function (connectionName) {
         try {
-            return TypeORM_1.getConnection(connectionName);
+            return (0, TypeORM_1.getConnection)(connectionName);
         }
         catch (e) {
             Exception_1.default.discharge('InvalidConnectionName', dictionary_1.default, e);
