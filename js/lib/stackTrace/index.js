@@ -12,3 +12,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var stack_trace_1 = __importDefault(require("stack-trace"));
 exports.default = stack_trace_1.default;
+//# sourceMappingURL=index.js.map

@@ -12,3 +12,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var app_root_dir_1 = __importDefault(require("app-root-dir"));
 exports.default = app_root_dir_1.default;
+//# sourceMappingURL=index.js.map

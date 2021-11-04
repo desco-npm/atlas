@@ -13,3 +13,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var object_map_1 = __importDefault(require("object.map"));
 exports.default = object_map_1.default;
+//# sourceMappingURL=index.js.map

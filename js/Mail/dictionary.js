@@ -5,3 +5,4 @@ exports.default = {
     en: {},
     ptbr: {}
 };
+//# sourceMappingURL=dictionary.js.map

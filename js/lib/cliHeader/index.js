@@ -12,3 +12,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var cli_header_1 = __importDefault(require("@desco/cli-header"));
 exports.default = cli_header_1.default;
+//# sourceMappingURL=index.js.map

@@ -32,3 +32,4 @@ var MailConfig = /** @class */ (function (_super) {
     return MailConfig;
 }(Config_1.default));
 exports.default = new MailConfig();
+//# sourceMappingURL=Config.js.map

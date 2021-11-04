@@ -169,3 +169,4 @@ var Atlas = /** @class */ (function () {
 }());
 exports.default = new Atlas();
 __exportStar(require("./types"), exports);
+//# sourceMappingURL=index.js.map

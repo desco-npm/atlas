@@ -15,3 +15,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var inflection_1 = __importDefault(require("inflection"));
 exports.default = inflection_1.default;
+//# sourceMappingURL=index.js.map

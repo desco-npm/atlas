@@ -34,3 +34,4 @@ var RESTConfig = /** @class */ (function (_super) {
     return RESTConfig;
 }(Config_1.default));
 exports.default = new RESTConfig;
+//# sourceMappingURL=Config.js.map

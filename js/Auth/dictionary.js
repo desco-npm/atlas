@@ -44,3 +44,4 @@ exports.default = {
         REST_ERROR_ACCESS_RESTRICT: 'Usuário não possui permissão para acessar o recurso solicitado',
     },
 };
+//# sourceMappingURL=dictionary.js.map

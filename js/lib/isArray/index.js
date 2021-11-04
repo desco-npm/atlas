@@ -12,3 +12,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var is_array_1 = __importDefault(require("is-array"));
 exports.default = is_array_1.default;
+//# sourceMappingURL=index.js.map

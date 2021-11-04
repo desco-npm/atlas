@@ -25,3 +25,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
   * ORM is highly influenced by other ORMs, such as Hibernate, Doctrine and Entity Framework.
   */
 __exportStar(require("typeorm"), exports);
+//# sourceMappingURL=index.js.map

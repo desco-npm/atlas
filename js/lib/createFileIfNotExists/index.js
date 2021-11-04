@@ -15,3 +15,4 @@ exports.default = (function (file) {
         return Promise.resolve(stream);
     }
 });
+//# sourceMappingURL=index.js.map

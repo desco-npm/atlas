@@ -17,3 +17,4 @@ exports.default = {
             + 'corresponde a uma conexão existente',
     }
 };
+//# sourceMappingURL=dictionary.js.map

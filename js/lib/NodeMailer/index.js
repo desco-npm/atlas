@@ -12,3 +12,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var nodemailer_1 = __importDefault(require("nodemailer"));
 exports.default = nodemailer_1.default;
+//# sourceMappingURL=index.js.map

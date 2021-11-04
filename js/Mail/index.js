@@ -109,3 +109,4 @@ var Mail = /** @class */ (function () {
     return Mail;
 }());
 exports.default = new Mail();
+//# sourceMappingURL=index.js.map

@@ -12,3 +12,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var fs_extra_1 = __importDefault(require("fs-extra"));
 exports.default = fs_extra_1.default;
+//# sourceMappingURL=index.js.map

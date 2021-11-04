@@ -8,3 +8,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
   NPM: https://www.npmjs.com/package/colors
 */
 require("colors");
+//# sourceMappingURL=index.js.map

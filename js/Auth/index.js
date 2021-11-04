@@ -718,3 +718,4 @@ var Auth = /** @class */ (function () {
     return Auth;
 }());
 exports.default = new Auth();
+//# sourceMappingURL=index.js.map

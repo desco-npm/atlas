@@ -13,3 +13,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var url_pattern_1 = __importDefault(require("url-pattern"));
 exports.default = url_pattern_1.default;
+//# sourceMappingURL=index.js.map

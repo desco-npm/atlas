@@ -34,3 +34,4 @@ var ExceptionConfig = /** @class */ (function (_super) {
     return ExceptionConfig;
 }(Config_1.default));
 exports.default = new ExceptionConfig();
+//# sourceMappingURL=Config.js.map

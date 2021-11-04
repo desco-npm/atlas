@@ -6,3 +6,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
   Resources @desco/atlas
 */
 exports.default = (function (array) { return array.filter(function (item, key, self) { return self.indexOf(item) === key; }); });
+//# sourceMappingURL=index.js.map

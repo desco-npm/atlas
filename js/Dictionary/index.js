@@ -42,3 +42,4 @@ var Dictionary = /** @class */ (function () {
     return Dictionary;
 }());
 exports.default = new Dictionary();
+//# sourceMappingURL=index.js.map

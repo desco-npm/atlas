@@ -18,3 +18,4 @@ exports.default = (function (min, max, params) {
         return num;
     }
 });
+//# sourceMappingURL=index.js.map

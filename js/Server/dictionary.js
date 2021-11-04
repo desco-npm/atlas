@@ -9,3 +9,4 @@ exports.default = {
         listingOnPort: "Servidor rodando na porta [[PORT]]"
     }
 };
+//# sourceMappingURL=dictionary.js.map

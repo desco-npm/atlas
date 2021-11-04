@@ -12,3 +12,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var html_pdf_1 = __importDefault(require("html-pdf"));
 exports.default = html_pdf_1.default;
+//# sourceMappingURL=index.js.map

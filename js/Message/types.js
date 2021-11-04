@@ -9,3 +9,4 @@ var MessageColorType;
     MessageColorType["warning"] = "yellow";
     MessageColorType["cyan"] = "info";
 })(MessageColorType = exports.MessageColorType || (exports.MessageColorType = {}));
+//# sourceMappingURL=types.js.map

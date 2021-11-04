@@ -34,3 +34,4 @@ var DictionaryConfig = /** @class */ (function (_super) {
     return DictionaryConfig;
 }(Config_1.default));
 exports.default = new DictionaryConfig();
+//# sourceMappingURL=Config.js.map

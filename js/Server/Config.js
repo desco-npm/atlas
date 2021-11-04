@@ -45,3 +45,4 @@ var ServerConfig = /** @class */ (function (_super) {
     return ServerConfig;
 }(Config_1.default));
 exports.default = new ServerConfig();
+//# sourceMappingURL=Config.js.map

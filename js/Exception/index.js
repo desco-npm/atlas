@@ -43,3 +43,4 @@ var Exception = /** @class */ (function () {
     return Exception;
 }());
 exports.default = new Exception();
+//# sourceMappingURL=index.js.map

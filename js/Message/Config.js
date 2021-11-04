@@ -34,3 +34,4 @@ var MessageConfig = /** @class */ (function (_super) {
     return MessageConfig;
 }(Config_1.default));
 exports.default = new MessageConfig;
+//# sourceMappingURL=Config.js.map

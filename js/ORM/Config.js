@@ -32,3 +32,4 @@ var ORMConfig = /** @class */ (function (_super) {
     return ORMConfig;
 }(Config_1.default));
 exports.default = new ORMConfig();
+//# sourceMappingURL=Config.js.map

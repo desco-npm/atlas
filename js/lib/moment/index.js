@@ -12,3 +12,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var moment_1 = __importDefault(require("moment"));
 exports.default = moment_1.default;
+//# sourceMappingURL=index.js.map

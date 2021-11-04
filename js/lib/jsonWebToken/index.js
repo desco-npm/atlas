@@ -12,3 +12,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 exports.default = jsonwebtoken_1.default;
+//# sourceMappingURL=index.js.map

@@ -13,3 +13,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var clone_1 = __importDefault(require("clone"));
 exports.default = clone_1.default;
+//# sourceMappingURL=index.js.map

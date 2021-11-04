@@ -12,3 +12,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 */
 var random_string_generator_1 = __importDefault(require("random-string-generator"));
 exports.default = random_string_generator_1.default;
+//# sourceMappingURL=index.js.map

@@ -104,3 +104,4 @@ var AuthConfig = /** @class */ (function (_super) {
     return AuthConfig;
 }(Config_1.default));
 exports.default = new AuthConfig();
+//# sourceMappingURL=Config.js.map

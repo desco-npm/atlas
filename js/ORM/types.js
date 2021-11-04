@@ -30,3 +30,4 @@ var typeorm_5 = require("typeorm");
 Object.defineProperty(exports, "JoinTable", { enumerable: true, get: function () { return typeorm_5.JoinTable; } });
 Object.defineProperty(exports, "JoinColumn", { enumerable: true, get: function () { return typeorm_5.JoinColumn; } });
 __exportStar(require("typeorm/connection/ConnectionOptions"), exports);
+//# sourceMappingURL=types.js.map

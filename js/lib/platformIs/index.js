@@ -18,3 +18,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
   NPM: https://www.npmjs.com/package/platform-is
 */
 __exportStar(require("platform-is"), exports);
+//# sourceMappingURL=index.js.map

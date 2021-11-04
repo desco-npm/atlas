@@ -46,3 +46,4 @@ exports.default = (function (_a) {
             .catch(function (e) { return res.status(e.statusCode).json(e); });
     });
 });
+//# sourceMappingURL=routes.js.map
