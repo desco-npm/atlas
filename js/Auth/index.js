@@ -115,41 +115,45 @@ var Auth = /** @class */ (function () {
                 this.ResourceRepository = (_b = this.Connection) === null || _b === void 0 ? void 0 : _b.getRepository(this.resourceEntityName);
                 // Add middleware
                 Server_1.default.Core.use(function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-                    var publicResource, user;
-                    return __generator(this, function (_a) {
-                        switch (_a.label) {
+                    var publicResource, _a, _b, user, _c, _d, _e, _f;
+                    return __generator(this, function (_g) {
+                        switch (_g.label) {
                             case 0: return [4 /*yield*/, this.isPublicResource(req.url, req.method)
                                 // If the route is public, release
                             ];
                             case 1:
-                                publicResource = _a.sent();
+                                publicResource = _g.sent();
                                 // If the route is public, release
                                 if (publicResource) {
                                     next();
                                     return [2 /*return*/];
                                 }
-                                // No token, returns error
-                                if (!req.headers.authorization) {
-                                    res.status(401).json(REST_1.default.getError('ACCESS_WITHOUT_TOKEN', dictionary_1.default));
-                                    return [2 /*return*/];
-                                }
-                                return [4 /*yield*/, this.getUserByToken(req.headers.authorization)
-                                    // If not found user, token is invalid. Inform
-                                ];
+                                if (!!req.headers.authorization) return [3 /*break*/, 3];
+                                _b = (_a = res.status(401)).json;
+                                return [4 /*yield*/, REST_1.default.getError('ACCESS_WITHOUT_TOKEN', dictionary_1.default, { pure: true, })];
                             case 2:
-                                user = _a.sent();
+                                _b.apply(_a, [_g.sent()]);
+                                return [2 /*return*/];
+                            case 3: return [4 /*yield*/, this.getUserByToken(req.headers.authorization)
                                 // If not found user, token is invalid. Inform
-                                if (!user) {
-                                    res.status(403).json(REST_1.default.getError('ACCESS_INVALID_TOKEN', dictionary_1.default));
-                                    return [2 /*return*/];
-                                }
-                                return [4 /*yield*/, this.resourcePermissionByUser(user, req.url, req.method)];
-                            case 3:
-                                // If user does not have permission for the requested resource, inform
-                                if (!(_a.sent())) {
-                                    res.status(403).json(REST_1.default.getError('ACCESS_RESTRICT', dictionary_1.default));
-                                    return [2 /*return*/];
-                                }
+                            ];
+                            case 4:
+                                user = _g.sent();
+                                if (!!user) return [3 /*break*/, 6];
+                                _d = (_c = res.status(403)).json;
+                                return [4 /*yield*/, REST_1.default.getError('ACCESS_INVALID_TOKEN', dictionary_1.default, { pure: true, })];
+                            case 5:
+                                _d.apply(_c, [_g.sent()]);
+                                return [2 /*return*/];
+                            case 6: return [4 /*yield*/, this.resourcePermissionByUser(user, req.url, req.method)];
+                            case 7:
+                                if (!!(_g.sent())) return [3 /*break*/, 9];
+                                _f = (_e = res.status(403)).json;
+                                return [4 /*yield*/, REST_1.default.getError('ACCESS_RESTRICT', dictionary_1.default, { pure: true, })];
+                            case 8:
+                                _f.apply(_e, [_g.sent()]);
+                                return [2 /*return*/];
+                            case 9:
                                 req.headers.userData = user;
                                 next();
                                 return [2 /*return*/];

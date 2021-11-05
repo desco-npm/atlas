@@ -95,7 +95,9 @@ class Auth {
       
       // No token, returns error
       if (!req.headers.authorization) {
-        res.status(401).json(REST.getError('ACCESS_WITHOUT_TOKEN', dictionary))
+        res.status(401).json(
+          await REST.getError('ACCESS_WITHOUT_TOKEN', dictionary, { pure: true, })
+        )
         
         return
       }
@@ -105,14 +107,18 @@ class Auth {
 
       // If not found user, token is invalid. Inform
       if(!user) {
-        res.status(403).json(REST.getError('ACCESS_INVALID_TOKEN', dictionary))
+        res.status(403).json(
+          await REST.getError('ACCESS_INVALID_TOKEN', dictionary, { pure: true, })
+        )
 
         return
       }
 
       // If user does not have permission for the requested resource, inform
       if (!await this.resourcePermissionByUser(user, req.url, req.method)) {
-        res.status(403).json(REST.getError('ACCESS_RESTRICT', dictionary))
+        res.status(403).json(
+          await REST.getError('ACCESS_RESTRICT', dictionary, { pure: true, })
+        )
 
         return
       }
